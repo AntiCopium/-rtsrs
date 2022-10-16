@@ -5,7 +5,7 @@ import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
-  InteractionResponseTypes,
+  InteractionResponseTypes
 } from "../../deps.ts";
 import { createCommand } from "./mod.ts";
 createCommand({
@@ -22,11 +22,13 @@ createCommand({
   ],
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
+
     if (interaction.data?.options === undefined) {
-      return undefined
+      return false
     } else {
       console.log(interaction.data.options)
     }
+    
     const user = interaction.data?.options[0].value;
     console.log(user);
     const embedDead = new Embeds()
@@ -63,3 +65,4 @@ createCommand({
     );
   },
 });
+
