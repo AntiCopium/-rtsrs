@@ -1,4 +1,5 @@
 // deno-lint-ignore-file
+import { defaultDecodeOptions } from "https://cdn.skypack.dev/-/@msgpack/msgpack@v2.7.2-WOzo1hxweJTYwgLvOmPM/dist=es2019,mode=types/dist/decode.d.ts";
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
 import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
@@ -23,16 +24,20 @@ createCommand({
   ],
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
+    if(interaction.data?.options === undefined) {
+      return
+    }
+    const user = interaction.data?.options[0].value
     const embedDead = new Embeds()
       .setTitle("rtsrs dead or alive success")
       .setColor("#880808")
-      .setDescription(`💀🔫 you died nigga`)
+      .setDescription(`<@${user}> \n \n result: 💀🔫 you died nigga`)
       .setFooter(`rtsrs bot ${day}`);
 
     const embedAlive = new Embeds()
       .setTitle("rtsrs dead or alive success")
       .setColor("#125e94")
-      .setDescription(`😮‍💨 alive`)
+      .setDescription(`<@${user}> \n \n result: 😮‍💨 alive`)
       .setFooter(`rtsrs bot ${day}`);
 
     const r = new mod.Random().pick
