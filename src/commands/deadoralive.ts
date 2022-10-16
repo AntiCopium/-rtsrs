@@ -26,9 +26,12 @@ createCommand({
 
     if (interaction.data?.options === undefined) {
       return false
-    } 
-    const user = interaction.data?.options[0].value;
+    } else {
+      console.log(interaction.data.options)
+    }
 
+    const user = interaction.data?.options[0].value;
+    console.log(user)
 
     const embedDead = new Embeds()
       .setTitle("rtsrs dead or alive success")
