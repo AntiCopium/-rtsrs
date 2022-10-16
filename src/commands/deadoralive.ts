@@ -23,7 +23,7 @@ createCommand({
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
     if (interaction.data?.options === undefined) {
-      return;
+      return undefined
     }
     const user = interaction.data?.options[0].value;
     console.log(user);
