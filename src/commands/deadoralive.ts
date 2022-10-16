@@ -24,6 +24,8 @@ createCommand({
     const day = format(new Date(), "HH:mm");
     if (interaction.data?.options === undefined) {
       return undefined
+    } else {
+      console.log(interaction.data.options)
     }
     const user = interaction.data?.options[0].value;
     console.log(user);
