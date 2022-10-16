@@ -4,11 +4,9 @@ import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
-  InteractionResponseTypes
+  InteractionResponseTypes,
 } from "../../deps.ts";
 import { createCommand } from "./mod.ts";
-
-
 createCommand({
   name: "doa",
   description: "rtsrs has 1 in 8 chance of dead",
@@ -17,22 +15,16 @@ createCommand({
     {
       type: ApplicationCommandOptionTypes.User,
       name: "user",
-      description: "a user to doa",
+      description: "a user to test",
       required: false,
     },
   ],
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
-
     if (interaction.data?.options === undefined) {
-      return false
-    } else {
-      console.log(interaction.data.options)
+      return;
     }
-
     const user = interaction.data?.options[0].value;
-    console.log(user)
-
     const embedDead = new Embeds()
       .setTitle("rtsrs dead or alive success")
       .setColor("#880808")
@@ -67,4 +59,3 @@ createCommand({
     );
   },
 });
-
