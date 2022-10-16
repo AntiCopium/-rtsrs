@@ -1,4 +1,3 @@
-// deno-lint-ignore-file
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
 import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
@@ -8,6 +7,8 @@ import {
   InteractionResponseTypes
 } from "../../deps.ts";
 import { createCommand } from "./mod.ts";
+
+
 createCommand({
   name: "doa",
   description: "rtsrs has 1 in 8 chance of dead",
@@ -16,7 +17,7 @@ createCommand({
     {
       type: ApplicationCommandOptionTypes.User,
       name: "user",
-      description: "a user to test",
+      description: "a user to doa",
       required: false,
     },
   ],
@@ -28,9 +29,9 @@ createCommand({
     } else {
       console.log(interaction.data.options)
     }
-    
     const user = interaction.data?.options[0].value;
-    console.log(user);
+
+
     const embedDead = new Embeds()
       .setTitle("rtsrs dead or alive success")
       .setColor("#880808")
