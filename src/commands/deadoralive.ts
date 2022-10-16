@@ -26,9 +26,7 @@ createCommand({
 
     if (interaction.data?.options === undefined) {
       return false
-    } else {
-      console.log(interaction.data.options)
-    }
+    } 
     const user = interaction.data?.options[0].value;
 
 
