@@ -1,12 +1,11 @@
 // deno-lint-ignore-file
-import { defaultDecodeOptions } from "https://cdn.skypack.dev/-/@msgpack/msgpack@v2.7.2-WOzo1hxweJTYwgLvOmPM/dist=es2019,mode=types/dist/decode.d.ts";
 import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
 import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
 import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
-  InteractionResponseTypes
+  InteractionResponseTypes,
 } from "../../deps.ts";
 import { createCommand } from "./mod.ts";
 createCommand({
@@ -17,17 +16,17 @@ createCommand({
     {
       type: ApplicationCommandOptionTypes.User,
       name: "user",
-      description:"a user to test",
+      description: "a user to test",
       required: false,
-
     },
   ],
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
-    if(interaction.data?.options === undefined) {
-      return
+    if (interaction.data?.options === undefined) {
+      return;
     }
-    const user = interaction.data?.options[0].value
+    const user = interaction.data?.options[0].value;
+    console.log(user);
     const embedDead = new Embeds()
       .setTitle("rtsrs dead or alive success")
       .setColor("#880808")
@@ -40,17 +39,16 @@ createCommand({
       .setDescription(`<@${user}> \n \n result: 😮‍💨 alive`)
       .setFooter(`rtsrs bot ${day}`);
 
-    const r = new mod.Random().pick
-    (
-      embedAlive, 
-      embedAlive, 
-      embedAlive, 
-      embedAlive, 
-      embedAlive, 
-      embedAlive, 
-      embedAlive, 
-      embedDead
-      );
+    const r = new mod.Random().pick(
+      embedAlive,
+      embedAlive,
+      embedAlive,
+      embedAlive,
+      embedAlive,
+      embedAlive,
+      embedAlive,
+      embedDead,
+    );
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
@@ -58,7 +56,6 @@ createCommand({
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
           embeds: r,
-          
         },
       },
     );
