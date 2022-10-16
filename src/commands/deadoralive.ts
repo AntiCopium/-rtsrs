@@ -16,13 +16,13 @@ createCommand({
       type: ApplicationCommandOptionTypes.User,
       name: "user",
       description: "a user to test",
-      required: false,
+      required: true,
     },
   ],
   execute: async (Bot, interaction) => {
     const day = format(new Date(), "HH:mm");
     if (interaction.data?.options === undefined) {
-      return;
+      return false;
     }
     const user = interaction.data?.options[0].value;
     const embedDead = new Embeds()
