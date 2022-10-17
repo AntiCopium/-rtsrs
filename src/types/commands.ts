@@ -1,5 +1,9 @@
-import { BotClient } from "../../rtsrs.ts";
-import { ApplicationCommandOption, ApplicationCommandTypes, Interaction } from "../../deps.ts";
+import {
+  ApplicationCommandOption,
+  ApplicationCommandTypes,
+  Interaction,
+} from '../../deps.ts';
+import { BotClient } from '../../rtsrs.ts';
 
 export interface Command {
   /** The name of this command. */

@@ -1,4 +1,4 @@
-import { configs } from "./configs.ts";
+import { configs } from './configs.ts';
 import {
   BotWithCache,
   BotWithHelpersPlugin,
@@ -9,14 +9,14 @@ import {
   enableHelpersPlugin,
   enablePermissionsPlugin,
   GatewayIntents,
-} from "./deps.ts";
-import { Command } from "./src/types/commands.ts";
+} from './deps.ts';
+import { Command } from './src/types/commands.ts';
 
 // MAKE THE BASIC BOT OBJECT
 const bot = createBot({
   token: configs.token,
   botId: configs.botId,
-  intents: GatewayIntents.Guilds,
+  intents: GatewayIntents.Guilds && GatewayIntents.GuildMessages,
   events: {},
 });
 

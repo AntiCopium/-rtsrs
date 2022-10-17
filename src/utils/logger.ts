@@ -1,5 +1,5 @@
 // deno-lint-ignore-file no-explicit-any
-import { bold, cyan, gray, italic, red, yellow } from "../../deps.ts";
+import { bold, cyan, gray, italic, red, yellow } from '../../deps.ts';
 
 export enum LogLevels {
   Debug,
@@ -10,11 +10,11 @@ export enum LogLevels {
 }
 
 const prefixes = new Map<LogLevels, string>([
-  [LogLevels.Debug, "DEBUG"],
-  [LogLevels.Info, "INFO"],
-  [LogLevels.Warn, "WARN"],
-  [LogLevels.Error, "ERROR"],
-  [LogLevels.Fatal, "FATAL"],
+  [LogLevels.Debug, 'DEBUG'],
+  [LogLevels.Info, 'INFO'],
+  [LogLevels.Warn, 'WARN'],
+  [LogLevels.Error, 'ERROR'],
+  [LogLevels.Fatal, 'FATAL'],
 ]);
 
 const noColor: (str: string) => string = (msg) => msg;
@@ -42,8 +42,8 @@ export function logger({
     const date = new Date();
     const log = [
       `[${date.toLocaleDateString()} ${date.toLocaleTimeString()}]`,
-      color(prefixes.get(level) || "DEBUG"),
-      name ? `${name} >` : ">",
+      color(prefixes.get(level) || 'DEBUG'),
+      name ? `${name} >` : '>',
       ...args,
     ];
 
@@ -98,5 +98,5 @@ export function logger({
   };
 }
 
-export const log = logger({ name: "Main" });
+export const log = logger({ name: 'Main' });
 export default log;

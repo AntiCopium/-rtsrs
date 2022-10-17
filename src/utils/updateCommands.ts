@@ -1,12 +1,12 @@
-import { Bot } from "../../rtsrs.ts";
-import { configs } from "../../configs.ts";
+import { configs } from '../../configs.ts';
+import { Bot } from '../../rtsrs.ts';
 
 export async function updateApplicationCommands() {
   await Bot.helpers.upsertGlobalApplicationCommands(
     Bot.commands
       // ONLY GLOBAL COMMANDS
       .filter((command) => !command.devOnly)
-      .array(),
+      .array()
   );
 
   await Bot.helpers.upsertGuildApplicationCommands(
@@ -14,6 +14,6 @@ export async function updateApplicationCommands() {
     Bot.commands
       // ONLY GLOBAL COMMANDS
       .filter((command) => !!command.devOnly)
-      .array(),
+      .array()
   );
 }
