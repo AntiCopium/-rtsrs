@@ -1,4 +1,6 @@
 // deno-lint-ignore-file
+import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
+import { sleep } from 'https://deno.land/x/sleep/mod.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -7,6 +9,7 @@ import {
 import {
   createCommand,
   day,
+  dbChangeData,
   dbHasValue,
   getdbValue,
   setdbValue,
@@ -33,12 +36,9 @@ createCommand({
     );
     const user = interaction.user.id;
 
-    if (!(await dbHasValue(user.toString())) === true) {
+    if ((await dbHasValue(user.toString())) === false) {
       await setdbValue(user.toString(), user);
     }
-
-    console.log(msg);
-    console.log(await getdbValue('user'));
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
