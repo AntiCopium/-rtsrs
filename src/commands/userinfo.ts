@@ -5,7 +5,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, day, setdbValue } from './mod.ts';
 
 createCommand({
   name: 'userinfo',
@@ -20,10 +20,9 @@ createCommand({
     },
   ],
   execute: async (Bot, interaction) => {
-    const day = format(new Date(), 'HH:mm');
-    if (interaction?.data?.resolved?.users === undefined) {
-      return;
-    }
+    if (interaction?.data?.resolved?.users === undefined) return;
+    await setdbValue('hello');
+
     const user = interaction.data.resolved.users;
     console.log(user);
 
@@ -33,7 +32,7 @@ createCommand({
       {
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          content: `${user}`,
+          content: `${user} ${day}`,
         },
       }
     );
