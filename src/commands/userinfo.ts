@@ -1,6 +1,4 @@
 // deno-lint-ignore-file
-import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
-import { sleep } from 'https://deno.land/x/sleep/mod.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -9,7 +7,7 @@ import {
 import {
   createCommand,
   day,
-  dbChangeData,
+  dbHasValue,
   getdbValue,
   setdbValue,
 } from './mod.ts';
@@ -29,9 +27,17 @@ createCommand({
   execute: async (Bot, interaction) => {
     if (interaction?.data?.resolved?.users === undefined) return;
 
-    // const user = interaction.data.resolved.users;
+    const msg = JSON.stringify(
+      Object.fromEntries(interaction.data.resolved.users),
+      (key, value) => (typeof value === 'bigint' ? value.toString() : value)
+    );
     const user = interaction.user.id;
-    await setdbValue('user', user);
+
+    if (!(await dbHasValue(user.toString())) === true) {
+      await setdbValue(user.toString(), user);
+    }
+
+    console.log(msg);
     console.log(await getdbValue('user'));
 
     await Bot.helpers.sendInteractionResponse(
@@ -40,7 +46,7 @@ createCommand({
       {
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          content: `${user} ${day}`,
+          content: `${msg} ${day}`,
         },
       }
     );
