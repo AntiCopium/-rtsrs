@@ -28,13 +28,11 @@ createCommand({
   ],
   execute: async (Bot, interaction) => {
     if (interaction?.data?.resolved?.users === undefined) return;
-    await setdbValue('hello', 'HELLOSD');
-    console.log(await getdbValue('hello'));
-    await sleep(3);
-    await dbChangeData('hello', 'SD2323');
-    console.log(await getdbValue('hello'));
 
-    const user = interaction.data.resolved.users;
+    // const user = interaction.data.resolved.users;
+    const user = interaction.user.id;
+    await setdbValue('user', user);
+    console.log(await getdbValue('user'));
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
