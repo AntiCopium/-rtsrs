@@ -18,7 +18,7 @@ export async function setdbValue(id: string, data?: any): Promise<void> {
     return;
   }
   await table.create(id, data);
-  log.info(`Crated DB values ${id}`);
+  log.info(`Created DB values ${id}`);
 }
 
 export async function getdbValue(id: string): Promise<unknown> {
@@ -43,7 +43,7 @@ export async function dbHasValue(id: string): Promise<unknown> {
   return await table.has(id);
 }
 
-export async function dbValueDel(id: string) {
+export async function dbDel(id: string) {
   const log = logger({ name: 'DB Manager' });
   log.info(`Deleting ${id} ...`);
   if (id === undefined) {
@@ -52,4 +52,14 @@ export async function dbValueDel(id: string) {
   }
   await table.delete(id);
   log.info(`Deleted ${id}`);
+}
+
+export async function dbChangeData(id: string, data: any) {
+  const log = logger({ name: 'DB Manager' });
+
+  if (id && data === undefined) return;
+
+  log.info(`Changing ${id} ...`);
+  await dbDel(id);
+  await setdbValue(id, data);
 }

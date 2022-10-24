@@ -34,11 +34,11 @@ kwik.msgpackExtensionCodec.register({
 // Initialize the Database
 await kwik.init();
 
-await table.set('testsss');
-await table.create('YH', 'Hello');
-await table.create('YY', 'Hello');
-console.log(await table.has('test'));
-const test = await table.get('YH');
-console.log(test);
+// await table.set('testsss');
+// await table.create('YH', 'Hello');
+// await table.create('YY', 'Hello');
+// console.log(await table.has('test'));
+// const test = await table.get('YH');
+// console.log(test);
 
 log.info('Database Initialized!');
