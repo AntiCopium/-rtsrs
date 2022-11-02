@@ -6,8 +6,7 @@ const log = logger({ name: 'DB Manager' });
 
 log.info('Initializing Database');
 
-const kwik = new Kwik();
-export const table = new KwikTable(kwik, 'table');
+export const kwik = new Kwik();
 
 // Add BigInt Support
 kwik.msgpackExtensionCodec.register({
@@ -42,3 +41,69 @@ await kwik.init();
 // console.log(test);
 
 log.info('Database Initialized!');
+export async function CreateTable(table: string) {
+  try {
+    await Deno.mkdir(`C:\\Users\\Owner\\Desktop\\!rtsrs\\db\\${table}`);
+    await new KwikTable(kwik, table);
+  } catch (e) {
+    const log = logger({ name: 'DB Manager' });
+    log.warn(e)
+  }
+}
+export async function setdbValue(
+  id: string,
+  table: KwikTable<any>,
+  data?: any
+): Promise<void> {
+  const log = logger({ name: 'DB Manager' });
+  log.info(`Attempting to add ${id}, ${data} value.`);
+  if (id === undefined) {
+    log.error('NO ID SPECIFIED');
+    return;
+  }
+  await table.create(id, data);
+  log.info(`Created DB values ${id}`);
+}
+// CreateTable('Hus').then(() => {
+//   const log = logger({ name: 'DB Manager' });
+//   log.info('Made new Table')
+// });const Hus = new KwikTable(kwik, 'Hus')
+export async function getdbValue(id: string, table: KwikTable<any>): Promise<unknown> {
+  const log = logger({ name: 'DB Manager' });
+  log.info(`Attempting to get ${id}`);
+  if (id === undefined) {
+    log.error('NO ID SPECIFIED');
+    return;
+  }
+  log.info(`Fetched DB value ${id}`);
+  return await table.get(id);
+}
+export async function dbHasValue(id: string, table: KwikTable<any>): Promise<unknown> {
+  const log = logger({ name: 'DB Manager' });
+  log.info(`Has ${id} ???`);
+  if (id === undefined) {
+    log.error('NO ID SPECIFIED');
+    return;
+  }
+  log.info(`Check DB for ${id} (returns true or false)`);
+  return await table.has(id);
+}
+export async function dbDel(id: string, table: KwikTable<any>) {
+  const log = logger({ name: 'DB Manager' });
+  log.info(`Deleting ${id} ...`);
+  if (id === undefined) {
+    log.error('NO ID SPECIFIED');
+    return;
+  }
+  await table.delete(id);
+  log.info(`Deleted ${id}`);
+}
+export async function dbChangeData(id: string, data: any, table: KwikTable<any>) {
+  const log = logger({ name: 'DB Manager' });
+
+  if (id && data === undefined) return;
+
+  log.info(`Changing ${id} ...`);
+  await dbDel(id, table);
+  await setdbValue(id, table, data);
+}

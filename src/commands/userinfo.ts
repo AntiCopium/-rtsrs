@@ -6,14 +6,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import {
-  createCommand,
-  day,
-  dbChangeData,
-  dbHasValue,
-  getdbValue,
-  setdbValue,
-} from './mod.ts';
+import { createCommand, day } from './mod.ts';
 
 createCommand({
   name: 'userinfo',
@@ -34,11 +27,11 @@ createCommand({
       Object.fromEntries(interaction.data.resolved.users),
       (key, value) => (typeof value === 'bigint' ? value.toString() : value)
     );
-    const user = interaction.user.id;
-
-    if ((await dbHasValue(user.toString())) === false) {
-      await setdbValue(user.toString(), user);
-    }
+    // const user = interaction.user.id;
+    //
+    // if ((await dbHasValue(user.toString())) === false) {
+    //   await setdbValue(user.toString(), user);
+    // }
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
