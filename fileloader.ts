@@ -1,4 +1,5 @@
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/black.ts#0";
+import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/case.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/deadoralive.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/mod.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/ping.ts#0";

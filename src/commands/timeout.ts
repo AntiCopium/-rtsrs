@@ -7,7 +7,14 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { CreateTable, dbHasValue, kwik, setdbValue } from '../database/mod.ts';
+import {
+  CreateTable,
+  dbChangeData,
+  dbHasValue,
+  getdbValue,
+  kwik,
+  setdbValue,
+} from '../database/mod.ts';
 import { rdomcolor } from '../utils/colors.ts';
 import { logger } from '../utils/logger.ts';
 import { minToMilli } from '../utils/timeconvert.ts';
@@ -17,14 +24,18 @@ await CreateTable('MuteCase').then(() => {
   const log = logger({ name: 'DB Manager' });
   log.info('Made new Table');
 });
-const mutecase = new KwikTable(kwik, 'MuteCase');
+export const mutecase = new KwikTable(kwik, 'MuteCase');
 
-let currentcase = 0;
-function addCase() {
-  currentcase++;
+let currentcase = await getdbValue('currentCASE', mutecase);
+setdbValue('currentCASE', mutecase, currentcase);
+async function addCase() {
+    if (typeof currentcase === 'number') {
+        currentcase++
+    }
+  await dbChangeData('currentCASE', currentcase, mutecase);
 }
 
-console.log(currentcase);
+console.log(await getdbValue('currentCASE', mutecase));
 
 createCommand({
   name: 'timeout',
@@ -86,12 +97,12 @@ createCommand({
     const timeinMin = interaction.data?.options[3].value!;
     const level = interaction.data.options[0].value!;
     addCase();
-
-    if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
-      let data = `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`;
-      await setdbValue(currentcase.toString(), mutecase, data);
+    if (typeof currentcase === 'number') {
+        if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
+            let data = `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`;
+            await setdbValue(currentcase.toString(), mutecase, data);
+          }
     }
-
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
       .setColor(rdomcolor())
@@ -99,13 +110,13 @@ createCommand({
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`
       );
-      try {
-        await Bot.helpers.editMember(guildID, userToMute, {
-            communicationDisabledUntil: Date.now() + minToMilli(timeinMin),
-          });
-      } catch(err) {
-        return;
-      }
+    try {
+      await Bot.helpers.editMember(guildID, userToMute, {
+        communicationDisabledUntil: Date.now() + minToMilli(timeinMin),
+      });
+    } catch (err) {
+      return;
+    }
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
