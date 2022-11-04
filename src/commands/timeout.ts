@@ -29,9 +29,9 @@ export const mutecase = new KwikTable(kwik, 'MuteCase');
 let currentcase = await getdbValue('currentCASE', mutecase);
 setdbValue('currentCASE', mutecase, currentcase);
 async function addCase() {
-    if (typeof currentcase === 'number') {
-        currentcase++
-    }
+  if (typeof currentcase === 'number') {
+    currentcase++;
+  }
   await dbChangeData('currentCASE', currentcase, mutecase);
 }
 
@@ -96,12 +96,13 @@ createCommand({
     const userToMute = interaction.data?.options[2].value?.toString()!;
     const timeinMin = interaction.data?.options[3].value!;
     const level = interaction.data.options[0].value!;
+
     addCase();
     if (typeof currentcase === 'number') {
-        if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
-            let data = `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`;
-            await setdbValue(currentcase.toString(), mutecase, data);
-          }
+      if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
+        let data = `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`;
+        await setdbValue(currentcase.toString(), mutecase, data);
+      }
     }
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
