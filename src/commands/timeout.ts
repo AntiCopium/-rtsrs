@@ -27,7 +27,7 @@ await CreateTable('MuteCase').then(() => {
 export const mutecase = new KwikTable(kwik, 'MuteCase');
 
 let currentcase = await getdbValue('currentCASE', mutecase);
-setdbValue('currentCASE', mutecase, currentcase);
+await setdbValue('currentCASE', mutecase, currentcase);
 async function addCase() {
   if (typeof currentcase === 'number') {
     currentcase++;
