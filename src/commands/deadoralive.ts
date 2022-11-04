@@ -11,6 +11,7 @@ createCommand({
   name: 'doa',
   description: 'rtsrs has 1 in 8 chance of dead',
   type: ApplicationCommandTypes.ChatInput,
+  devOnly: true,
   options: [
     {
       type: ApplicationCommandOptionTypes.User,

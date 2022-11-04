@@ -11,6 +11,7 @@ createCommand({
   name: 'black',
   description: 'blackness',
   type: ApplicationCommandTypes.ChatInput,
+  devOnly: true,
   execute: async (Bot, interaction) => {
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
