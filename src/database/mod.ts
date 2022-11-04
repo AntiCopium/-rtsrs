@@ -40,7 +40,11 @@ await kwik.init();
 // const test = await table.get('YH');
 // console.log(test);
 
-log.info('Database Initialized!');
+/**
+ * Creates a table (DONT USE ON EXEUCAION)
+ * @param table
+ * @constructor
+ */
 export async function CreateTable(table: string) {
   try {
     await Deno.mkdir(`C:\\Users\\Owner\\Desktop\\!rtsrs\\db\\${table}`);
@@ -50,6 +54,14 @@ export async function CreateTable(table: string) {
     log.warn(e)
   }
 }
+
+/**
+ * Sets a DB VALUE
+ * @async
+ * @param id
+ * @param table
+ * @param data
+ */
 export async function setdbValue(
   id: string,
   table: KwikTable<any>,
@@ -64,10 +76,19 @@ export async function setdbValue(
   await table.create(id, data);
   log.info(`Created DB values ${id}`);
 }
+
+// HOW TO CREATE A TABLE
 // CreateTable('Hus').then(() => {
 //   const log = logger({ name: 'DB Manager' });
 //   log.info('Made new Table')
 // });const Hus = new KwikTable(kwik, 'Hus')
+
+
+/**
+ * Gets the data of a db value
+ * @param id
+ * @param table
+ */
 export async function getdbValue(id: string, table: KwikTable<any>): Promise<unknown> {
   const log = logger({ name: 'DB Manager' });
   log.info(`Attempting to get ${id}`);
@@ -78,16 +99,31 @@ export async function getdbValue(id: string, table: KwikTable<any>): Promise<unk
   log.info(`Fetched DB value ${id}`);
   return await table.get(id);
 }
+
+/**
+ * Check if DB has value
+ * @param id
+ * @param table
+ */
 export async function dbHasValue(id: string, table: KwikTable<any>): Promise<unknown> {
   const log = logger({ name: 'DB Manager' });
-  log.info(`Has ${id} ???`);
   if (id === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
-  log.info(`Check DB for ${id} (returns true or false)`);
+  if (await table.has(id) === true) {
+    log.info(`${id} => TRUE`)
+  } else {
+    log.info(`${id} => FALSE`)
+  }
   return await table.has(id);
 }
+
+/**
+ * DB deletes a value
+ * @param id
+ * @param table
+ */
 export async function dbDel(id: string, table: KwikTable<any>) {
   const log = logger({ name: 'DB Manager' });
   log.info(`Deleting ${id} ...`);
@@ -98,6 +134,13 @@ export async function dbDel(id: string, table: KwikTable<any>) {
   await table.delete(id);
   log.info(`Deleted ${id}`);
 }
+
+/**
+ * changes a db data
+ * @param id
+ * @param data
+ * @param table
+ */
 export async function dbChangeData(id: string, data: any, table: KwikTable<any>) {
   const log = logger({ name: 'DB Manager' });
 
@@ -107,3 +150,5 @@ export async function dbChangeData(id: string, data: any, table: KwikTable<any>)
   await dbDel(id, table);
   await setdbValue(id, table, data);
 }
+
+log.info('Database Initialized!');

@@ -12,7 +12,7 @@ export interface Command {
   description: string;
   /** The type of command this is. */
   type: ApplicationCommandTypes;
-  /** Whether or not this command is for the dev server only. */
+  /** Whether this command is for the dev server only. */
   devOnly?: boolean;
   /** The options for this command */
   options?: ApplicationCommandOption[];
