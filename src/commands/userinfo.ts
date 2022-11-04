@@ -12,11 +12,11 @@ import { rdomcolor } from '../utils/colors.ts';
 import { logger } from '../utils/logger.ts';
 import { createCommand, day } from './mod.ts';
 
-await CreateTable('Slavery').then(() => {
-  const log = logger({ name: 'DB Manager' });
-  log.info('Made new Table');
-});
-const slavery = new KwikTable(kwik, 'Slavery');
+// await CreateTable('Slavery').then(() => {
+//   const log = logger({ name: 'DB Manager' });
+//   log.info('Made new Table');
+// });
+// const slavery = new KwikTable(kwik, 'Slavery');
 
 createCommand({
   name: 'userinfo',
@@ -51,13 +51,13 @@ createCommand({
     const resolveduser = interaction.data?.options[0].value?.toString()!;
     console.log(resolveduser);
 
-    if ((await dbHasValue(user.toString(), slavery)) === false) {
-      await setdbValue(user.toString(), slavery, user);
-    }
+    // if ((await dbHasValue(user.toString(), slavery)) === false) {
+    //   await setdbValue(user.toString(), slavery, user);
+    // }
 
-    await Bot.helpers.editMember(guildid, resolveduser, {
-      communicationDisabledUntil: Date.now() + 600000
-    });
+    // await Bot.helpers.editMember(guildid, resolveduser, {
+    //   communicationDisabledUntil: Date.now() + 600000
+    // });
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,

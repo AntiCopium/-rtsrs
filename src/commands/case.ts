@@ -37,7 +37,9 @@ createCommand({
     const embed = new Embeds()
       .setTitle(`case ${x}`)
       .setColor(rdomcolor())
-      .setDescription(`**If you need further info contact the Moderator.** \n \n ${data}`)
+      .setDescription(
+        `**If you need further info contact the Moderator.** \n \n ${data}`
+      )
       .setFooter(`rtsrs • Case Review Of ${x} • ${day}`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
