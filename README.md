@@ -1,4 +1,3 @@
-# -rtsrs
 <h1 align="center">
   -rtsrs
   <br>
@@ -18,11 +17,9 @@
 ### Case
 <a href="#"><img src="https://user-images.githubusercontent.com/90981829/200134452-d9a7051f-536f-4dbc-8bcf-512a4304cf34.png" width="360"></a>
 
-Have deno
 ### Timeout
 <a href="#"><img src="https://user-images.githubusercontent.com/90981829/200134408-93ee97c7-7b7a-48c8-9bea-a288d40ffca7.png" width="360"></a>
 
-Put your stuff in .env 
 ```
 ### Violations
 <a href="#"><img src="https://user-images.githubusercontent.com/90981829/200134428-514b2f3e-32ff-4dc9-97af-c9c01b50ff5b.png" width="360"></a>
