@@ -1,4 +1,5 @@
 // deno-lint-ignore-file
+import { configs } from '../../configs.ts';
 import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
@@ -16,13 +17,14 @@ createCommand({
 
   execute: async (Bot, interaction) => {
     if (interaction?.member === undefined) return;
-    if (interaction.member.id.toString() === '727286619207630931') {
+    if (interaction.member.id.toString() === configs.owner) {
       await dbChangeData('currentCase', 0, mutecase);
       await dbChangeData('currentCase', 0, WarnCase);
       console.log(await getdbValue('currentCase', mutecase));
       console.log(await getdbValue('currentCase', WarnCase));
       log.warn('Resseted Mute case');
       log.warn('Resseted Warn case');
+      log.fatal('RESTART BOT');
     } else {
       return;
     }

@@ -5,6 +5,7 @@ import {
   InteractionResponseTypes,
 } from '../../deps.ts';
 import { createCommand } from './mod.ts';
+import { configs } from '../../configs.ts';
 
 createCommand({
   name: 'eval',
@@ -24,7 +25,7 @@ createCommand({
     if (interaction?.member === undefined) return;
     if (interaction?.data?.options === undefined) return;
     const stuff = interaction.data.options[0].value?.toString()!;
-    if (interaction.member.id.toString() === '727286619207630931') {
+    if (interaction.member.id.toString() === configs.owner) {
       try {
         eval(stuff);
       } catch (err) {
