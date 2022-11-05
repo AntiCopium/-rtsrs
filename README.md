@@ -45,7 +45,8 @@ deno task run
 4. Run the command `/resetcase` and restart the bot (do this on first startup).
 
 ## CMDS
->>> s
+Timeout
+  >   🛈  Timesout a user
 
 
 ### 🗿 ENJOY
