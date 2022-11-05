@@ -39,13 +39,14 @@ OWNER_ID=''
 ```
 
 
-3. Run the bot with
+3. Run the bot setup for first launch
+```ps
+$ ./setup.sh
+```
+
+4. To run the bot after first launch use
 ```ps
 deno task run
 ```
-
-4. When running you will encouter an error; in the db folder make these new folders: `Violations`, `MuteCase`, `WarnCase`, `WarnViolations`
-
-5. Run this command in Discord `/resetcase` (only for first launch).
 
 ### 🗿 ENJOY
