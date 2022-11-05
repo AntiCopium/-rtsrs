@@ -15,3 +15,5 @@ After u put that info run the bot using deno task run
 then run the command /resetcase after u run it restart the bot.
 
 🗿ENJOY
+
+Built with Discordeno
