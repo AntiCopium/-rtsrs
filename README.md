@@ -42,7 +42,9 @@ OWNER_ID=''
 deno task run
 ```
 
-4. Run the command `/resetcase` and restart the bot (do this on first startup).
+4. You will encounter an error Make folders in db folder called `MuteCase`, `Violations`, `WarnCase`, `WarnViolations`.
+
+5. Run the command `/resetcase` and restart the bot (do this on first startup)
 
 ## CMDS
 #### Timeout
