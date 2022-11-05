@@ -7,6 +7,7 @@ import { dbChangeData, getdbValue } from '../database/mod.ts';
 import { log } from '../utils/logger.ts';
 import { createCommand } from './mod.ts';
 import { mutecase } from './timeout.ts';
+import { WarnCase } from './warn.ts';
 createCommand({
   name: 'resetcase',
   description: 'resetcase Owner NEEDS TO RESTART BOT',
@@ -17,8 +18,11 @@ createCommand({
     if (interaction?.member === undefined) return;
     if (interaction.member.id.toString() === '727286619207630931') {
       await dbChangeData('currentCase', 0, mutecase);
+      await dbChangeData('currentCase', 0, WarnCase);
       console.log(await getdbValue('currentCase', mutecase));
+      console.log(await getdbValue('currentCase', WarnCase));
       log.warn('Resseted Mute case');
+      log.warn('Resseted Warn case');
     } else {
       return;
     }

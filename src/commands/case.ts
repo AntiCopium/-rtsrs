@@ -10,6 +10,7 @@ import { dbHasValue, getdbValue } from '../database/mod.ts';
 import { rdomcolor } from '../utils/colors.ts';
 import { createCommand } from './mod.ts';
 import { mutecase } from './timeout.ts';
+import { WarnCase } from './warn.ts';
 createCommand({
   name: 'case',
   description: 'reviews a timeout case',
@@ -21,26 +22,63 @@ createCommand({
       description: 'Case number',
       required: true,
     },
+    {
+      type: ApplicationCommandOptionTypes.String,
+      name: 'table',
+      description: 'What Tables to Search from',
+      required: true,
+      choices: [
+        {
+          name: 'WarnViolations',
+          value: 'WarnViolations',
+        },
+        {
+          name: 'TimeoutViolations',
+          value: 'TimeoutViolations',
+        },
+      ],
+    },
   ],
   execute: async (Bot, interaction) => {
     if (interaction?.data?.options === undefined) return;
+    let embed = new Embeds();
+    const number = interaction.data.options[0].value!;
+    const table = interaction.data.options[1].value!;
+    console.log(table);
 
-    const x = interaction.data.options[0].value!;
+    if (table === 'TimeoutViolations') {
+      if ((await dbHasValue(number.toString(), mutecase)) === false) {
+        return;
+      }
 
-    if ((await dbHasValue(x.toString(), mutecase)) === false) {
-      return;
+      let data = await getdbValue(number.toString(), mutecase);
+
+      const day = format(new Date(), 'HH:mm');
+      embed = new Embeds()
+        .setTitle(`case ${number}`)
+        .setColor(rdomcolor())
+        .setDescription(
+          `**If you need further info contact the Moderator.** \n \n ${data}`
+        )
+        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
+    }
+    if (table === 'WarnViolations') {
+      if ((await dbHasValue(number.toString(), WarnCase)) === false) {
+        return;
+      }
+
+      let data = await getdbValue(number.toString(), WarnCase);
+
+      const day = format(new Date(), 'HH:mm');
+      embed = new Embeds()
+        .setTitle(`case ${number}`)
+        .setColor(rdomcolor())
+        .setDescription(
+          `**If you need further info contact the Moderator.** \n \n ${data}`
+        )
+        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
     }
 
-    let data = await getdbValue(x.toString(), mutecase);
-
-    const day = format(new Date(), 'HH:mm');
-    const embed = new Embeds()
-      .setTitle(`case ${x}`)
-      .setColor(rdomcolor())
-      .setDescription(
-        `**If you need further info contact the Moderator.** \n \n ${data}`
-      )
-      .setFooter(`rtsrs • Case Review Of ${x} • ${day}`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,

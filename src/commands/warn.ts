@@ -18,41 +18,40 @@ import {
 } from '../database/mod.ts';
 import { rdomcolor } from '../utils/colors.ts';
 import { logger } from '../utils/logger.ts';
-import { minToMilli } from '../utils/timeconvert.ts';
 import { createCommand, day } from './mod.ts';
 
-await CreateTable('MuteCase').then(() => {
+await CreateTable('WarnCase').then(() => {
   const log = logger({ name: 'DB Manager' });
   log.info('Made new Table');
 });
-export const mutecase = new KwikTable(kwik, 'MuteCase');
+export const WarnCase = new KwikTable(kwik, 'WarnCase');
 
-await CreateTable(`Violations`).then(() => {
+await CreateTable(`WarnViolations`).then(() => {
   const log = logger({ name: 'DB Manager' });
   log.info('Made new Table');
 });
-export const Violations = new KwikTable(kwik, 'Violations');
+export const WarnViolations = new KwikTable(kwik, 'WarnViolations');
 
-export let currentcase = await getdbValue('currentCASE', mutecase);
-await setdbValue('currentCASE', mutecase, currentcase);
+export let currentcase = await getdbValue('currentCASE', WarnCase);
+await setdbValue('currentCASE', WarnCase, currentcase);
 export async function addCase() {
   if (typeof currentcase === 'number') {
     currentcase++;
   }
-  await dbChangeData('currentCASE', currentcase, mutecase);
+  await dbChangeData('currentCASE', currentcase, WarnCase);
 }
 
-console.log(await getdbValue('currentCASE', mutecase));
+console.log(await getdbValue('currentCASE', WarnCase));
 
 createCommand({
-  name: 'timeout',
-  description: 'mutes a user',
+  name: 'warn',
+  description: 'warns a user',
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
       name: 'level',
-      description: 'level of timeout',
+      description: 'level of warn',
       required: true,
       choices: [
         {
@@ -81,60 +80,53 @@ createCommand({
       description: 'A user',
       required: true,
     },
-    {
-      type: ApplicationCommandOptionTypes.Number,
-      name: 'mintime',
-      description: 'A time limit in min',
-      required: true,
-    },
   ],
-
   execute: async (Bot, interaction) => {
+    /* CHECKS */
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
-      validatePermissions(interaction.member?.permissions!, ['ADMINISTRATOR']);
+      validatePermissions(interaction.member?.permissions!, [
+        'MANAGE_MESSAGES',
+      ]);
     if (hasPerm === false) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048') return;
+    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+      return;
+    /* INFORMATION NEEDED */
     const reason = interaction.data?.options[1].value!;
-    const guildID = interaction.guildId!;
-    const moderator = interaction.user.id!;
-    const userToMute = interaction.data?.options[2].value?.toString()!;
-    const timeinMin = interaction.data?.options[3].value!;
+    const userToWarn = interaction.data?.options[2].value!;
+    // const userToWarnUsername =
     const level = interaction.data.options[0].value!;
+    const moderator = interaction.user.id!;
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
+    /* DB CASE SYSTEM */
     await addCase();
     if (typeof currentcase === 'number') {
-      if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
-        let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
-        await setdbValue(currentcase.toString(), mutecase, data);
+      if ((await dbHasValue(currentcase.toString(), WarnCase)) === false) {
+        let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
+        await setdbValue(currentcase.toString(), WarnCase, data);
       }
     }
 
-    if ((await dbHasValue(`${userToMute}`, Violations)) === false) {
-      await setdbValue(`${userToMute}`, Violations, currentcase);
+    if ((await dbHasValue(`${userToWarn}`, WarnViolations)) === false) {
+      await setdbValue(`${userToWarn}`, WarnViolations, currentcase);
     } else {
-      const olddata: string = await getdbValue(`${userToMute}`, Violations);
-      const newdata: string = olddata.toString() + "  |  " + currentcase.toString();
-      await dbChangeData(`${userToMute}`,newdata, Violations)
+      const olddata: string = await getdbValue(`${userToWarn}`, WarnViolations);
+      const newdata: string =
+        olddata.toString() + '  |  ' + currentcase.toString();
+      await dbChangeData(`${userToWarn}`, newdata, WarnViolations);
     }
+
     const embed = new Embeds()
-      .setTitle('TIMEOUT SUCCSESS 🤐')
+      .setTitle(`WARNED  🚨`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Timeout Case ${currentcase} • ${day}`)
+      .setFooter(`rtsrs • Warn Case ${currentcase} • ${day}`)
       .setDescription(
-        `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`
+        `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}`
       );
-    try {
-      await Bot.helpers.editMember(guildID, userToMute, {
-        communicationDisabledUntil: Date.now() + minToMilli(timeinMin),
-      });
-    } catch (err) {
-      return;
-    }
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,

@@ -10,5 +10,6 @@ import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/resetCase.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/timeout.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/userinfo.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/violations.ts#0";
+import "file:///C:/Users/Owner/Desktop/!rtsrs/src/commands/warn.ts#0";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/events/interactionCreate.ts#1";
 import "file:///C:/Users/Owner/Desktop/!rtsrs/src/events/ready.ts#1";
