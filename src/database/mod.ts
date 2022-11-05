@@ -1,6 +1,6 @@
+import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import { Kwik, KwikDecode, KwikEncode } from '../../deps.ts';
 import { logger } from '../utils/logger.ts';
-import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 
 const log = logger({ name: 'DB Manager' });
 
@@ -51,7 +51,7 @@ export async function CreateTable(table: string) {
     await new KwikTable(kwik, table);
   } catch (e) {
     const log = logger({ name: 'DB Manager' });
-    log.warn(e)
+    log.warn(e);
   }
 }
 
@@ -83,13 +83,15 @@ export async function setdbValue(
 //   log.info('Made new Table')
 // });const Hus = new KwikTable(kwik, 'Hus')
 
-
 /**
  * Gets the data of a db value
  * @param id
  * @param table
  */
-export async function getdbValue(id: string, table: KwikTable<any>): Promise<unknown> {
+export async function getdbValue(
+  id: string,
+  table: KwikTable<any>
+): Promise<any> {
   const log = logger({ name: 'DB Manager' });
   log.info(`Attempting to get ${id}`);
   if (id === undefined) {
@@ -105,16 +107,19 @@ export async function getdbValue(id: string, table: KwikTable<any>): Promise<unk
  * @param id
  * @param table
  */
-export async function dbHasValue(id: string, table: KwikTable<any>): Promise<unknown> {
+export async function dbHasValue(
+  id: string,
+  table: KwikTable<any>
+): Promise<unknown> {
   const log = logger({ name: 'DB Manager' });
   if (id === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
-  if (await table.has(id) === true) {
-    log.info(`${id} => TRUE`)
+  if ((await table.has(id)) === true) {
+    log.info(`${id} => TRUE`);
   } else {
-    log.info(`${id} => FALSE`)
+    log.info(`${id} => FALSE`);
   }
   return await table.has(id);
 }
@@ -141,7 +146,11 @@ export async function dbDel(id: string, table: KwikTable<any>) {
  * @param data
  * @param table
  */
-export async function dbChangeData(id: string, data: any, table: KwikTable<any>) {
+export async function dbChangeData(
+  id: string,
+  data: any,
+  table: KwikTable<any>
+) {
   const log = logger({ name: 'DB Manager' });
 
   if (id && data === undefined) return;
@@ -149,6 +158,24 @@ export async function dbChangeData(id: string, data: any, table: KwikTable<any>)
   log.info(`Changing ${id} ...`);
   await dbDel(id, table);
   await setdbValue(id, table, data);
+}
+/**
+ * updates db data id
+ * @param id
+ * @param data
+ * @param table
+ */
+export async function updatedbData(
+  id: string,
+  data: any,
+  table: KwikTable<any>
+): Promise<void> {
+  const log = logger({ name: 'DB Manager' });
+  if (id && data && table === undefined) return;
+  log.info(`Updating ${id} ... with ${data}`);
+  await table.update(id, data);
+  log.info(`Updated ${id}`);
+  console.log(await getdbValue(id, table))
 }
 
 log.info('Database Initialized!');
