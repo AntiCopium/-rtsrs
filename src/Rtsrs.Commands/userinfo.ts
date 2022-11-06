@@ -1,15 +1,11 @@
 // deno-lint-ignore-file
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
-  BigString,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { CreateTable, dbHasValue, kwik, setdbValue } from '../database/mod.ts';
-import { rdomcolor } from '../utils/colors.ts';
-import { logger } from '../utils/logger.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { createCommand, day } from './mod.ts';
 
 // await CreateTable('Slavery').then(() => {

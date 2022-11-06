@@ -6,8 +6,8 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { dbHasValue, getdbValue } from '../database/mod.ts';
-import { rdomcolor } from '../utils/colors.ts';
+import { dbHasValue, getdbValue } from '../Rtsrs.Database/mod.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { createCommand } from './mod.ts';
 import { mutecase } from './timeout.ts';
 import { WarnCase } from './warn.ts';

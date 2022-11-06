@@ -10,7 +10,7 @@ import {
   enablePermissionsPlugin,
   GatewayIntents,
 } from './deps.ts';
-import { Command } from './src/types/commands.ts';
+import { Command } from './src/Rtsrs.Types/commands.ts';
 
 // MAKE THE BASIC BOT OBJECT
 const bot = createBot({

@@ -1,20 +1,20 @@
-import { startBot } from "./deps.ts";
-import log from "./src/utils/logger.ts";
-import { fileLoader, importDirectory } from "./src/utils/loader.ts";
-import { updateApplicationCommands } from "./src/utils/updateCommands.ts";
+import { startBot } from './deps.ts';
+import { fileLoader, importDirectory } from './src/Rtsrs.Utils/loader.ts';
+import log from './src/Rtsrs.Utils/logger.ts';
+import { updateApplicationCommands } from './src/Rtsrs.Utils/updateCommands.ts';
 // setup db
-import "./src/database/mod.ts";
-import { Bot } from "./rtsrs.ts";
+import { Bot } from './rtsrs.ts';
+import './src/Rtsrs.Database/mod.ts';
 
-log.info("Starting bot...");
+log.info('Starting bot...');
 
 // Forces deno to read all the files which will fill the commands/inhibitors cache etc.
 await Promise.all(
   [
-    "./src/commands",
-    "./src/events",
-    // "./src/tasks",
-  ].map((path) => importDirectory(Deno.realPathSync(path))),
+    './src/Rtsrs.Commands',
+    './src/Rtsrs.Events',
+    // "./src/Rtsrs.tasks",
+  ].map((path) => importDirectory(Deno.realPathSync(path)))
 );
 await fileLoader();
 

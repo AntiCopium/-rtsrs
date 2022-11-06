@@ -1,26 +1,40 @@
 // deno-lint-ignore-file
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
+import { ApplicationCommandOptionTypes } from 'https://deno.land/x/discordeno@17.0.0/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
+import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
 import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { rdomcolor } from '../utils/colors.ts';
-import { snowflakeToTimestamp } from '../utils/helpers.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { createCommand } from './mod.ts';
 
 createCommand({
-  name: 'ping',
-  description: 'notifys rtsrs erves to send ping request.',
+  name: 'randomnumber',
+  description: 'submits a random number from (range)',
   type: ApplicationCommandTypes.ChatInput,
+  options: [
+    {
+      type: ApplicationCommandOptionTypes.Integer,
+      name: 'range',
+      description: 'a range to go 1 to (range)',
+      required: true,
+    },
+  ],
   execute: async (Bot, interaction) => {
-    // const hasPerm = Boolean(interaction?.member?.permissions) && validatePermissions(interaction.member?.permissions, ["ADMINISTRATOR"]);
-    const ping = Date.now() - snowflakeToTimestamp(interaction.id);
+    if (interaction.data?.options === undefined) {
+      return;
+    }
+    const int = interaction.data?.options[0].value;
     const day = format(new Date(), 'HH:mm');
+    const number = new mod.Random();
+    const n = number.int(1, int);
+
     const embed = new Embeds()
-      .setTitle('rtsrs current ping')
+      .setTitle('rtsrs random number success')
+      .setDescription(`**Generated number**: ${n}\n\nRange: ${int}`)
       .setColor(rdomcolor())
-      .setDescription(`${ping} (ms)`)
       .setFooter(`rtsrs bot ${day}`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
@@ -28,7 +42,6 @@ createCommand({
       {
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          flags: 64,
           embeds: embed,
         },
       }

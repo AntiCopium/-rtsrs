@@ -15,9 +15,9 @@ import {
   getdbValue,
   kwik,
   setdbValue,
-} from '../database/mod.ts';
-import { rdomcolor } from '../utils/colors.ts';
-import { logger } from '../utils/logger.ts';
+} from '../Rtsrs.Database/mod.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { logger } from '../Rtsrs.Utils/logger.ts';
 import { createCommand, day } from './mod.ts';
 
 await CreateTable('WarnCase').then(() => {

@@ -1,6 +1,6 @@
 import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import { Kwik, KwikDecode, KwikEncode } from '../../deps.ts';
-import { logger } from '../utils/logger.ts';
+import { logger } from '../Rtsrs.Utils/logger.ts';
 
 const log = logger({ name: 'DB Manager' });
 

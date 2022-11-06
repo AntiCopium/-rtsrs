@@ -1,5 +1,5 @@
 import { Bot } from '../../rtsrs.ts';
-import log from '../utils/logger.ts';
+import log from '../Rtsrs.Utils/logger.ts';
 
 Bot.events.ready = (_, payload) => {
   log.info(

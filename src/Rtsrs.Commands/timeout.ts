@@ -15,10 +15,10 @@ import {
   getdbValue,
   kwik,
   setdbValue,
-} from '../database/mod.ts';
-import { rdomcolor } from '../utils/colors.ts';
-import { logger } from '../utils/logger.ts';
-import { minToMilli } from '../utils/timeconvert.ts';
+} from '../Rtsrs.Database/mod.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { logger } from '../Rtsrs.Utils/logger.ts';
+import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import { createCommand, day } from './mod.ts';
 
 await CreateTable('MuteCase').then(() => {

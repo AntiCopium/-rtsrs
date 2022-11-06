@@ -7,8 +7,8 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { dbDel, dbHasValue } from '../database/mod.ts';
-import { rdomcolor } from '../utils/colors.ts';
+import { dbDel, dbHasValue } from '../Rtsrs.Database/mod.ts';
+import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { createCommand } from './mod.ts';
 import { Violations } from './timeout.ts';
 import { WarnViolations } from './warn.ts';

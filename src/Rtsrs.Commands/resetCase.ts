@@ -4,8 +4,8 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { dbChangeData, getdbValue } from '../database/mod.ts';
-import { log } from '../utils/logger.ts';
+import { dbChangeData, getdbValue } from '../Rtsrs.Database/mod.ts';
+import { log } from '../Rtsrs.Utils/logger.ts';
 import { createCommand } from './mod.ts';
 import { mutecase } from './timeout.ts';
 import { WarnCase } from './warn.ts';

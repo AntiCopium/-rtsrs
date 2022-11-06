@@ -1,5 +1,5 @@
 import { Bot } from '../../rtsrs.ts';
-import { Command } from '../types/commands.ts';
+import { Command } from '../Rtsrs.Types/commands.ts';
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 
 export function createCommand(command: Command) {

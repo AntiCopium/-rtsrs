@@ -1,6 +1,6 @@
 import { InteractionTypes } from '../../deps.ts';
 import { Bot } from '../../rtsrs.ts';
-import log from '../utils/logger.ts';
+import log from '../Rtsrs.Utils/logger.ts';
 
 Bot.events.interactionCreate = (_, interaction) => {
   if (!interaction.data) return;
