@@ -1,4 +1,4 @@
-export function minToMilli(time: any): number {
+export function minToMilli(time: number): number {
   return time * 60000;
 }
 

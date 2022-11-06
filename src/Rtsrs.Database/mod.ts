@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-explicit-any
 import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import { Kwik, KwikDecode, KwikEncode } from '../../deps.ts';
 import { logger } from '../Rtsrs.Utils/logger.ts';
@@ -175,7 +176,7 @@ export async function updatedbData(
   log.info(`Updating ${id} ... with ${data}`);
   await table.update(id, data);
   log.info(`Updated ${id}`);
-  console.log(await getdbValue(id, table))
+  console.log(await getdbValue(id, table));
 }
 
 log.info('Database Initialized!');
