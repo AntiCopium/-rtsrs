@@ -111,15 +111,24 @@ export async function addTimeoutViolation(user: any) {
 }
 
 export async function CheckWarnCurrentCase() {
-  if (typeof WarnCurrentCase !== 'number') {
+  if ((await getdbValue('WarnCurrentCase', WarnCase)) === '[object Object]') {
     await dbChangeData('WarnCurrentCase', 0, WarnCase);
     console.log('Changed WarnCurrentCase to 0');
+  }
+}
+export async function CheckTimeoutCurrentCase() {
+  if (
+    (await getdbValue('TimeoutCurrentCase', TimeoutCase)) === '[object Object]'
+  ) {
+    await dbChangeData('TimeoutCurrentCase', 0, TimeoutCase);
+    console.log('Changed TimeoutCurrentCase to 0');
   }
 }
 
 export async function initCase() {
   await CreateCases();
   await CheckWarnCurrentCase();
+  await CheckTimeoutCurrentCase();
 }
 
 export async function initViolations() {

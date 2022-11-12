@@ -12,6 +12,7 @@ import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import {
   addTimeoutCase,
   addTimeoutViolation,
+  CheckTimeoutCurrentCase,
   TimeoutCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
@@ -80,7 +81,9 @@ createCommand({
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
     let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
+    await CheckTimeoutCurrentCase();
     await addTimeoutCase(data);
+
 
     await addTimeoutViolation(userToMute);
     const embed = new Embeds()
