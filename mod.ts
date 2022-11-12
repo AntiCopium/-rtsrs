@@ -5,7 +5,7 @@ import { updateApplicationCommands } from './src/Rtsrs.Utils/updateCommands.ts';
 // setup db
 import { Bot } from './rtsrs.ts';
 import './src/Rtsrs.Database/mod.ts';
-import { initCase } from './src/Rtsrs.Violation/Case.ts';
+import { initCase } from './src/Rtsrs.Violation/ViolationManager.ts';
 
 log.info('Starting bot...');
 

@@ -9,8 +9,8 @@ import {
 import { dbHasValue, getdbValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { createCommand } from './mod.ts';
-import { mutecase } from './timeout.ts';
-import { WarnCase } from './warn.ts';
+import { TimeoutCase } from '../Rtsrs.Violation/ViolationManager.ts';
+import { WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
 createCommand({
   name: 'case',
   description: 'reviews a timeout case',
@@ -47,11 +47,11 @@ createCommand({
     console.log(table);
 
     if (table === 'TimeoutViolations') {
-      if ((await dbHasValue(number.toString(), mutecase)) === false) {
+      if ((await dbHasValue(number.toString(), TimeoutCase)) === false) {
         return;
       }
 
-      let data = await getdbValue(number.toString(), mutecase);
+      let data = await getdbValue(number.toString(), TimeoutCase);
 
       const day = format(new Date(), 'HH:mm');
       embed = new Embeds()

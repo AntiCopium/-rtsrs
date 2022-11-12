@@ -19,30 +19,14 @@ import {
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { logger } from '../Rtsrs.Utils/logger.ts';
 import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
+import { addTimeoutCase, TimeoutCase, TimeoutCurrentCase } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
-
-await CreateTable('MuteCase').then(() => {
-  const log = logger({ name: 'DB Manager' });
-  log.info('Made new Table');
-});
-export const mutecase = new KwikTable(kwik, 'MuteCase');
 
 await CreateTable(`Violations`).then(() => {
   const log = logger({ name: 'DB Manager' });
   log.info('Made new Table');
 });
 export const Violations = new KwikTable(kwik, 'Violations');
-
-export let currentcase = await getdbValue('currentCASE', mutecase);
-await setdbValue('currentCASE', mutecase, currentcase);
-export async function addCase() {
-  if (typeof currentcase === 'number') {
-    currentcase++;
-  }
-  await dbChangeData('currentCASE', currentcase, mutecase);
-}
-
-console.log(await getdbValue('currentCASE', mutecase));
 
 createCommand({
   name: 'timeout',
@@ -107,26 +91,21 @@ createCommand({
     const level = interaction.data.options[0].value!;
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-    await addCase();
-    if (typeof currentcase === 'number') {
-      if ((await dbHasValue(currentcase.toString(), mutecase)) === false) {
-        let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
-        await setdbValue(currentcase.toString(), mutecase, data);
-      }
-    }
+    let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
+    await addTimeoutCase(data);
 
-    if ((await dbHasValue(`${userToMute}`, Violations)) === false) {
-      await setdbValue(`${userToMute}`, Violations, currentcase);
-    } else {
-      const olddata: string = await getdbValue(`${userToMute}`, Violations);
-      const newdata: string =
-        olddata.toString() + '  |  ' + currentcase.toString();
-      await dbChangeData(`${userToMute}`, newdata, Violations);
-    }
+    // if ((await dbHasValue(`${userToMute}`, Violations)) === false) {
+    //   await setdbValue(`${userToMute}`, Violations, currentcase);
+    // } else {
+    //   const olddata: string = await getdbValue(`${userToMute}`, Violations);
+    //   const newdata: string =
+    //     olddata.toString() + '  |  ' + currentcase.toString();
+    //   await dbChangeData(`${userToMute}`, newdata, Violations);
+    // }
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Timeout Case ${currentcase} • ${day}`)
+      .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase} • ${day}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`
       );

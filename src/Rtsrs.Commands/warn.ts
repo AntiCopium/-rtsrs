@@ -8,45 +8,21 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import {
-  CreateTable,
-  dbChangeData,
-  dbHasValue,
-  getdbValue,
-  kwik,
-  setdbValue,
-} from '../Rtsrs.Database/mod.ts';
+import { CreateTable, kwik } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { logger } from '../Rtsrs.Utils/logger.ts';
 import {
-  addDataToCurrentWarnCase,
   addWarnCase,
   CheckWarnCurrentCase,
-} from '../Rtsrs.Violation/Case.ts';
+WarnCurrentCase,
+} from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
-
-await CreateTable('WarnCase').then(() => {
-  const log = logger({ name: 'DB Manager' });
-  log.info('Made new Table');
-});
-export const WarnCase = new KwikTable(kwik, 'WarnCase');
 
 await CreateTable(`WarnViolations`).then(() => {
   const log = logger({ name: 'DB Manager' });
   log.info('Made new Table');
 });
 export const WarnViolations = new KwikTable(kwik, 'WarnViolations');
-
-export let currentcase = await getdbValue('currentCASE', WarnCase);
-await setdbValue('currentCASE', WarnCase, currentcase);
-export async function addCase() {
-  if (typeof currentcase === 'number') {
-    currentcase++;
-  }
-  await dbChangeData('currentCASE', currentcase, WarnCase);
-}
-
-console.log(await getdbValue('currentCASE', WarnCase));
 
 createCommand({
   name: 'warn',
@@ -115,23 +91,23 @@ createCommand({
     //     await setdbValue(currentcase.toString(), WarnCase, data);
     //   }
     // }
+    let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
     await CheckWarnCurrentCase();
-    await addWarnCase();
-    await addDataToCurrentWarnCase('s');
+    await addWarnCase(data);
 
-    if ((await dbHasValue(`${userToWarn}`, WarnViolations)) === false) {
-      await setdbValue(`${userToWarn}`, WarnViolations, currentcase);
-    } else {
-      const olddata: string = await getdbValue(`${userToWarn}`, WarnViolations);
-      const newdata: string =
-        olddata.toString() + '  |  ' + currentcase.toString();
-      await dbChangeData(`${userToWarn}`, newdata, WarnViolations);
-    }
+    // if ((await dbHasValue(`${userToWarn}`, WarnViolations)) === false) {
+    //   await setdbValue(`${userToWarn}`, WarnViolations, currentcase);
+    // } else {
+    //   const olddata: string = await getdbValue(`${userToWarn}`, WarnViolations);
+    //   const newdata: string =
+    //     olddata.toString() + '  |  ' + currentcase.toString();
+    //   await dbChangeData(`${userToWarn}`, newdata, WarnViolations);
+    // }
 
     const embed = new Embeds()
       .setTitle(`WARNED  🚨`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Warn Case ${currentcase} • ${day}`)
+      .setFooter(`rtsrs • Warn Case ${WarnCurrentCase} • ${day}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}`
       );

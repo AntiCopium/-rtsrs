@@ -18,7 +18,7 @@ import {
   dbHasValue,
   getdbValue,
   kwik,
-  setdbValue
+  setdbValue,
 } from '../Rtsrs.Database/mod.ts';
 import { log } from '../Rtsrs.Utils/logger.ts';
 
@@ -44,37 +44,43 @@ async function CreateCases() {
 export const WarnCase = new KwikTable(kwik, 'WarnCase');
 export const TimeoutCase = new KwikTable(kwik, 'TimeoutCase');
 export let WarnCurrentCase = await getdbValue('WarnCurrentCase', WarnCase);
-export let TimeoutCurrentCase: number;
+export let TimeoutCurrentCase = await getdbValue(
+  'TimeoutCurrentCase',
+  TimeoutCase
+);
 
-export async function addWarnCase() {
-  if (typeof WarnCurrentCase  === 'number') {
+export async function addWarnCase(data: string) {
+  if (typeof WarnCurrentCase === 'number') {
     WarnCurrentCase++;
+    if ((await dbHasValue(WarnCurrentCase.toString(), WarnCase)) === false) {
+      await setdbValue(WarnCurrentCase.toString(), WarnCase, data);
+    }
   }
+
   await dbChangeData('WarnCurrentCase', WarnCurrentCase, WarnCase);
-  console.log(WarnCurrentCase);
+  console.log((await getdbValue('WarnCurrentCase', WarnCase)) + ' > Warn Case');
 }
 
-
-export async function addTimeoutCase() {
-  if (
-    typeof (await getdbValue('TimeoutCurrentCase', TimeoutCase)) != 'number'
-  ) {
-    setdbValue('TimeoutCurrentCase', TimeoutCase, 0);
-  } else {
+export async function addTimeoutCase(data: string) {
+  if (typeof TimeoutCurrentCase === 'number') {
     TimeoutCurrentCase++;
+    if (
+      (await dbHasValue(TimeoutCurrentCase.toString(), TimeoutCase)) === false
+    ) {
+      await setdbValue(TimeoutCurrentCase.toString(), TimeoutCase, data);
+    }
   }
 
-  await dbChangeData('TimeoutCurrentCase', WarnCurrentCase, TimeoutCase);
+  await dbChangeData('TimeoutCurrentCase', TimeoutCurrentCase, TimeoutCase);
+  console.log(
+    (await getdbValue('TimeoutCurrentCase', TimeoutCase)) + ' > Timeout Case'
+  );
 }
 
 export async function CheckWarnCurrentCase() {
-  if (typeof (await getdbValue('WarnCurrentCase', WarnCase)) === 'number') {
-    if ((await getdbValue('WarnCurrentCase', WarnCase)) < 0) {
-      await dbChangeData('WarnCurrentCase', 0, WarnCase);
-      console.log('CheckWarnCurrentCase checked... (Set to Zero)');
-    } else {
-      await setdbValue('WarnCurrentCase', WarnCase, 0);
-    }
+  if (typeof WarnCurrentCase !== 'number') {
+    await dbChangeData('WarnCurrentCase', 0, WarnCase);
+    console.log('Changed WarnCurrentCase to 0');
   }
 }
 
