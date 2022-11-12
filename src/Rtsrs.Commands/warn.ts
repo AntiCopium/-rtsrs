@@ -18,6 +18,11 @@ import {
 } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { logger } from '../Rtsrs.Utils/logger.ts';
+import {
+  addDataToCurrentWarnCase,
+  addWarnCase,
+  CheckWarnCurrentCase,
+} from '../Rtsrs.Violation/Case.ts';
 import { createCommand, day } from './mod.ts';
 
 await CreateTable('WarnCase').then(() => {
@@ -102,14 +107,17 @@ createCommand({
     const moderator = interaction.user.id!;
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-    /* DB CASE SYSTEM */
-    await addCase();
-    if (typeof currentcase === 'number') {
-      if ((await dbHasValue(currentcase.toString(), WarnCase)) === false) {
-        let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
-        await setdbValue(currentcase.toString(), WarnCase, data);
-      }
-    }
+    // /* DB CASE SYSTEM */
+    // await addCase();
+    // if (typeof currentcase === 'number') {
+    //   if ((await dbHasValue(currentcase.toString(), WarnCase)) === false) {
+    //     let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
+    //     await setdbValue(currentcase.toString(), WarnCase, data);
+    //   }
+    // }
+    await CheckWarnCurrentCase();
+    await addWarnCase();
+    await addDataToCurrentWarnCase('s');
 
     if ((await dbHasValue(`${userToWarn}`, WarnViolations)) === false) {
       await setdbValue(`${userToWarn}`, WarnViolations, currentcase);

@@ -97,7 +97,8 @@ createCommand({
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048') return;
+    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+      return;
     const reason = interaction.data?.options[1].value!;
     const guildID = interaction.guildId!;
     const moderator = interaction.user.id!;
@@ -118,8 +119,9 @@ createCommand({
       await setdbValue(`${userToMute}`, Violations, currentcase);
     } else {
       const olddata: string = await getdbValue(`${userToMute}`, Violations);
-      const newdata: string = olddata.toString() + "  |  " + currentcase.toString();
-      await dbChangeData(`${userToMute}`,newdata, Violations)
+      const newdata: string =
+        olddata.toString() + '  |  ' + currentcase.toString();
+      await dbChangeData(`${userToMute}`, newdata, Violations);
     }
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')

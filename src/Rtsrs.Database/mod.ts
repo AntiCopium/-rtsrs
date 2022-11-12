@@ -4,6 +4,7 @@ import { Kwik, KwikDecode, KwikEncode } from '../../deps.ts';
 import { logger } from '../Rtsrs.Utils/logger.ts';
 
 const log = logger({ name: 'DB Manager' });
+// const encoder = new TextEncoder();
 
 log.info('Initializing Database');
 
@@ -42,7 +43,7 @@ await kwik.init();
 // console.log(test);
 
 /**
- * Creates a table (DONT USE ON EXEUCAION)
+ * Creates a table (DON'T USE ON EXECUTE)
  * @param table
  * @constructor
  */
@@ -52,7 +53,8 @@ export async function CreateTable(table: string) {
     await new KwikTable(kwik, table);
   } catch (e) {
     const log = logger({ name: 'DB Manager' });
-    log.warn(e);
+    await Deno.writeTextFile('Rtsrs.DB.txt', e + '\n \n ', { append: true });
+    log.warn('Log Created...');
   }
 }
 
@@ -70,7 +72,7 @@ export async function setdbValue(
 ): Promise<void> {
   const log = logger({ name: 'DB Manager' });
   log.info(`Attempting to add ${id}, ${data} value.`);
-  if (id === undefined) {
+  if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
@@ -95,7 +97,7 @@ export async function getdbValue(
 ): Promise<any> {
   const log = logger({ name: 'DB Manager' });
   log.info(`Attempting to get ${id}`);
-  if (id === undefined) {
+  if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
@@ -111,9 +113,9 @@ export async function getdbValue(
 export async function dbHasValue(
   id: string,
   table: KwikTable<any>
-): Promise<unknown> {
+): Promise<any> {
   const log = logger({ name: 'DB Manager' });
-  if (id === undefined) {
+  if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
@@ -133,7 +135,7 @@ export async function dbHasValue(
 export async function dbDel(id: string, table: KwikTable<any>) {
   const log = logger({ name: 'DB Manager' });
   log.info(`Deleting ${id} ...`);
-  if (id === undefined) {
+  if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
@@ -154,7 +156,7 @@ export async function dbChangeData(
 ) {
   const log = logger({ name: 'DB Manager' });
 
-  if (id && data === undefined) return;
+  if (id && data && table === undefined) return;
 
   log.info(`Changing ${id} ...`);
   await dbDel(id, table);
