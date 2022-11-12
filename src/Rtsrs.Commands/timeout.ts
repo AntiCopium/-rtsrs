@@ -11,10 +11,11 @@ import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import {
   addCase,
-  addTimeoutViolation,
+  addViolation,
   CaseType,
   CheckTimeoutCurrentCase,
   TimeoutCurrentCase,
+  ViolationType,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
 
@@ -85,7 +86,7 @@ createCommand({
     await CheckTimeoutCurrentCase();
     await addCase(data, CaseType.TimeoutCase);
 
-    await addTimeoutViolation(userToMute);
+    await addViolation(userToMute, ViolationType.TimeoutViolation);
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
       .setColor(rdomcolor())

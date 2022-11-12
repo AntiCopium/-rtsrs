@@ -28,6 +28,10 @@ export enum CaseType {
   WarnCase,
   TimeoutCase,
 }
+export enum ViolationType {
+  WarnViolation,
+  TimeoutViolation,
+}
 async function CreateCases() {
   await CreateTable('WarnCase').then(() => {
     log.info('WarnCase table created...');
@@ -90,23 +94,24 @@ export async function addCase(data: string, table: CaseType) {
   }
 }
 
-export async function addWarnViolation(user: any) {
-  if ((await dbHasValue(`${user}`, WarnViolations)) === false) {
-    await setdbValue(`${user}`, WarnViolations, WarnCurrentCase);
-  } else {
-    let olddata: string = await getdbValue(`${user}`, WarnViolations);
-    let newdata: string = olddata + '  |  ' + WarnCurrentCase;
-    await dbChangeData(`${user}`, newdata, WarnViolations);
+export async function addViolation(user: any, table: ViolationType) {
+  if (table === ViolationType.WarnViolation) {
+    if ((await dbHasValue(`${user}`, WarnViolations)) === false) {
+      await setdbValue(`${user}`, WarnViolations, WarnCurrentCase);
+    } else {
+      let olddata: string = await getdbValue(`${user}`, WarnViolations);
+      let newdata: string = olddata + '  |  ' + WarnCurrentCase;
+      await dbChangeData(`${user}`, newdata, WarnViolations);
+    }
   }
-}
-
-export async function addTimeoutViolation(user: any) {
-  if ((await dbHasValue(`${user}`, TimeoutViolations)) === false) {
-    await setdbValue(`${user}`, TimeoutViolations, TimeoutCurrentCase);
-  } else {
-    let olddata: string = await getdbValue(`${user}`, TimeoutViolations);
-    let newdata: string = olddata + '  |  ' + TimeoutCurrentCase;
-    await dbChangeData(`${user}`, newdata, TimeoutViolations);
+  if (table === ViolationType.TimeoutViolation) {
+    if ((await dbHasValue(`${user}`, TimeoutViolations)) === false) {
+      await setdbValue(`${user}`, TimeoutViolations, TimeoutCurrentCase);
+    } else {
+      let olddata: string = await getdbValue(`${user}`, TimeoutViolations);
+      let newdata: string = olddata + '  |  ' + TimeoutCurrentCase;
+      await dbChangeData(`${user}`, newdata, TimeoutViolations);
+    }
   }
 }
 

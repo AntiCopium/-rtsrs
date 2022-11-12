@@ -10,9 +10,10 @@ import {
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import {
   addCase,
-  addWarnViolation,
+  addViolation,
   CaseType,
   CheckWarnCurrentCase,
+  ViolationType,
   WarnCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
@@ -79,7 +80,7 @@ createCommand({
     let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
     await CheckWarnCurrentCase();
     await addCase(data, CaseType.WarnCase);
-    await addWarnViolation(userToWarn);
+    await addViolation(userToWarn, ViolationType.WarnViolation);
 
     const embed = new Embeds()
       .setTitle(`WARNED  🚨`)
