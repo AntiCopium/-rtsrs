@@ -6,7 +6,7 @@ import {
 } from '../../deps.ts';
 import { dbChangeData, getdbValue } from '../Rtsrs.Database/mod.ts';
 import { log } from '../Rtsrs.Utils/logger.ts';
-import { TimeoutCase, WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
+import { KickCase, TimeoutCase, WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand } from './mod.ts';
 createCommand({
   name: 'resetcase',
@@ -19,6 +19,7 @@ createCommand({
     if (interaction.member.id.toString() === configs.owner) {
       await dbChangeData('WarnCurrentCase', 0, WarnCase);
       await dbChangeData('TimeoutCurrentCase', 0, TimeoutCase);
+      await dbChangeData('KickCurrentCase', 0, KickCase);
       console.log(await getdbValue('TimeoutCurrentCase', TimeoutCase));
       console.log(await getdbValue('WarnCurrentCase', WarnCase));
       log.warn('Resseted Mute case');

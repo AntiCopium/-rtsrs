@@ -27,10 +27,12 @@ import { log } from '../Rtsrs.Utils/logger.ts';
 export enum CaseType {
   WarnCase,
   TimeoutCase,
+  KickCase,
 }
 export enum ViolationType {
   WarnViolation,
   TimeoutViolation,
+  KickViolation,
 }
 async function CreateCases() {
   await CreateTable('WarnCase').then(() => {
@@ -38,6 +40,9 @@ async function CreateCases() {
   });
   await CreateTable('TimeoutCase').then(() => {
     log.info('TimeoutCase table created...');
+  });
+  await CreateTable('KickCase').then(() => {
+    log.info('KickCase table created...');
   });
 }
 
@@ -48,15 +53,21 @@ async function CreateViolations() {
   await CreateTable('TimeoutViolations').then(() => {
     log.info('TimeoutViolations table created...');
   });
+  await CreateTable('KickViolations').then(() => {
+    log.info('KickViolations table created...');
+  });
 }
-// CASE
+// INIT CASES
 export const WarnCase = new KwikTable(kwik, 'WarnCase');
 export const TimeoutCase = new KwikTable(kwik, 'TimeoutCase');
-// VIOLATIONS
+export const KickCase = new KwikTable(kwik, 'KickCase');
+// INIT VIOLATIONS
 export const WarnViolations = new KwikTable(kwik, 'WarnViolations');
 export const TimeoutViolations = new KwikTable(kwik, 'TimeoutViolations');
-
+export const KickViolations = new KwikTable(kwik, 'KickViolations');
+// CASE CURRENT CASE
 export let WarnCurrentCase = await getdbValue('WarnCurrentCase', WarnCase);
+export let KickCurrentCase = await getdbValue('KickCurrentCase', KickCase);
 export let TimeoutCurrentCase = await getdbValue(
   'TimeoutCurrentCase',
   TimeoutCase
@@ -92,6 +103,20 @@ export async function addCase(data: string, table: CaseType) {
       (await getdbValue('TimeoutCurrentCase', TimeoutCase)) + ' > Timeout Case'
     );
   }
+
+  if (table === CaseType.KickCase) {
+    if (typeof KickCurrentCase === 'number') {
+      KickCurrentCase++;
+      if ((await dbHasValue(KickCurrentCase.toString(), KickCase)) === false) {
+        await setdbValue(KickCurrentCase.toString(), KickCase, data);
+      }
+    }
+
+    await dbChangeData('KickCurrentCase', KickCurrentCase, KickCase);
+    console.log(
+      (await getdbValue('KickCurrentCase', KickCase)) + ' > Kick Case'
+    );
+  }
 }
 
 export async function addViolation(user: any, table: ViolationType) {
@@ -113,27 +138,44 @@ export async function addViolation(user: any, table: ViolationType) {
       await dbChangeData(`${user}`, newdata, TimeoutViolations);
     }
   }
-}
-
-export async function CheckWarnCurrentCase() {
-  if ((await getdbValue('WarnCurrentCase', WarnCase)) === '[object Object]') {
-    await dbChangeData('WarnCurrentCase', 0, WarnCase);
-    console.log('Changed WarnCurrentCase to 0');
+  if (table === ViolationType.KickViolation) {
+    if ((await dbHasValue(`${user}`, KickViolations)) === false) {
+      await setdbValue(`${user}`, KickViolations, KickCurrentCase);
+    } else {
+      let olddata: string = await getdbValue(`${user}`, KickViolations);
+      let newdata: string = olddata + '  |  ' + KickCurrentCase;
+      await dbChangeData(`${user}`, newdata, KickViolations);
+    }
   }
 }
-export async function CheckTimeoutCurrentCase() {
-  if (
-    (await getdbValue('TimeoutCurrentCase', TimeoutCase)) === '[object Object]'
-  ) {
-    await dbChangeData('TimeoutCurrentCase', 0, TimeoutCase);
-    console.log('Changed TimeoutCurrentCase to 0');
+
+export async function CheckCurrentCase(table: CaseType) {
+  if (table === CaseType.WarnCase) {
+    if ((await getdbValue('WarnCurrentCase', WarnCase)) === '[object Object]') {
+      await dbChangeData('WarnCurrentCase', 0, WarnCase);
+      console.log('Changed WarnCurrentCase to 0');
+    }
+  }
+  if (table === CaseType.TimeoutCase) {
+    if (
+      (await getdbValue('TimeoutCurrentCase', TimeoutCase)) ===
+      '[object Object]'
+    ) {
+      await dbChangeData('TimeoutCurrentCase', 0, TimeoutCase);
+      console.log('Changed TimeoutCurrentCase to 0');
+    }
+  }
+
+  if (table === CaseType.KickCase) {
+    if ((await getdbValue('KickCurrentCase', KickCase)) === '[object Object]') {
+      await dbChangeData('KickCurrentCase', 0, KickCase);
+      console.log('Changed KickCurrentCase to 0');
+    }
   }
 }
 
 export async function initCase() {
   await CreateCases();
-  await CheckWarnCurrentCase();
-  await CheckTimeoutCurrentCase();
 }
 
 export async function initViolations() {

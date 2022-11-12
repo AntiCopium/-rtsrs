@@ -9,6 +9,7 @@ import {
 import { getdbValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import {
+  KickViolations,
   TimeoutViolations,
   WarnViolations,
 } from '../Rtsrs.Violation/ViolationManager.ts';
@@ -62,6 +63,10 @@ createCommand({
       await getdbValue(user.toString(), TimeoutViolations)
     );
 
+    let data3 = JSON.stringify(
+      await getdbValue(user.toString(), KickViolations)
+    );
+
     const day = format(new Date(), 'HH:mm');
     let embed1 = new Embeds()
       .setTitle(`Violations Timeout`)
@@ -76,7 +81,13 @@ createCommand({
       .setDescription(
         `**Warn Violations Cases for <@${user}>.** \n \n >>> **Case Numbers: ${data2}** \n \n *Hint: you can use /case (casenumber) for more info*`
       )
-      .setFooter(`rtsrs • Violations for <@${user}> • ${day}`);
+      .setFooter(`rtsrs • Violations for <@${user}> • ${day}`)
+      .addEmbed()
+      .setTitle(`Violations Kick`)
+      .setColor(rdomcolor())
+      .setDescription(
+        `**Kick Violations Cases for <@${user}>.** \n \n >>> **Case Numbers: ${data3}** \n \n *Hint: you can use /case (casenumber) for more info*`
+      );
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,

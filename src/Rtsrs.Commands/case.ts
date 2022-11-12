@@ -8,9 +8,8 @@ import {
 } from '../../deps.ts';
 import { dbHasValue, getdbValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { KickCase, TimeoutCase, WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand } from './mod.ts';
-import { TimeoutCase } from '../Rtsrs.Violation/ViolationManager.ts';
-import { WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
 createCommand({
   name: 'case',
   description: 'reviews a timeout case',
@@ -35,6 +34,10 @@ createCommand({
         {
           name: 'TimeoutViolations',
           value: 'TimeoutViolations',
+        },
+        {
+          name: 'KickCases',
+          value: 'KickCases',
         },
       ],
     },
@@ -68,6 +71,22 @@ createCommand({
       }
 
       let data = await getdbValue(number.toString(), WarnCase);
+
+      const day = format(new Date(), 'HH:mm');
+      embed = new Embeds()
+        .setTitle(`case ${number}`)
+        .setColor(rdomcolor())
+        .setDescription(
+          `**If you need further info contact the Moderator.** \n \n ${data}`
+        )
+        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
+    }
+    if (table === 'KickCases') {
+      if ((await dbHasValue(number.toString(), KickCase)) === false) {
+        return;
+      }
+
+      let data = await getdbValue(number.toString(), KickCase);
 
       const day = format(new Date(), 'HH:mm');
       embed = new Embeds()

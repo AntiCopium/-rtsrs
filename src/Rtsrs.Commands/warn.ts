@@ -12,7 +12,7 @@ import {
   addCase,
   addViolation,
   CaseType,
-  CheckWarnCurrentCase,
+  CheckCurrentCase,
   ViolationType,
   WarnCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
@@ -78,7 +78,7 @@ createCommand({
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
     let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
-    await CheckWarnCurrentCase();
+    await CheckCurrentCase(CaseType.WarnCase);
     await addCase(data, CaseType.WarnCase);
     await addViolation(userToWarn, ViolationType.WarnViolation);
 

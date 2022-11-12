@@ -10,6 +10,7 @@ import {
 import { dbDel, dbHasValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import {
+  KickViolations,
   TimeoutViolations,
   WarnViolations,
 } from '../Rtsrs.Violation/ViolationManager.ts';
@@ -40,6 +41,9 @@ createCommand({
     }
     if ((await dbHasValue(x.toString(), WarnViolations)) === true) {
       await dbDel(`${x}`, WarnViolations);
+    }
+    if ((await dbHasValue(x.toString(), KickViolations)) === true) {
+      await dbDel(`${x}`, KickViolations);
     }
 
     const day = format(new Date(), 'HH:mm');

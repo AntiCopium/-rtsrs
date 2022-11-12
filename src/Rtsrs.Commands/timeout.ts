@@ -13,7 +13,7 @@ import {
   addCase,
   addViolation,
   CaseType,
-  CheckTimeoutCurrentCase,
+  CheckCurrentCase,
   TimeoutCurrentCase,
   ViolationType,
 } from '../Rtsrs.Violation/ViolationManager.ts';
@@ -83,7 +83,7 @@ createCommand({
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
     let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
-    await CheckTimeoutCurrentCase();
+    await CheckCurrentCase(CaseType.TimeoutCase);
     await addCase(data, CaseType.TimeoutCase);
 
     await addViolation(userToMute, ViolationType.TimeoutViolation);
