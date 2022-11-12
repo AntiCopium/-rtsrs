@@ -10,8 +10,9 @@ import {
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import {
-  addTimeoutCase,
+  addCase,
   addTimeoutViolation,
+  CaseType,
   CheckTimeoutCurrentCase,
   TimeoutCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
@@ -82,8 +83,7 @@ createCommand({
 
     let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
     await CheckTimeoutCurrentCase();
-    await addTimeoutCase(data);
-
+    await addCase(data, CaseType.TimeoutCase);
 
     await addTimeoutViolation(userToMute);
     const embed = new Embeds()

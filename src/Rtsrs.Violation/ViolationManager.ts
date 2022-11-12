@@ -4,9 +4,11 @@
  * ! WORK IN PROGRESS (CURRENTLY WORKING)
  *
  *
- * This is a a manager for cases;
+ * This is a a manager for cases,violations;
  * Instead of the casses going in the file this is more organized and with init when bot started
  * This will fix all setup issues and make an more organised workspace.
+ *
+ * ? This is constantly udpated file
  *
  * ~ CAPTHAT
  */
@@ -22,16 +24,10 @@ import {
 } from '../Rtsrs.Database/mod.ts';
 import { log } from '../Rtsrs.Utils/logger.ts';
 
-export enum _CaseType {
+export enum CaseType {
   WarnCase,
   TimeoutCase,
 }
-
-export type Case = {
-  type: _CaseType;
-  table: KwikTable<any>;
-};
-
 async function CreateCases() {
   await CreateTable('WarnCase').then(() => {
     log.info('WarnCase table created...');
@@ -62,32 +58,36 @@ export let TimeoutCurrentCase = await getdbValue(
   TimeoutCase
 );
 
-export async function addWarnCase(data: string) {
-  if (typeof WarnCurrentCase === 'number') {
-    WarnCurrentCase++;
-    if ((await dbHasValue(WarnCurrentCase.toString(), WarnCase)) === false) {
-      await setdbValue(WarnCurrentCase.toString(), WarnCase, data);
+export async function addCase(data: string, table: CaseType) {
+  if (table === CaseType.WarnCase) {
+    if (typeof WarnCurrentCase === 'number') {
+      WarnCurrentCase++;
+      if ((await dbHasValue(WarnCurrentCase.toString(), WarnCase)) === false) {
+        await setdbValue(WarnCurrentCase.toString(), WarnCase, data);
+      }
     }
+
+    await dbChangeData('WarnCurrentCase', WarnCurrentCase, WarnCase);
+    console.log(
+      (await getdbValue('WarnCurrentCase', WarnCase)) + ' > Warn Case'
+    );
   }
 
-  await dbChangeData('WarnCurrentCase', WarnCurrentCase, WarnCase);
-  console.log((await getdbValue('WarnCurrentCase', WarnCase)) + ' > Warn Case');
-}
-
-export async function addTimeoutCase(data: string) {
-  if (typeof TimeoutCurrentCase === 'number') {
-    TimeoutCurrentCase++;
-    if (
-      (await dbHasValue(TimeoutCurrentCase.toString(), TimeoutCase)) === false
-    ) {
-      await setdbValue(TimeoutCurrentCase.toString(), TimeoutCase, data);
+  if (table === CaseType.TimeoutCase) {
+    if (typeof TimeoutCurrentCase === 'number') {
+      TimeoutCurrentCase++;
+      if (
+        (await dbHasValue(TimeoutCurrentCase.toString(), TimeoutCase)) === false
+      ) {
+        await setdbValue(TimeoutCurrentCase.toString(), TimeoutCase, data);
+      }
     }
-  }
 
-  await dbChangeData('TimeoutCurrentCase', TimeoutCurrentCase, TimeoutCase);
-  console.log(
-    (await getdbValue('TimeoutCurrentCase', TimeoutCase)) + ' > Timeout Case'
-  );
+    await dbChangeData('TimeoutCurrentCase', TimeoutCurrentCase, TimeoutCase);
+    console.log(
+      (await getdbValue('TimeoutCurrentCase', TimeoutCase)) + ' > Timeout Case'
+    );
+  }
 }
 
 export async function addWarnViolation(user: any) {

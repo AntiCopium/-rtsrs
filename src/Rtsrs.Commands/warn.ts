@@ -1,24 +1,21 @@
 // deno-lint-ignore-file
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { CreateTable, kwik } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { logger } from '../Rtsrs.Utils/logger.ts';
 import {
-  addWarnCase,
+  addCase,
   addWarnViolation,
+  CaseType,
   CheckWarnCurrentCase,
-WarnCurrentCase,
+  WarnCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
-
 
 createCommand({
   name: 'warn',
@@ -81,7 +78,7 @@ createCommand({
 
     let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
     await CheckWarnCurrentCase();
-    await addWarnCase(data);
+    await addCase(data, CaseType.WarnCase);
     await addWarnViolation(userToWarn);
 
     const embed = new Embeds()
