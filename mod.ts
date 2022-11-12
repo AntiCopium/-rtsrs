@@ -5,7 +5,10 @@ import { updateApplicationCommands } from './src/Rtsrs.Utils/updateCommands.ts';
 // setup db
 import { Bot } from './rtsrs.ts';
 import './src/Rtsrs.Database/mod.ts';
-import { initCase } from './src/Rtsrs.Violation/ViolationManager.ts';
+import {
+  initCase,
+  initViolations,
+} from './src/Rtsrs.Violation/ViolationManager.ts';
 
 log.info('Starting bot...');
 
@@ -22,8 +25,10 @@ await fileLoader();
 // UPDATES YOUR COMMANDS TO LATEST COMMANDS
 await updateApplicationCommands();
 
-// MAKES CASE WORKS
+// MAKES CASE WORK
 await initCase();
+// MAKES VIOLATION WORK
+await initViolations();
 
 // STARTS THE CONNECTION TO DISCORD
 await startBot(Bot);

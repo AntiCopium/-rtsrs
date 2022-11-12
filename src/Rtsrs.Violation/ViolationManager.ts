@@ -41,8 +41,21 @@ async function CreateCases() {
   });
 }
 
+async function CreateViolations() {
+  await CreateTable('WarnViolations').then(() => {
+    log.info('WarnViolations table created...');
+  });
+  await CreateTable('TimeoutViolations').then(() => {
+    log.info('TimeoutViolations table created...');
+  });
+}
+// CASE
 export const WarnCase = new KwikTable(kwik, 'WarnCase');
 export const TimeoutCase = new KwikTable(kwik, 'TimeoutCase');
+// VIOLATIONS
+export const WarnViolations = new KwikTable(kwik, 'WarnViolations');
+export const TimeoutViolations = new KwikTable(kwik, 'TimeoutViolations');
+
 export let WarnCurrentCase = await getdbValue('WarnCurrentCase', WarnCase);
 export let TimeoutCurrentCase = await getdbValue(
   'TimeoutCurrentCase',
@@ -77,6 +90,26 @@ export async function addTimeoutCase(data: string) {
   );
 }
 
+export async function addWarnViolation(user: any) {
+  if ((await dbHasValue(`${user}`, WarnViolations)) === false) {
+    await setdbValue(`${user}`, WarnViolations, WarnCurrentCase);
+  } else {
+    let olddata: string = await getdbValue(`${user}`, WarnViolations);
+    let newdata: string = olddata + '  |  ' + WarnCurrentCase;
+    await dbChangeData(`${user}`, newdata, WarnViolations);
+  }
+}
+
+export async function addTimeoutViolation(user: any) {
+  if ((await dbHasValue(`${user}`, TimeoutViolations)) === false) {
+    await setdbValue(`${user}`, TimeoutViolations, TimeoutCurrentCase);
+  } else {
+    let olddata: string = await getdbValue(`${user}`, TimeoutViolations);
+    let newdata: string = olddata + '  |  ' + TimeoutCurrentCase;
+    await dbChangeData(`${user}`, newdata, TimeoutViolations);
+  }
+}
+
 export async function CheckWarnCurrentCase() {
   if (typeof WarnCurrentCase !== 'number') {
     await dbChangeData('WarnCurrentCase', 0, WarnCase);
@@ -87,5 +120,9 @@ export async function CheckWarnCurrentCase() {
 export async function initCase() {
   await CreateCases();
   await CheckWarnCurrentCase();
+}
+
+export async function initViolations() {
+  await CreateViolations();
 }
 ``;

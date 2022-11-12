@@ -8,9 +8,11 @@ import {
 } from '../../deps.ts';
 import { getdbValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import {
+  TimeoutViolations,
+  WarnViolations,
+} from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand } from './mod.ts';
-import { Violations } from './timeout.ts';
-import { WarnViolations } from './warn.ts';
 createCommand({
   name: 'violations',
   description: 'reviews violations',
@@ -56,7 +58,9 @@ createCommand({
       await getdbValue(user.toString(), WarnViolations)
     );
 
-    let data1 = JSON.stringify(await getdbValue(user.toString(), Violations));
+    let data1 = JSON.stringify(
+      await getdbValue(user.toString(), TimeoutViolations)
+    );
 
     const day = format(new Date(), 'HH:mm');
     let embed1 = new Embeds()

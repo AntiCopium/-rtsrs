@@ -1,32 +1,20 @@
 // deno-lint-ignore-file
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import {
-  CreateTable,
-  dbChangeData,
-  dbHasValue,
-  getdbValue,
-  kwik,
-  setdbValue,
-} from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { logger } from '../Rtsrs.Utils/logger.ts';
 import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
-import { addTimeoutCase, TimeoutCase, TimeoutCurrentCase } from '../Rtsrs.Violation/ViolationManager.ts';
+import {
+  addTimeoutCase,
+  addTimeoutViolation,
+  TimeoutCurrentCase,
+} from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
-
-await CreateTable(`Violations`).then(() => {
-  const log = logger({ name: 'DB Manager' });
-  log.info('Made new Table');
-});
-export const Violations = new KwikTable(kwik, 'Violations');
 
 createCommand({
   name: 'timeout',
@@ -94,14 +82,7 @@ createCommand({
     let data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
     await addTimeoutCase(data);
 
-    // if ((await dbHasValue(`${userToMute}`, Violations)) === false) {
-    //   await setdbValue(`${userToMute}`, Violations, currentcase);
-    // } else {
-    //   const olddata: string = await getdbValue(`${userToMute}`, Violations);
-    //   const newdata: string =
-    //     olddata.toString() + '  |  ' + currentcase.toString();
-    //   await dbChangeData(`${userToMute}`, newdata, Violations);
-    // }
+    await addTimeoutViolation(userToMute);
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
       .setColor(rdomcolor())

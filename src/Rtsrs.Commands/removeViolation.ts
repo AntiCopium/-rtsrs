@@ -9,9 +9,11 @@ import {
 } from '../../deps.ts';
 import { dbDel, dbHasValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import {
+  TimeoutViolations,
+  WarnViolations,
+} from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand } from './mod.ts';
-import { Violations } from './timeout.ts';
-import { WarnViolations } from './warn.ts';
 createCommand({
   name: 'delviolation',
   description: 'removes violations from user',
@@ -33,8 +35,8 @@ createCommand({
 
     const x = interaction.data.options[0].value!;
 
-    if ((await dbHasValue(x.toString(), Violations)) === true) {
-      await dbDel(`${x}`, Violations);
+    if ((await dbHasValue(x.toString(), TimeoutViolations)) === true) {
+      await dbDel(`${x}`, TimeoutViolations);
     }
     if ((await dbHasValue(x.toString(), WarnViolations)) === true) {
       await dbDel(`${x}`, WarnViolations);
