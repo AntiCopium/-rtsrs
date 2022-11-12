@@ -1,7 +1,7 @@
 // deno-lint-ignore-file
 /**
  *
- * ! WORK IN PROGRESS (CURRENTLY UNWORKING)
+ * ! WORK IN PROGRESS (CURRENTLY WORKING)
  *
  *
  * This is a a manager for cases;
