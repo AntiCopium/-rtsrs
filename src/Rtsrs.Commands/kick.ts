@@ -13,8 +13,8 @@ import {
   addViolation,
   CaseType,
   CheckCurrentCase,
+  KickCurrentCase,
   ViolationType,
-  WarnCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, day } from './mod.ts';
 
@@ -76,15 +76,10 @@ createCommand({
     const moderator = interaction.user.id!;
     const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-    let data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToKick}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
-    await CheckCurrentCase(CaseType.KickCase);
-    await addCase(data, CaseType.KickCase);
-    await addViolation(userToKick, ViolationType.KickViolation);
-
     const embed = new Embeds()
       .setTitle(`KICKED  👋🏿`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Kick Case ${WarnCurrentCase} • ${day}`)
+      .setFooter(`rtsrs • Kick Case ${KickCurrentCase} • ${day}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToKick}> \n **REASON:** ${reason}`
       );
@@ -98,6 +93,11 @@ createCommand({
     } catch (err) {
       return;
     }
+
+    let data = `**TYPE:** KICK \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToKick}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
+    await CheckCurrentCase(CaseType.KickCase);
+    await addCase(data, CaseType.KickCase);
+    await addViolation(userToKick, ViolationType.KickViolation);
 
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
