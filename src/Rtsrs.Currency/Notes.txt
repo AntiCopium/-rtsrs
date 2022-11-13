@@ -1,0 +1,6 @@
+Currency module 
+
+/currency (command) (|commandOptions|)
+
+Making:
+    /currency balance

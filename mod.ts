@@ -17,6 +17,7 @@ await Promise.all(
   [
     './src/Rtsrs.Commands',
     './src/Rtsrs.Events',
+    './src/Rtsrs.Currency',
     // "./src/Rtsrs.tasks",
   ].map((path) => importDirectory(Deno.realPathSync(path)))
 );

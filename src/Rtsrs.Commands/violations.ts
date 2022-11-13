@@ -2,10 +2,6 @@
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
 import {
-  Button,
-  Components,
-} from 'https://pe57xadbtdyuoqzcevruxvg5daldsnt5cemp43cm3e5byinghfbq.arweave.net/eTv7gGGY8UdDIiVjS9TdGBY5Nn0RGP5sTNk6HCGmOUM/modules/componentsBuilder/mod.ts';
-import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
@@ -50,24 +46,6 @@ createCommand({
     if (interaction?.data?.options === undefined) return;
     const user = interaction.data.options[0].value!;
     const channelID = interaction.channelId?.toString()!;
-    // const table = interaction.data.options[1].value!;
-    // console.log(table);
-
-    // if ((await dbHasValue(user.toString(), Violations)) === false) {
-    //   return;
-    // }
-    // if ((await dbHasValue(user.toString(), WarnViolations)) === false) {
-    //   return;
-    // }
-    const but1 = new Button()
-      .setCustomId('Forward')
-      .setStyle('Success')
-      .setLabel('Next Page ➡️');
-
-    let comps = new Components().addComponent(but1);
-
-    console.log(comps);
-  
 
     let data2 = JSON.stringify(
       await getdbValue(user.toString(), WarnViolations)
@@ -118,7 +96,6 @@ createCommand({
         data: {
           flags: 64,
           embeds: embed1,
-          components: comps,
         },
       }
     );
