@@ -4,6 +4,7 @@ import log from './src/Rtsrs.Utils/logger.ts';
 import { updateApplicationCommands } from './src/Rtsrs.Utils/updateCommands.ts';
 // setup db
 import { Bot } from './rtsrs.ts';
+import { initCoin } from './src/Rtsrs.Currency/wallet/wallet.ts';
 import './src/Rtsrs.Database/mod.ts';
 import {
   initCase,
@@ -30,6 +31,8 @@ await updateApplicationCommands();
 await initCase();
 // MAKES VIOLATION WORK
 await initViolations();
+// STARTS CURRENCY
+await initCoin();
 
 // STARTS THE CONNECTION TO DISCORD
 await startBot(Bot);
