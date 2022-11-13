@@ -4,7 +4,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../../deps.ts';
-import { createCommand, day } from '../../Rtsrs.Commands/mod.ts';
+import { createCommand, day, timenow } from '../../Rtsrs.Commands/mod.ts';
 import { rdomcolor } from '../../Rtsrs.Utils/colors.ts';
 import { getBalance } from '../wallet/wallet.ts';
 
@@ -19,11 +19,12 @@ createCommand({
     const balance = await getBalance(userToFetchBalance);
     const embed = new Embeds()
       .setColor(rdomcolor())
+      .setTimestamp(timenow.getTime())
       .setTitle(`${userUsername}'s Current Balance`)
       .setDescription(
         `*Your balance always changes...*\n\n>>> ***Balance:*** *${balance}*$\n ***Daily Income:*** *Not Done*\n ***Bank:***  *TODO*\n \n *Hint: you can use /beg to beg for money.*`
       )
-      .setFooter(`rtsrs • User Balance • ${day}`);
+      .setFooter(`rtsrs • User Balance`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
