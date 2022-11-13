@@ -3,4 +3,10 @@ Currency module
 /currency (command) (|commandOptions|)
 
 Making:
-    /currency balance
+    /currency balance 
+    /currency getbalance (user)
+    /currency give (user) (Message)
+    /currency buy (item) (amount)
+    /currency inv
+    /currency moderation givecoins (amount) (user)
+    /currency moderation takecoins (amount) (user)
