@@ -16,7 +16,7 @@ import {
   KickCurrentCase,
   ViolationType,
 } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand, day } from './mod.ts';
+import { createCommand, day, timenow } from './mod.ts';
 
 createCommand({
   name: 'kick',
@@ -79,7 +79,8 @@ createCommand({
     const embed = new Embeds()
       .setTitle(`KICKED  👋🏿`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Kick Case ${KickCurrentCase} • ${day}`)
+      .setTimestamp(timenow.getTime())
+      .setFooter(`rtsrs • Kick Case ${KickCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToKick}> \n **REASON:** ${reason}`
       );

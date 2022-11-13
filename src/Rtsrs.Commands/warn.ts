@@ -16,7 +16,7 @@ import {
   ViolationType,
   WarnCurrentCase,
 } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand, day } from './mod.ts';
+import { createCommand, day, timenow } from './mod.ts';
 
 createCommand({
   name: 'warn',
@@ -83,9 +83,10 @@ createCommand({
     await addViolation(userToWarn, ViolationType.WarnViolation);
 
     const embed = new Embeds()
+      .setTimestamp(timenow.getTime())
       .setTitle(`WARNED  🚨`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Warn Case ${WarnCurrentCase} • ${day}`)
+      .setFooter(`rtsrs • Warn Case ${WarnCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}`
       );

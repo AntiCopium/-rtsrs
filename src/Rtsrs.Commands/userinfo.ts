@@ -6,7 +6,7 @@ import {
   InteractionResponseTypes,
 } from '../../deps.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { createCommand, day } from './mod.ts';
+import { createCommand, day, timenow } from './mod.ts';
 
 // await CreateTable('Slavery').then(() => {
 //   const log = logger({ name: 'DB Manager' });
@@ -38,9 +38,10 @@ createCommand({
 
     const embed = new Embeds()
       .setTitle('rtsrs user info')
+      .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`${msg}`)
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`rtsrs bot`);
 
     const user = interaction.user.id;
     const guildid: bigint = interaction.guildId;

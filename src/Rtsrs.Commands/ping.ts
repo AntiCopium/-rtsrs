@@ -7,7 +7,7 @@ import {
 } from '../../deps.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { snowflakeToTimestamp } from '../Rtsrs.Utils/helpers.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 
 createCommand({
   name: 'ping',
@@ -19,16 +19,16 @@ createCommand({
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
       .setTitle('rtsrs current ping')
+      .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`${ping} (ms)`)
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`rtsrs bot`)
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
       {
         type: InteractionResponseTypes.ChannelMessageWithSource,
         data: {
-          flags: 64,
           embeds: embed,
         },
       }

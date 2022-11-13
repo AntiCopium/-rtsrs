@@ -5,7 +5,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 
 createCommand({
   name: 'black',
@@ -17,8 +17,9 @@ createCommand({
     const embed = new Embeds()
       .setTitle('George floyds breathtaking words')
       .setColor("#000000")
+      .setTimestamp(timenow.getTime())
       .setImage("https://cdn.discordapp.com/attachments/929456196111433781/1031739676098318347/blackness.gif")
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`rtsrs bot`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,

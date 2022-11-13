@@ -8,7 +8,7 @@ import {
   InteractionResponseTypes,
 } from '../../deps.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 
 createCommand({
   name: 'randomnumber',
@@ -32,10 +32,11 @@ createCommand({
     const n = number.int(1, int);
 
     const embed = new Embeds()
+      .setTimestamp(timenow.getTime())
       .setTitle('rtsrs random number success')
       .setDescription(`**Generated number**: ${n}\n\nRange: ${int}`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`rtsrs bot`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,

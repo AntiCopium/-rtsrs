@@ -9,7 +9,7 @@ import {
 import { dbHasValue, getdbValue } from '../Rtsrs.Database/mod.ts';
 import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { KickCase, TimeoutCase, WarnCase } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 createCommand({
   name: 'case',
   description: 'reviews a timeout case',
@@ -59,11 +59,12 @@ createCommand({
       const day = format(new Date(), 'HH:mm');
       embed = new Embeds()
         .setTitle(`case ${number}`)
+        .setTimestamp(timenow.getTime())
         .setColor(rdomcolor())
         .setDescription(
           `**If you need further info contact the Moderator.** \n \n ${data}`
         )
-        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
+        .setFooter(`rtsrs • Case Review Of ${number}`);
     }
     if (table === 'WarnViolations') {
       if ((await dbHasValue(number.toString(), WarnCase)) === false) {

@@ -17,7 +17,7 @@ import {
   TimeoutCurrentCase,
   ViolationType,
 } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand, day } from './mod.ts';
+import { createCommand, day, timenow } from './mod.ts';
 
 createCommand({
   name: 'timeout',
@@ -89,8 +89,9 @@ createCommand({
     await addViolation(userToMute, ViolationType.TimeoutViolation);
     const embed = new Embeds()
       .setTitle('TIMEOUT SUCCSESS 🤐')
+      .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
-      .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase} • ${day}`)
+      .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`
       );

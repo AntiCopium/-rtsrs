@@ -14,7 +14,7 @@ import {
   TimeoutViolations,
   WarnViolations,
 } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 createCommand({
   name: 'delviolation',
   description: 'removes violations from user',
@@ -49,9 +49,10 @@ createCommand({
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
       .setTitle(`Violations Removal`)
+      .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`>>> **Violation Cases for <@${x}> Has been removed**`)
-      .setFooter(`rtsrs • Violations removal for <@${x}> • ${day}`);
+      .setFooter(`rtsrs • Violations removal for <@${x}>`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,

@@ -6,7 +6,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 createCommand({
   name: 'doa',
   description: 'rtsrs has 1 in 8 chance of dead',
@@ -28,9 +28,10 @@ createCommand({
     const user = interaction.data?.options[0].value;
     const embedDead = new Embeds()
       .setTitle('rtsrs dead or alive success')
+      .setTimestamp(timenow.getTime())
       .setColor('#880808')
       .setDescription(`<@${user}> \n \n result: 💀🔫 you died nigga`)
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`rtsrs bot`);
 
     const embedAlive = new Embeds()
       .setTitle('rtsrs dead or alive success')

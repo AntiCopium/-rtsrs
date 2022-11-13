@@ -13,7 +13,7 @@ import {
   TimeoutViolations,
   WarnViolations,
 } from '../Rtsrs.Violation/ViolationManager.ts';
-import { createCommand } from './mod.ts';
+import { createCommand, timenow } from './mod.ts';
 createCommand({
   name: 'violations',
   description: 'reviews violations',
@@ -62,9 +62,10 @@ createCommand({
     const day = format(new Date(), 'HH:mm');
     let StartEmbed = new Embeds()
       .setTitle(`Violations`)
+      .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`>>> Page 0 of 3 Click *next page*`)
-      .setFooter(`rtsrs • Page 0 of 3 • ${day}`);
+      .setFooter(`rtsrs • Page 0 of 3`);
 
     let embed1 = new Embeds()
       .setTitle(`Violations Timeout`)
