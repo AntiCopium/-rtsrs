@@ -15,7 +15,7 @@ export enum Color {
   '#fbcff9' = '#fbcff9',
   '#9474d4' = '#9474d4',
   '#846ccc' = '#846ccc',
-  '#c584f7' = '#c584f7'
+  '#c584f7' = '#c584f7',
 }
 
 /* Array values */
@@ -40,6 +40,7 @@ export const color6 = '#fbcff9';
 export const color7 = '#9474d4';
 export const color8 = '#846ccc';
 export const color9 = '#c584f7';
+export const discordInvis = '#36393e';
 
 /**
  * Generate a random color from palette

@@ -7,7 +7,7 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import { minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import {
   addCase,
@@ -88,9 +88,9 @@ createCommand({
 
     await addViolation(userToMute, ViolationType.TimeoutViolation);
     const embed = new Embeds()
-      .setTitle('TIMEOUT SUCCSESS 🤐')
+      .setTitle(`ACTION: TIMEOUT`)
       .setTimestamp(timenow.getTime())
-      .setColor(rdomcolor())
+      .setColor(discordInvis)
       .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`

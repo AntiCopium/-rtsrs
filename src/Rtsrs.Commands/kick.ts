@@ -7,7 +7,7 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import {
   addCase,
   addViolation,
@@ -78,7 +78,7 @@ createCommand({
 
     const embed = new Embeds()
       .setTitle(`KICKED  👋🏿`)
-      .setColor(rdomcolor())
+      .setColor(discordInvis)
       .setTimestamp(timenow.getTime())
       .setFooter(`rtsrs • Kick Case ${KickCurrentCase}`)
       .setDescription(

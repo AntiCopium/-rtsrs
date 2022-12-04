@@ -11,6 +11,7 @@ import {
   GatewayIntents,
 } from './deps.ts';
 import { Command } from './src/Rtsrs.Types/commands.ts';
+import { enableCollectorsPlugin } from "https://56o7ytls75b35pbz4g2endtqzmic437lqtrdkwrhpsnsrlt7cq5q.arweave.net/7538TXL_Q768OeG0Ro5wyxAub-uE4jVaJ3ybKK5_FDs/src/mod.ts"
 
 // MAKE THE BASIC BOT OBJECT
 const bot = createBot({
@@ -28,6 +29,10 @@ enableHelpersPlugin(bot);
 enableCachePlugin(bot);
 enableCacheSweepers(bot as BotWithCache);
 enablePermissionsPlugin(bot as BotWithCache);
+export const botCollect = enableCollectorsPlugin(bot, {
+  collectionExpirationCheckInterval: 30000,
+  defaultCollectorExpiration: 30000,
+});
 
 export interface BotClient extends BotWithCache<BotWithHelpersPlugin> {
   commands: Collection<string, Command>;
@@ -35,5 +40,23 @@ export interface BotClient extends BotWithCache<BotWithHelpersPlugin> {
 
 // THIS IS THE BOT YOU WANT TO USE EVERYWHERE IN YOUR CODE! IT HAS EVERYTHING BUILT INTO IT!
 export const Bot = bot as BotClient;
+
+// ***** ***    ****           *       *******         ***** ***        *******
+// ******  * **   *  *************      *       ***    ******  * **      *       ***
+// **   *  *  **  *     *********       *         **   **   *  *  **     *         **
+// *    *  *   **  *     *  *            **        *   *    *  *   **     **        *
+//   *  *    *    **  *  **             ***              *  *    *       ***
+//  ** **   *        *  ***            ** ***           ** **   *       ** ***
+//  ** **  *        **   **             *** ***         ** **  *         *** ***
+//  ** ****         **   **               *** ***       ** ****            *** ***
+//  ** **  ***      **   **                 *** ***     ** **  ***           *** ***
+//  ** **    **     **   **                   ** ***    ** **    **            ** ***
+//  *  **    **      **  **                    ** **    *  **    **             ** **
+//     *     **       ** *      *               * *        *     **              * *
+// ****      ***       ***     *      ***        *     ****      ***   ***        *
+// *  ****    **         *******      *  *********     *  ****    **   *  *********
+// *    **     *            ***       *     *****      *    **     *   *     *****
+// *                                  *                *               *
+// **                                 **               **              **
 // PREPARE COMMANDS HOLDER
 Bot.commands = new Collection();

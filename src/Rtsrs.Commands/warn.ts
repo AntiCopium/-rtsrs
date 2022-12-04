@@ -7,7 +7,7 @@ import {
   InteractionResponseTypes,
   validatePermissions,
 } from '../../deps.ts';
-import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
 import {
   addCase,
   addViolation,
@@ -84,8 +84,8 @@ createCommand({
 
     const embed = new Embeds()
       .setTimestamp(timenow.getTime())
-      .setTitle(`WARNED  🚨`)
-      .setColor(rdomcolor())
+      .setTitle(`ACTION: WARN`)
+      .setColor(discordInvis)
       .setFooter(`rtsrs • Warn Case ${WarnCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}`
