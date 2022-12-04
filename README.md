@@ -39,7 +39,7 @@ OWNER_ID=''
 ```
 
 
-3. Run the bot setup for first launch
+3. Run the bot setup for first launch; if this command does not work. Please install Git Bash
 ```ps
 $ ./setup.sh
 ```
