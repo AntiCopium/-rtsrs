@@ -33,9 +33,14 @@
 
 2. Put your stuff in .env 
 ```env
+# INFO NEEDED
 BOT_TOKEN=''
 DEV_GUILD_ID=''
 OWNER_ID=''
+
+
+# LOG CHANNELS
+USER_LOG_CHANNEL=''
 ```
 
 
