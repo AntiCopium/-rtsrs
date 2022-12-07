@@ -7,21 +7,20 @@ import { discordInvis } from '../Rtsrs.Utils/colors.ts';
 
 const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
-Bot.events.guildMemberAdd = async (_, member) => {
+Bot.events.guildMemberAdd = async (_, member, user) => {
   const avatasr = Bot.helpers.getAvatarURL(
     member.id.toString(),
     member.user?.discriminator.toString()!,
     {
-      avatar: member.avatar?.toString()!,
+      avatar: user.avatar,
       format: 'png',
     }
   );
 
-
   console.log(avatasr);
   const memberAdd = new Embeds()
     .setTitle('LOG: USER ENTER')
-    .setColor(discordInvis)
+    .setColor("#0f2080")
     .setTimestamp(timenow.getTime())
     .setThumbnail(avatasr)
     .setDescription(
@@ -31,3 +30,60 @@ Bot.events.guildMemberAdd = async (_, member) => {
     embeds: memberAdd,
   });
 };
+
+Bot.events.messageCreate = async (_, msg) => {
+  if (msg.content.toLowerCase() === 'hello') {
+    await Bot.helpers.sendMessage(msg.channelId, {
+      content: 'hi',
+    });
+  }
+};
+
+
+Bot.events.guildMemberRemove = async (_, user) => {
+  const avatasr = Bot.helpers.getAvatarURL(
+    user.id.toString(),
+    user.discriminator.toString()!,
+    {
+      avatar: user.avatar,
+      format: 'png',
+    }
+  );
+
+  console.log(avatasr);
+  const memberAdd = new Embeds()
+    .setTitle('LOG: USER LEAVE')
+    .setColor("#80170f")
+    .setTimestamp(timenow.getTime())
+    .setThumbnail(avatasr)
+    .setDescription(
+      `**WHEN (EST):** ${when}\n>>> **MEMBER_ID:** ${user.id}\n**USERNAME:** ${user.username}\n **DISCRIMINATOR:** ${user.discriminator}`
+    );
+  await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
+    embeds: memberAdd,
+  });
+}
+
+Bot.events.guildMemberUpdate = async (_, member, user) => {
+  const avatasr = Bot.helpers.getAvatarURL(
+    member.id.toString(),
+    member.user?.discriminator.toString()!,
+    {
+      avatar: user.avatar,
+      format: 'png',
+    }
+  );
+
+  console.log(avatasr);
+  const memberAdd = new Embeds()
+    .setTitle('LOG: USER INFO UPDATE')
+    .setColor("#80780f")
+    .setTimestamp(timenow.getTime())
+    .setThumbnail(avatasr)
+    .setDescription(
+      `**WHEN (EST):** ${when}\n>>> **MEMBER_ID:** ${member.id}\n**USERNAME:** ${member.user?.username}\n **DISCRIMINATOR:** ${member.user?.discriminator}`
+    );
+  await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
+    embeds: memberAdd,
+  });
+}

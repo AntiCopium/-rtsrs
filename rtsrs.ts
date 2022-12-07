@@ -21,7 +21,8 @@ const bot = createBot({
     GatewayIntents.Guilds |
     GatewayIntents.GuildMessages |
     GatewayIntents.GuildMessageReactions |
-    GatewayIntents.GuildMembers,
+    GatewayIntents.GuildMembers|
+    GatewayIntents.MessageContent,
   events: {},
 });
 

@@ -6,6 +6,7 @@ import {
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
+import { Bot } from '../../rtsrs.ts';
 import * as dbs from '../Rtsrs.Database/mod.ts';
 import * as clr from '../Rtsrs.Utils/colors.ts';
 import { discordInvis } from '../Rtsrs.Utils/colors.ts';
