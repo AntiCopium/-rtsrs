@@ -4,6 +4,7 @@ import { dotEnvConfig } from './deps.ts';
 export const env = dotEnvConfig({ export: true, path: './.env' });
 export const token = env.BOT_TOKEN || '';
 export const owner = env.OWNER_ID || '';
+export const USER_LOG_CHANNEL = env.USER_LOG_CHANNEL || '';
 
 export interface Config {
   token: string;
@@ -15,6 +16,7 @@ export const configs = {
   /** Get token from ENV variable */
   token,
   owner,
+  USER_LOG_CHANNEL,
   /** Get the BotId from the token */
   botId: BigInt(atob(token.split('.')[0])),
   /** The server id where you develop your bot and want dev commands created. */

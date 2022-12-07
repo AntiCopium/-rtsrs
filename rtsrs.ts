@@ -18,9 +18,10 @@ const bot = createBot({
   token: configs.token,
   botId: configs.botId,
   intents:
-    GatewayIntents.Guilds &&
-    GatewayIntents.GuildMessages &&
-    GatewayIntents.GuildMessageReactions,
+    GatewayIntents.Guilds |
+    GatewayIntents.GuildMessages |
+    GatewayIntents.GuildMessageReactions |
+    GatewayIntents.GuildMembers,
   events: {},
 });
 

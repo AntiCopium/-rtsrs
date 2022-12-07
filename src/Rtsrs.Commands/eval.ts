@@ -34,7 +34,9 @@ createCommand({
   ],
 
   execute: async (Bot, interaction) => {
+    // USEFULL VARS
     const guildID = interaction.guildId!;
+    
     if (interaction?.member === undefined) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.user.id.toString() !== owner) {
@@ -54,7 +56,11 @@ createCommand({
     }
     const stuff = interaction.data.options[0].value?.toString()!;
     try {
-      eval('try{(async () => {' + stuff + '})()}catch(aysd23sdm){console.log(aysd23sdm);}');
+      eval(
+        'try{(async () => {' +
+          stuff +
+          '})()}catch(aysd23sdm){console.log(aysd23sdm);}'
+      );
     } catch (err) {
       const embed = new Embeds()
         .setTitle(`EVAL: ERROR`)
