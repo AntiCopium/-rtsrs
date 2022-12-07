@@ -45,13 +45,13 @@ USER_LOG_CHANNEL=''
 
 
 3. Run the bot setup for first launch; if this command does not work. Please install Git Bash
-```ps
+```sh
 $ ./setup.sh
 ```
 
 4. To run the bot after first launch use
-```ps
-deno task run
+```sh
+deno task start
 ```
 
 ### 🗿 ENJOY
