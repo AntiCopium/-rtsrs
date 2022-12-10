@@ -58,9 +58,9 @@ createCommand({
     const stuff = interaction.data.options[0].value?.toString()!;
     try {
       eval(
-        'try{(async () => {' +
+        'try{eval((async () => {' +
           stuff +
-          '})()}catch(aysd23sdm){console.log(aysd23sdm);}'
+          '}))()}catch(aysd23sdm){console.log(aysd23sdm);}'
       );
     } catch (err) {
       const embed = new Embeds()
