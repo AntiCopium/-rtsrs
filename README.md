@@ -44,14 +44,10 @@ USER_LOG_CHANNEL=''
 ```
 
 
-3. Run the bot setup for first launch; if this command does not work. Please install Git Bash
-```sh
-$ ./setup.sh
-```
+3. Run the command ```sh deno task start```
 
-4. To run the bot after first launch use
-```sh
-deno task start
-```
+4. After go into the DEV_GUILD_ID server and use the command /resetcase.
+
+5. Then restart the bot...
 
 ### 🗿 ENJOY
