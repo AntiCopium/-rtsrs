@@ -3,7 +3,6 @@ import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts
 import { configs } from '../../configs.ts';
 import { Bot } from '../../rtsrs.ts';
 import { timenow } from '../Rtsrs.Commands/mod.ts';
-import { discordInvis } from '../Rtsrs.Utils/colors.ts';
 
 const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
@@ -86,4 +85,30 @@ Bot.events.guildMemberUpdate = async (_, member, user) => {
   await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
     embeds: memberAdd,
   });
+}
+
+
+Bot.events.guildBanAdd = async (_, usr) => {
+
+  const avatasr = Bot.helpers.getAvatarURL(
+    usr.id.toString(),
+   usr.discriminator.toString()!,
+    {
+      avatar: usr.avatar,
+      format: 'png',
+    }
+  );
+
+  const memberBan = new Embeds()
+  .setTitle('LOG: USER BAN ADD')
+  .setColor("#80780f")
+  .setTimestamp(timenow.getTime())
+  .setThumbnail(avatasr)
+  .setDescription(
+    `**WHEN (EST):** ${when}\n>>> **MEMBER_ID:** ${usr.id}\n**USERNAME:** ${usr.username}\n **DISCRIMINATOR:** ${usr.discriminator}`
+  );
+
+  await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
+    embeds: memberBan
+  })
 }
