@@ -45,7 +45,8 @@ BOT_MOD_CMD_LOG_CHANNEL=''
 ```
 
 
-3. Run the command ```sh deno task start```
+3. Run the command ```ps
+ deno task start```
 
 4. After go into the DEV_GUILD_ID server and use the command /resetcase.
 
