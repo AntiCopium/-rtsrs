@@ -46,18 +46,20 @@ fn main() -> std::io::Result<()> {
     for line in stdout_reader.lines() {
         let line = line?;
         println!(
-            "[stdout] {:?}",
+            "[stdout] {}",
             str::from_utf8(&strip_ansi_escapes::strip(line).expect("Error to remove color"))
                 .unwrap()
+                .replace('"', " ")
         );
     }
 
     for line in stderr_reader.lines() {
         let line = line?;
         println!(
-            "[stderr] {:?}",
+            "[stderr] {}",
             str::from_utf8(&strip_ansi_escapes::strip(line).expect("Error to remove color"))
                 .unwrap()
+                .replace('"', "")
         );
     }
     let ten_millis = time::Duration::from_millis(2000);
