@@ -2,6 +2,7 @@ db
 .env
 fileloader.ts
 Rtsrs.DB.txt
+deno.lock
 
 # Added by cargo
 
