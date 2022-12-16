@@ -553,7 +553,6 @@ createCommand({
     let embed = new Embeds();
     const number = interaction.data.options[0].value!;
     const table = interaction.data.options[1].value!;
-    console.log(table);
 
     if (table === 'TimeoutViolations') {
       if ((await dbHasValue(number.toString(), TimeoutCase)) === false) {
@@ -813,7 +812,6 @@ createCommand({
     const user = interaction.user.id;
     const guildid: bigint = interaction.guildId;
     const resolveduser = interaction.data?.options[0].value?.toString()!;
-    console.log(resolveduser);
 
     // if ((await dbHasValue(user.toString(), slavery)) === false) {
     //   await setdbValue(user.toString(), slavery, user);

@@ -2,3 +2,7 @@ db
 .env
 fileloader.ts
 Rtsrs.DB.txt
+
+# Added by cargo
+
+/target

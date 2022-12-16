@@ -16,7 +16,6 @@ Bot.events.guildMemberAdd = async (_, member, user) => {
     }
   );
 
-  console.log(avatasr);
   const memberAdd = new Embeds()
     .setTitle('LOG: USER ENTER')
     .setColor("#0f2080")
@@ -48,8 +47,6 @@ Bot.events.guildMemberRemove = async (_, user) => {
       format: 'png',
     }
   );
-
-  console.log(avatasr);
   const memberAdd = new Embeds()
     .setTitle('LOG: USER LEAVE')
     .setColor("#80170f")
@@ -73,7 +70,6 @@ Bot.events.guildMemberUpdate = async (_, member, user) => {
     }
   );
 
-  console.log(avatasr);
   const memberAdd = new Embeds()
     .setTitle('LOG: USER INFO UPDATE')
     .setColor("#80780f")

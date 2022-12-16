@@ -6,7 +6,6 @@ import { logger } from '../Rtsrs.Utils/logger.ts';
 const log = logger({ name: 'DB Manager' });
 // const encoder = new TextEncoder();
 
-log.info('Initializing Database');
 
 export const kwik = new Kwik();
 
@@ -49,12 +48,10 @@ await kwik.init();
  */
 export async function CreateTable(table: string) {
   try {
-    await Deno.mkdir(`C:\\Users\\Owner\\Desktop\\!rtsrs\\db\\${table}`);
+    await Deno.mkdir(`C:\\Users\\Owner\\Desktop\\rtsrs\\db\\${table}`);
     await new KwikTable(kwik, table);
   } catch (e) {
-    const log = logger({ name: 'DB Manager' });
     await Deno.writeTextFile('Rtsrs.DB.txt', e + '\n \n ', { append: true });
-    log.warn('Log Created...');
   }
 }
 
@@ -71,13 +68,13 @@ export async function setdbValue(
   data?: any
 ): Promise<void> {
   const log = logger({ name: 'DB Manager' });
-  log.info(`Attempting to add ${id}, ${data} value.`);
+  // log.info(`Attempting to add ${id}, ${data} value.`);
   if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
   await table.create(id, data);
-  log.info(`Created DB values ${id}`);
+  // log.info(`Created DB values ${id}`);
 }
 
 // HOW TO CREATE A TABLE
@@ -96,12 +93,12 @@ export async function getdbValue(
   table: KwikTable<any>
 ): Promise<any> {
   const log = logger({ name: 'DB Manager' });
-  log.info(`Attempting to get ${id}`);
+  // log.info(`Attempting to get ${id}`);
   if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
-  log.info(`Fetched DB value ${id}`);
+  // log.info(`Fetched DB value ${id}`);
   return await table.get(id);
 }
 
@@ -120,9 +117,9 @@ export async function dbHasValue(
     return;
   }
   if ((await table.has(id)) === true) {
-    log.info(`${id} => TRUE`);
+    // log.info(`${id} => TRUE`);
   } else {
-    log.info(`${id} => FALSE`);
+    // log.info(`${id} => FALSE`);
   }
   return await table.has(id);
 }
@@ -134,13 +131,13 @@ export async function dbHasValue(
  */
 export async function dbDel(id: string, table: KwikTable<any>) {
   const log = logger({ name: 'DB Manager' });
-  log.info(`Deleting ${id} ...`);
+  // log.info(`Deleting ${id} ...`);
   if (id && table === undefined) {
     log.error('NO ID SPECIFIED');
     return;
   }
   await table.delete(id);
-  log.info(`Deleted ${id}`);
+  // log.info(`Deleted ${id}`);
 }
 
 /**
@@ -158,7 +155,7 @@ export async function dbChangeData(
 
   if (id && data && table === undefined) return;
 
-  log.info(`Changing ${id} ...`);
+  // log.info(`Changing ${id} ...`);
   await dbDel(id, table);
   await setdbValue(id, table, data);
 }
@@ -175,10 +172,7 @@ export async function updatedbData(
 ): Promise<void> {
   const log = logger({ name: 'DB Manager' });
   if (id && data && table === undefined) return;
-  log.info(`Updating ${id} ... with ${data}`);
+  // log.info(`Updating ${id} ... with ${data}`);
   await table.update(id, data);
-  log.info(`Updated ${id}`);
-  console.log(await getdbValue(id, table));
+  // log.info(`Updated ${id}`);
 }
-
-log.info('Database Initialized!');

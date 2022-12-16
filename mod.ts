@@ -11,7 +11,6 @@ import {
   initViolations,
 } from './src/Rtsrs.Violation/ViolationManager.ts';
 
-log.info('Starting bot...');
 
 // Forces deno to read all the files which will fill the commands/inhibitors cache etc.
 await Promise.all(
