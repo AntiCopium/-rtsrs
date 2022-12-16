@@ -45,7 +45,7 @@ BOT_MOD_CMD_LOG_CHANNEL=''
 ```
 
 
-3. Run the command 
+3. Run the command or run the exe 'rtsrs.exe" (recommended) 
 ```ps
  deno task start
  ```
