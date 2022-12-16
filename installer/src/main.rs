@@ -5,18 +5,6 @@ use std::process;
 use std::process::Command;
 
 fn main() {
-    let output_git = Command::new("which")
-        .arg("git")
-        .output()
-        .expect("failed to execute process");
-
-    let git_status = output_git.status;
-    if git_status.success() {
-        println!("git is installed");
-    } else {
-        println!("git is not installed");
-        process::exit(0);
-    }
 
     let repo_url = "https://github.com/cantevenread/-rtsrs.git";
     let repo_name = "-rtsrs";
