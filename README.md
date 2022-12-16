@@ -29,29 +29,36 @@
 
 
 ## 🤖 How to run
-1. Install [Deno](https://deno.land/)
+1. Install [Deno](https://deno.land/) and [Git](https://git-scm.com/downloads).
 
-2. Put your stuff in .env 
+2. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
+
+3. Run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
+
+4. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
+
+## Way 2
+1. Download the source
+
+2. Fill the .env with
 ```env
 # INFO NEEDED
+
 BOT_TOKEN=''
 DEV_GUILD_ID=''
 OWNER_ID=''
 
-
 # LOG CHANNELS
+
 USER_LOG_CHANNEL=''
 BOT_MOD_CMD_LOG_CHANNEL=''
 ```
 
-
-3. Run the command or run the exe 'rtsrs.exe" (recommended) 
+3. Then run
 ```ps
- deno task start
- ```
+deno task start
+```
 
-4. After go into the DEV_GUILD_ID server and use the command /resetcase.
-
-5. Then restart the bot...
+**FOR BOTH WAYS MAKE SURE TO RUN THE COMMAND /resetcase AND RESTART THE BOT**
 
 ### 🗿 ENJOY
