@@ -7,3 +7,4 @@ deno.lock
 # Added by cargo
 
 /target
+installer/target
