@@ -1,8 +1,7 @@
-use std::env;
-use std::fmt::format;
 use std::fs;
 use std::io::{BufRead, BufReader};
 use std::process::{Command, Stdio};
+use std::str;
 use std::{thread, time};
 
 fn main() -> std::io::Result<()> {
@@ -46,12 +45,20 @@ fn main() -> std::io::Result<()> {
 
     for line in stdout_reader.lines() {
         let line = line?;
-        println!("[stdout] {}", line);
+        println!(
+            "[stdout] {:?}",
+            str::from_utf8(&strip_ansi_escapes::strip(line).expect("Error to remove color"))
+                .unwrap()
+        );
     }
 
     for line in stderr_reader.lines() {
         let line = line?;
-        println!("[stderr] {}", line);
+        println!(
+            "[stderr] {:?}",
+            str::from_utf8(&strip_ansi_escapes::strip(line).expect("Error to remove color"))
+                .unwrap()
+        );
     }
     let ten_millis = time::Duration::from_millis(2000);
     thread::sleep(ten_millis);
