@@ -29,7 +29,7 @@
 
 
 ## 🤖 How to run
-1. Install [Deno](https://deno.land/) and [Git](https://git-scm.com/downloads).
+1. Install [Deno](https://deno.land/)
 
 2. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
 
