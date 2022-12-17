@@ -29,13 +29,12 @@
 
 
 ## 🤖 How to run
-1. Install [Deno](https://deno.land/)
 
-2. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
+1. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
 
-3. Run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
+2. Run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
 
-4. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
+3. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
 
 ## Way 2
 1. Download the source
