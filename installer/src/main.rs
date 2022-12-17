@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use std::process;
 use std::process::Command;
 use std::process::Stdio;
+use std::{thread, time};
 
 fn check_deno_installed() -> bool {
     let output = Command::new("where")
@@ -37,7 +38,7 @@ fn install_deno() {
     assert!(output.status.success());
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Checking Deno Installation");
     if !check_deno_installed() {
         println!("Installing Deno");
@@ -97,4 +98,10 @@ fn main() {
     let file_path = repo_dir.join(".env");
 
     fs::write(file_path, final_env).expect("Failed to write to file");
+
+    println!("Run the rtsrs.exe in -rtsrs to run the bot...");
+
+    let ten_millis = time::Duration::from_millis(4000);
+    thread::sleep(ten_millis);
+    Ok(())
 }

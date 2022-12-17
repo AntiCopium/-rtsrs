@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 git2 = "0.15.0"
+strip-ansi-escapes = "0.1.1"
