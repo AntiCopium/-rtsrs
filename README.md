@@ -36,6 +36,8 @@
 
 3. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
 
+**FOR BOTH WAYS MAKE SURE TO RUN THE COMMAND /resetcase AND RESTART THE BOT**
+
 ## Way 2
 1. Download the source
 
