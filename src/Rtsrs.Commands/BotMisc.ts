@@ -1,8 +1,9 @@
 // deno-lint-ignore-file no-unused-vars
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
-import axiod from 'https://deno.land/x/axiod/mod.ts';
+import axiod from "https://deno.land/x/axiod@0.26.2/mod.ts";
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
 import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
+import { owner } from '../../configs.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -198,14 +199,52 @@ createCommand({
           name: 'ORAL',
           value: 'ORAL',
         },
+        {
+          name: 'CUM',
+          value: 'CUM',
+        },
+        {
+          name: 'LEWD',
+          value: 'LEWD',
+        },
+        {
+          name: 'LESBIAN',
+          value: 'LESBIAN',
+        },
+        {
+          name: 'SEXY',
+          value: 'SEXY',
+        },
+        {
+          name: 'HENTAI2',
+          value: 'HENTAI2',
+        },
+        {
+          name: 'BJ',
+          value: 'BJ',
+        },
+        {
+          name: 'BOOBS',
+          value: 'BOOBS',
+        },
+        {
+          name: 'PUSSY',
+          value: 'PUSSY',
+        },
+        {
+          name: 'HOLO',
+          value: 'HOLO',
+        },
+        {
+          name: 'NEKO',
+          value: 'NEKO',
+        },
+        {
+          name: 'ANAL',
+          value: 'ANAL',
+        },
       ],
     },
-    {
-      type: ApplicationCommandOptionTypes.String,
-      name: 'gif',
-      description: 'gif',
-      required: true,
-    }
   ],
   execute: async (Bot, interaction) => {
     const type = interaction.data?.options![0].value!;
@@ -229,6 +268,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -254,6 +294,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -279,6 +320,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -304,6 +346,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -329,6 +372,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -341,7 +385,7 @@ createCommand({
           .then(async (response) => {
             const img = response.data['images'][0]['url'];
             const embed = new Embeds()
-              .setTitle('ASS Generated')
+              .setTitle('MILKERS Generated')
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
@@ -354,6 +398,7 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
+                  flags: 64,
                 },
               }
             );
@@ -366,7 +411,7 @@ createCommand({
           .then(async (response) => {
             const img = response.data['images'][0]['url'];
             const embed = new Embeds()
-              .setTitle('MILKERS Generated')
+              .setTitle('ASS Generated')
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
@@ -523,6 +568,293 @@ createCommand({
             const img = response.data['images'][0]['url'];
             const embed = new Embeds()
               .setTitle('ORAL Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'CUM': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/cum')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('CUM Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'LEWD': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/lewd')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('LEWD Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'LESBIAN': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/lesbian')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('LESBIAN Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'SEXY': {
+        if (interaction.user.id.toString() !== owner) return;
+        await axiod
+          .get('http://api.nekos.fun:8080/api/feet')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('SEXY Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'HENTAI2': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/hentai')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('HENTAI2 Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'BJ': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/bj')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('BJ Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'BOOBS': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/boobs')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('BOOBS Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'PUSSY': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/pussy')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('PUSSY Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'HOLO': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/holo')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('HOLO Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'NEKO': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/neko')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('NEKO Generated')
+              .setImage(img)
+              .setColor(discordInvis)
+              .setTimestamp(timenow.getTime())
+              .setFooter('rtsrs anime');
+
+            await Bot.helpers.sendInteractionResponse(
+              interaction.id,
+              interaction.token,
+              {
+                type: InteractionResponseTypes.ChannelMessageWithSource,
+                data: {
+                  embeds: embed,
+                  flags: 64,
+                },
+              }
+            );
+          });
+        break;
+      }
+      case 'ANAL': {
+        await axiod
+          .get('http://api.nekos.fun:8080/api/anal')
+          .then(async (response) => {
+            const img = response.data['image'];
+            const embed = new Embeds()
+              .setTitle('ANAL Generated')
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
