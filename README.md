@@ -38,4 +38,6 @@
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
+<span style="color:blue">some *blue* text</span>.
+
 ### 🗿 ENJOY
