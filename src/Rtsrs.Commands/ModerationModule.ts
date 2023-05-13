@@ -22,8 +22,6 @@ import log from '../Rtsrs.Utils/logger.ts';
 import { MillitoMin, minToMilli } from '../Rtsrs.Utils/timeconvert.ts';
 import * as tablesvio from '../Rtsrs.Violation/ViolationManager.ts';
 import {
-  addCase,
-  addViolation,
   CaseType,
   CheckCurrentCase,
   KickCase,
@@ -36,6 +34,8 @@ import {
   WarnCase,
   WarnCurrentCase,
   WarnViolations,
+  addCase,
+  addViolation,
 } from '../Rtsrs.Violation/ViolationManager.ts';
 import { createCommand, timenow } from './mod.ts';
 
@@ -98,13 +98,13 @@ createCommand({
       .setTitle(`ACTION: BAN`)
       .setTimestamp(timenow.getTime())
       .setColor(discordInvis)
-      .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase}`)
+      .setFooter(`rtsrs • User Ban • Sucsess`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToBan}>\n**REASON:** ${reason}`
       );
     try {
       await Bot.helpers.banMember(guildID, userToBan, {
-        reason: reason.toString(),
+        reason: level.toString() + reason.toString() ,
       });
     } catch (_err) {
       return;
@@ -834,3 +834,4 @@ createCommand({
   },
 });
 ``;
+

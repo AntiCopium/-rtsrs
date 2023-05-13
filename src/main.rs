@@ -1,6 +1,6 @@
 use std::fs;
 use std::io::{BufRead, BufReader};
-use std::process::{Command, Stdio};
+use std::process::{Command, Stdio, Child};
 use std::str;
 use std::{thread, time};
 
@@ -30,12 +30,69 @@ fn main() -> std::io::Result<()> {
     println!("{}", rustc_version);
     println!("RTSRS VERSION: #121622");
 
-    let process = Command::new("deno")
+    let selected_option: i32;
+
+    loop {
+        println!("Please select an option:");
+        println!("1. Start (Default)");
+        println!("2. Check Run (Fresh start)");
+        println!("Enter for default option");
+
+        let mut input = String::new();
+
+        std::io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read input");
+
+        let trimmed_input = input.trim();
+
+        if trimmed_input == "" {
+            // If user pressed Enter without entering a value, treat it as Option A
+            selected_option = 1;
+            // println!("Option A selected");
+            break;
+        }
+
+        match trimmed_input {
+            "1" => {
+                selected_option = 1;
+                // println!("Option A selected");
+                break;
+            }
+            "2" => {
+                selected_option = 2;
+                // println!("Option B selected");
+                break;
+            }
+            _ => {
+                println!("Invalid option, please try again.");
+            }
+        }
+    }
+
+    // Use the selected_option variable here
+    println!("Selected option: {}", selected_option);
+
+let process: Child = if selected_option == 1 {
+    let child_process = Command::new("deno")
         .arg("task")
         .arg("start")
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .spawn()?;
+    child_process
+} else {
+    let child_process = Command::new("deno")
+        .arg("task")
+        .arg("check-run")
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()?;
+    child_process
+};
+
+    
+
 
     let stdout = process.stdout.expect("failed to get stdout handle");
     let stderr = process.stderr.expect("failed to get stderr handle");

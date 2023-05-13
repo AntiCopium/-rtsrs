@@ -37,6 +37,7 @@ export const botCollect = enableCollectorsPlugin(bot, {
 });
 
 export interface BotClient extends BotWithCache<BotWithHelpersPlugin> {
+  helpers: any;
   commands: Collection<string, Command>;
 }
 
