@@ -1,13 +1,14 @@
 use std::fs;
-use std::io::{BufRead, BufReader};
+use std::io::{BufRead, BufReader, Write, self};
 use std::process::{Command, Stdio, Child};
 use std::str;
 use std::{thread, time};
+use std::fs::{File};
+use std::io::prelude::*;
 
 fn main() -> std::io::Result<()> {
     let path = "db";
 
-    // Check if the directory exists
     match fs::metadata(path) {
         Ok(metadata) => {
             if metadata.is_dir() {
@@ -15,10 +16,34 @@ fn main() -> std::io::Result<()> {
             } else {
                 println!("{} is not a directory", path);
             }
-        }
-        Err(_) => {
-            println!("{} does not exist or there was an error accessing it", path);
-        }
+        },
+        Err(e) => {
+            if e.kind() == io::ErrorKind::NotFound {
+                println!("{} does not exist, creating it...", path);
+
+                // Create the db directory
+                fs::create_dir(path)?;
+
+                // Create the KickCase directory and file
+                let kick_case_dir = format!("{}/KickCase", path);
+                fs::create_dir(&kick_case_dir)?;
+                File::create(format!("{}/KickCase/KickCurrentCase.kwik", path))?;
+
+                // Create the TimeoutCase directory and file
+                let timeout_case_dir = format!("{}/TimeoutCase", path);
+                fs::create_dir(&timeout_case_dir)?;
+                File::create(format!("{}/TimeoutCase/TimeoutCurrentCase.kwik", path))?;
+
+                // Create the WarnCase directory and file
+                let warn_case_dir = format!("{}/WarnCase", path);
+                fs::create_dir(&warn_case_dir)?;
+                File::create(format!("{}/WarnCase/WarnCurrentCase.kwik", path))?;
+
+                println!("Created {} and subdirectories", path);
+            } else {
+                println!("Error accessing {}: {}", path, e);
+            }
+        },
     }
     let output = Command::new("deno").arg("--version").output()?;
     let deno_version = String::from_utf8_lossy(&output.stdout);

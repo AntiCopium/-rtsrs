@@ -20,5 +20,10 @@
     "Slowmode",
     "upsert"
   ],
-  "deno.unstable": true
+  "deno.unstable": true,
+  "rust-analyzer.linkedProjects": [
+    ".\\installer\\Cargo.toml",
+    ".\\installer\\Cargo.toml",
+    "Cargo.toml"
+  ]
 }
