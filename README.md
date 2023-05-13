@@ -45,11 +45,16 @@
 ### MAC OS
 Compile from source
 Downlaod source > delete rtsrs.exe > delete installer folder > fill .env with info > make a file called .env > fill in this info
-BOT_TOKEN=\n
-DEV_GUILD_ID=\n
-OWNER_ID=\n
-USER_LOG_CHANNEL=\n
-BOT_MOD_CMD_LOG_CHANNEL=\n
+BOT_TOKEN=
+
+DEV_GUILD_ID=
+
+OWNER_ID=
+
+USER_LOG_CHANNEL=
+
+BOT_MOD_CMD_LOG_CHANNEL=
+
  > cargo run in the root dir > fresh start
 
 ### 🗿 ENJOY
