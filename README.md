@@ -39,7 +39,7 @@
 4. Then run fresh start option. This will freshly restart the cases. 
 
 <span style="color:red">
-❗**MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START**
+❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
 </span>
 
 ### 🗿 ENJOY
