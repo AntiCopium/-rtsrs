@@ -38,28 +38,4 @@
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
-## Way 2
-1. Download the source
-
-2. Fill the .env with
-```env
-# INFO NEEDED
-
-BOT_TOKEN=''
-DEV_GUILD_ID=''
-OWNER_ID=''
-
-# LOG CHANNELS
-
-USER_LOG_CHANNEL=''
-BOT_MOD_CMD_LOG_CHANNEL=''
-```
-
-3. Then run
-```ps
-deno task start
-```
-
-**FOR BOTH WAYS MAKE SURE TO RUN THE COMMAND /resetcase AND RESTART THE BOT**
-
 ### 🗿 ENJOY
