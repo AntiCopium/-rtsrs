@@ -42,6 +42,8 @@
 ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
 </span>
 
-## MAC OS read Release instructions. 
+### MAC OS
+Compile from source
+Downlaod source > delete rtsrs.exe > delete installer folder > fill .env with info > cargo run in the root dir > fresh start
 
 ### 🗿 ENJOY
