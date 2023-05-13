@@ -39,6 +39,16 @@ fn main() -> std::io::Result<()> {
                 fs::create_dir(&warn_case_dir)?;
                 File::create(format!("{}/WarnCase/WarnCurrentCase.kwik", path))?;
 
+                let kick_violations_dir = format!("{}/KickViolations", path);
+                fs::create_dir(&kick_violations_dir)?;
+
+                let timeout_violations_dir = format!("{}/TimeoutViolations", path);
+                fs::create_dir(&timeout_violations_dir)?;
+
+                let warn_violations_dir = format!("{}/WarnViolations", path);
+                fs::create_dir(&warn_violations_dir)?;
+
+
                 println!("Created {} and subdirectories", path);
             } else {
                 println!("Error accessing {}: {}", path, e);
