@@ -38,6 +38,8 @@
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
-<span style="color:red">some **This is Red Bold.** text</span>
+<span style="color:red">
+Text content
+</span>
 
 ### 🗿 ENJOY
