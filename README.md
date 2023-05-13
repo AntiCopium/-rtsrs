@@ -38,28 +38,23 @@
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
-## Way 2
-1. Download the source
+<span style="color:red">
+❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
+</span>
 
-2. Fill the .env with
-```env
-# INFO NEEDED
+### MAC OS
+Compile from source
+Downlaod source > delete rtsrs.exe > delete installer folder > fill .env with info > make a file called .env > fill in this info
+BOT_TOKEN=
 
-BOT_TOKEN=''
-DEV_GUILD_ID=''
-OWNER_ID=''
+DEV_GUILD_ID=
 
-# LOG CHANNELS
+OWNER_ID=
 
-USER_LOG_CHANNEL=''
-BOT_MOD_CMD_LOG_CHANNEL=''
-```
+USER_LOG_CHANNEL=
 
-3. Then run
-```ps
-deno task start
-```
+BOT_MOD_CMD_LOG_CHANNEL=
 
-**FOR BOTH WAYS MAKE SURE TO RUN THE COMMAND /resetcase AND RESTART THE BOT**
+ > cargo run in the root dir > fresh start
 
 ### 🗿 ENJOY
