@@ -1,4 +1,5 @@
 import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
+import { botName } from "../../configs.ts";
 import { ApplicationCommandOptionTypes, ApplicationCommandTypes, InteractionResponseTypes } from "../../deps.ts";
 import { addToUserBalance, getBalance } from "../Rtsrs.Currency/wallet.ts";
 import { rdomcolor } from "../Rtsrs.Utils/colors.ts";
@@ -20,7 +21,7 @@ createCommand({
         .setDescription(
           `*Your balance always changes...*\n\n>>> ***Balance:*** *${balance}*$\n ***Daily Income:*** *Not Done*\n ***Bank:***  *TODO*\n \n *Hint: you can use /beg to beg for money.*`
         )
-        .setFooter(`rtsrs • User Balance`);
+        .setFooter(`${botName} • User Balance`);
       await Bot.helpers.sendInteractionResponse(
         interaction.id,
         interaction.token,
@@ -65,7 +66,7 @@ createCommand({
         .setDescription(
           `*Your balance always changes*\n\n>>> ***Balance:*** *${balance}*$\n ***Daily Income:*** *Not Done*\n \n *Hint: you can use /beg to beg for money.*`
         )
-        .setFooter(`rtsrs • User Balance`);
+        .setFooter(`${botName} • User Balance`);
       await Bot.helpers.sendInteractionResponse(
         interaction.id,
         interaction.token,
