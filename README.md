@@ -32,7 +32,7 @@
 
 1. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
 
-2. Run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
+2. Make a folder and move the installer into the folder than run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
 
 3. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
 
