@@ -42,4 +42,6 @@
 ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
 </span>
 
+## MAC OS read Release instructions. 
+
 ### 🗿 ENJOY
