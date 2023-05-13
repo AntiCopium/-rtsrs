@@ -1,7 +1,7 @@
 // deno-lint-ignore-file prefer-const no-unused-vars
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import { configs, owner } from '../../configs.ts';
+import { botName, configs, owner } from '../../configs.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -40,40 +40,40 @@ import {
 import { createCommand, timenow } from './mod.ts';
 
 createCommand({
-  name: 'ban',
-  description: 'bans a user',
+  name: `ban`,
+  description: `bans a user`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'level',
-      description: 'level of timeout',
+      name: `level`,
+      description: `level of timeout`,
       required: true,
       choices: [
         {
-          name: 'LOW',
-          value: 'LOW',
+          name: `LOW`,
+          value: `LOW`,
         },
         {
-          name: 'MED',
-          value: 'MED',
+          name: `MED`,
+          value: `MED`,
         },
         {
-          name: 'HIGH',
-          value: 'HIGH',
+          name: `HIGH`,
+          value: `HIGH`,
         },
       ],
     },
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'reason',
-      description: 'Provide reason',
+      name: `reason`,
+      description: `Provide reason`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'A user',
+      name: `user`,
+      description: `A user`,
       required: true,
     },
   ],
@@ -81,12 +81,12 @@ createCommand({
   execute: async (Bot, interaction) => {
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
-      validatePermissions(interaction.member?.permissions!, ['BAN_MEMBERS']);
+      validatePermissions(interaction.member?.permissions!, [`BAN_MEMBERS`]);
     if (hasPerm === false) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+    if (interaction.data.options[2].value?.toString() === `999433568151421048`)
       return;
     const reason = interaction.data?.options[1].value!;
     const guildID = interaction.guildId!;
@@ -98,7 +98,7 @@ createCommand({
       .setTitle(`ACTION: BAN`)
       .setTimestamp(timenow.getTime())
       .setColor(discordInvis)
-      .setFooter(`rtsrs • User Ban • Sucsess`)
+      .setFooter(`${botName} • User Ban • Sucsess`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToBan}>\n**REASON:** ${reason}`
       );
@@ -109,11 +109,11 @@ createCommand({
     } catch (_err) {
       return;
     }
-    const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const when = format(new Date(), `yyyy-MM-dd HH:mm:ss`);
 
     const memberBan = new Embeds()
-      .setTitle('LOG: USER BAN ADD')
-      .setColor('#80780f')
+      .setTitle(`LOG: USER BAN ADD`)
+      .setColor(`#80780f`)
       .setTimestamp(timenow.getTime())
       .setDescription(
         `**WHEN (EST):** ${when}\n **MODERATOR:** <@${moderator}\n>>>> **MEMBER_ID:** ${userToBan}\n**USERNAME:** <@${userToBan}>`
@@ -137,40 +137,40 @@ createCommand({
 });
 
 createCommand({
-  name: 'kick',
-  description: 'kicks a user',
+  name: `kick`,
+  description: `kicks a user`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'level',
-      description: 'level of kick',
+      name: `level`,
+      description: `level of kick`,
       required: true,
       choices: [
         {
-          name: 'LOW',
-          value: 'LOW',
+          name: `LOW`,
+          value: `LOW`,
         },
         {
-          name: 'MED',
-          value: 'MED',
+          name: `MED`,
+          value: `MED`,
         },
         {
-          name: 'HIGH',
-          value: 'HIGH',
+          name: `HIGH`,
+          value: `HIGH`,
         },
       ],
     },
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'reason',
-      description: 'Provide reason',
+      name: `reason`,
+      description: `Provide reason`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'A user',
+      name: `user`,
+      description: `A user`,
       required: true,
     },
   ],
@@ -178,12 +178,12 @@ createCommand({
     /* CHECKS */
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
-      validatePermissions(interaction.member?.permissions!, ['KICK_MEMBERS']);
+      validatePermissions(interaction.member?.permissions!, [`KICK_MEMBERS`]);
     if (hasPerm === false) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+    if (interaction.data.options[2].value?.toString() === `999433568151421048`)
       return;
     /* INFORMATION NEEDED */
     const reason = interaction.data?.options[1].value!;
@@ -192,13 +192,13 @@ createCommand({
     // const userToKickUsername =
     const level = interaction.data.options[0].value!;
     const moderator = interaction.user.id!;
-    const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const when = format(new Date(), `yyyy-MM-dd HH:mm:ss`);
 
     const embed = new Embeds()
       .setTitle(`KICKED  👋🏿`)
       .setColor(discordInvis)
       .setTimestamp(timenow.getTime())
-      .setFooter(`rtsrs • Kick Case ${KickCurrentCase}`)
+      .setFooter(`${botName} • Kick Case ${KickCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToKick}> \n **REASON:** ${reason}`
       );
@@ -232,40 +232,40 @@ createCommand({
 });
 
 createCommand({
-  name: 'warn',
-  description: 'warns a user',
+  name: `warn`,
+  description: `warns a user`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'level',
-      description: 'level of warn',
+      name: `level`,
+      description: `level of warn`,
       required: true,
       choices: [
         {
-          name: 'LOW',
-          value: 'LOW',
+          name: `LOW`,
+          value: `LOW`,
         },
         {
-          name: 'MED',
-          value: 'MED',
+          name: `MED`,
+          value: `MED`,
         },
         {
-          name: 'HIGH',
-          value: 'HIGH',
+          name: `HIGH`,
+          value: `HIGH`,
         },
       ],
     },
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'reason',
-      description: 'Provide reason',
+      name: `reason`,
+      description: `Provide reason`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'A user',
+      name: `user`,
+      description: `A user`,
       required: true,
     },
   ],
@@ -274,13 +274,13 @@ createCommand({
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
       validatePermissions(interaction.member?.permissions!, [
-        'MANAGE_MESSAGES',
+        `MANAGE_MESSAGES`,
       ]);
     if (hasPerm === false) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+    if (interaction.data.options[2].value?.toString() === `999433568151421048`)
       return;
     /* INFORMATION NEEDED */
     const reason = interaction.data?.options[1].value!;
@@ -288,7 +288,7 @@ createCommand({
     // const userToWarnUsername =
     const level = interaction.data.options[0].value!;
     const moderator = interaction.user.id!;
-    const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const when = format(new Date(), `yyyy-MM-dd HH:mm:ss`);
 
     const data = `**TYPE:** WARN \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}\n**WHEN:** ${when}`;
     await CheckCurrentCase(CaseType.WarnCase);
@@ -299,7 +299,7 @@ createCommand({
       .setTimestamp(timenow.getTime())
       .setTitle(`ACTION: WARN`)
       .setColor(discordInvis)
-      .setFooter(`rtsrs • Warn Case ${WarnCurrentCase}`)
+      .setFooter(`${botName} • Warn Case ${WarnCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToWarn}> \n **REASON:** ${reason}`
       );
@@ -318,46 +318,46 @@ createCommand({
 });
 
 createCommand({
-  name: 'timeout',
-  description: 'mutes a user',
+  name: `timeout`,
+  description: `mutes a user`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'level',
-      description: 'level of timeout',
+      name: `level`,
+      description: `level of timeout`,
       required: true,
       choices: [
         {
-          name: 'LOW',
-          value: 'LOW',
+          name: `LOW`,
+          value: `LOW`,
         },
         {
-          name: 'MED',
-          value: 'MED',
+          name: `MED`,
+          value: `MED`,
         },
         {
-          name: 'HIGH',
-          value: 'HIGH',
+          name: `HIGH`,
+          value: `HIGH`,
         },
       ],
     },
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'reason',
-      description: 'Provide reason',
+      name: `reason`,
+      description: `Provide reason`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'A user',
+      name: `user`,
+      description: `A user`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.Number,
-      name: 'mintime',
-      description: 'A time limit in min',
+      name: `mintime`,
+      description: `A time limit in min`,
       required: true,
     },
   ],
@@ -365,12 +365,12 @@ createCommand({
   execute: async (Bot, interaction) => {
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
-      validatePermissions(interaction.member?.permissions!, ['MUTE_MEMBERS']);
+      validatePermissions(interaction.member?.permissions!, [`MUTE_MEMBERS`]);
     if (hasPerm === false) return;
     if (interaction?.data?.options === undefined) return;
     if (interaction?.guildId === undefined) return;
     if (interaction?.user?.id === undefined) return;
-    if (interaction.data.options[2].value?.toString() === '999433568151421048')
+    if (interaction.data.options[2].value?.toString() === `999433568151421048`)
       return;
     const reason = interaction.data?.options[1].value!;
     const guildID = interaction.guildId!;
@@ -378,7 +378,7 @@ createCommand({
     const userToMute = interaction.data?.options[2].value?.toString()!;
     const timeinMin = interaction.data?.options[3].value!;
     const level = interaction.data.options[0].value!;
-    const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const when = format(new Date(), `yyyy-MM-dd HH:mm:ss`);
 
     const data = `**TYPE:** TIMEOUT \n **LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason} \n **WHEN:** ${when}`;
 
@@ -390,7 +390,7 @@ createCommand({
       .setTitle(`ACTION: TIMEOUT`)
       .setTimestamp(timenow.getTime())
       .setColor(discordInvis)
-      .setFooter(`rtsrs • Timeout Case ${TimeoutCurrentCase}`)
+      .setFooter(`${botName} • Timeout Case ${TimeoutCurrentCase}`)
       .setDescription(
         `**LEVEL:** ${level}\n \n**MODERATOR:** <@${moderator}> \n >>> **USER:** <@${userToMute}>\n**TIME:** ${timeinMin}m\n **REASON:** ${reason}`
       );
@@ -403,8 +403,8 @@ createCommand({
     }
 
     const memberTimeout = new Embeds()
-      .setTitle('LOG: TIMEDOUT')
-      .setColor('#80780f')
+      .setTitle(`LOG: TIMEDOUT`)
+      .setColor(`#80780f`)
       .setTimestamp(timenow.getTime())
       .setDescription(
         `**WHEN (EST):** ${when}\n **MODERATOR:** <@${moderator}\n>>>> **MEMBER_ID:** ${userToMute}\n**USERNAME:** <@${userToMute}>`
@@ -428,29 +428,29 @@ createCommand({
 });
 
 createCommand({
-  name: 'violations',
-  description: 'reviews violations',
+  name: `violations`,
+  description: `reviews violations`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'user',
+      name: `user`,
+      description: `user`,
       required: true,
     },
     // {
     //   type: ApplicationCommandOptionTypes.String,
-    //   name: 'table',
-    //   description: 'What Tables to Search from',
+    //   name: `table`,
+    //   description: `What Tables to Search from`,
     //   required: true,
     //   choices: [
     //     {
-    //       name: 'WarnViolations',
-    //       value: 'WarnViolations',
+    //       name: `WarnViolations`,
+    //       value: `WarnViolations`,
     //     },
     //     {
-    //       name: 'TimeoutViolations',
-    //       value: 'TimeoutViolations',
+    //       name: `TimeoutViolations`,
+    //       value: `TimeoutViolations`,
     //     },
     //   ],
     // },
@@ -472,13 +472,13 @@ createCommand({
       await getdbValue(user.toString(), KickViolations)
     );
 
-    const day = format(new Date(), 'HH:mm');
+    const day = format(new Date(), `HH:mm`);
     let StartEmbed = new Embeds()
       .setTitle(`Violations`)
       .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`>>> Page 0 of 3 Click *next page*`)
-      .setFooter(`rtsrs • Page 0 of 3`);
+      .setFooter(`${botName} • Page 0 of 3`);
 
     let embed1 = new Embeds()
       .setTitle(`Violations Timeout`)
@@ -486,16 +486,16 @@ createCommand({
       .setDescription(
         `**Timeout Violations Cases for <@${user}>.** \n \n >>> **Case Numbers: ${data1}** \n \n *Hint: you can use /case (casenumber) for more info*`
       )
-      .setFooter(`rtsrs • Violations for <@${user}> • ${day}`)
+      .setFooter(`${botName} • Violations for <@${user}> • ${day}`)
       .addEmbed()
       .setTitle(`Violations Warn`)
       .setColor(rdomcolor())
       .setDescription(
         `**Warn Violations Cases for <@${user}>.** \n \n >>> **Case Numbers: ${data2}** \n \n *Hint: you can use /case (casenumber) for more info*`
       )
-      .setFooter(`rtsrs • Violations for <@${user}> • ${day}`)
+      .setFooter(`${botName} • Violations for <@${user}> • ${day}`)
       .addEmbed()
-      .setFooter(`rtsrs • Violations for <@${user}> • ${day}`)
+      .setFooter(`${botName} • Violations for <@${user}> • ${day}`)
       .setTitle(`Violations Kick`)
       .setColor(rdomcolor())
       .setDescription(
@@ -517,33 +517,33 @@ createCommand({
 });
 
 createCommand({
-  name: 'case',
-  description: 'reviews a timeout case',
+  name: `case`,
+  description: `reviews a timeout case`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.Integer,
-      name: 'casenumber',
-      description: 'Case number',
+      name: `casenumber`,
+      description: `Case number`,
       required: true,
     },
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'table',
-      description: 'What Tables to Search from',
+      name: `table`,
+      description: `What Tables to Search from`,
       required: true,
       choices: [
         {
-          name: 'WarnViolations',
-          value: 'WarnViolations',
+          name: `WarnViolations`,
+          value: `WarnViolations`,
         },
         {
-          name: 'TimeoutViolations',
-          value: 'TimeoutViolations',
+          name: `TimeoutViolations`,
+          value: `TimeoutViolations`,
         },
         {
-          name: 'KickCases',
-          value: 'KickCases',
+          name: `KickCases`,
+          value: `KickCases`,
         },
       ],
     },
@@ -554,14 +554,14 @@ createCommand({
     const number = interaction.data.options[0].value!;
     const table = interaction.data.options[1].value!;
 
-    if (table === 'TimeoutViolations') {
+    if (table === `TimeoutViolations`) {
       if ((await dbHasValue(number.toString(), TimeoutCase)) === false) {
         return;
       }
 
       let data = await getdbValue(number.toString(), TimeoutCase);
 
-      const day = format(new Date(), 'HH:mm');
+      const day = format(new Date(), `HH:mm`);
       embed = new Embeds()
         .setTitle(`case ${number}`)
         .setTimestamp(timenow.getTime())
@@ -569,39 +569,39 @@ createCommand({
         .setDescription(
           `**If you need further info contact the Moderator.** \n \n ${data}`
         )
-        .setFooter(`rtsrs • Case Review Of ${number}`);
+        .setFooter(`${botName} • Case Review Of ${number}`);
     }
-    if (table === 'WarnViolations') {
+    if (table === `WarnViolations`) {
       if ((await dbHasValue(number.toString(), WarnCase)) === false) {
         return;
       }
 
       let data = await getdbValue(number.toString(), WarnCase);
 
-      const day = format(new Date(), 'HH:mm');
+      const day = format(new Date(), `HH:mm`);
       embed = new Embeds()
         .setTitle(`case ${number}`)
         .setColor(rdomcolor())
         .setDescription(
           `**If you need further info contact the Moderator.** \n \n ${data}`
         )
-        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
+        .setFooter(`${botName} • Case Review Of ${number} • ${day}`);
     }
-    if (table === 'KickCases') {
+    if (table === `KickCases`) {
       if ((await dbHasValue(number.toString(), KickCase)) === false) {
         return;
       }
 
       let data = await getdbValue(number.toString(), KickCase);
 
-      const day = format(new Date(), 'HH:mm');
+      const day = format(new Date(), `HH:mm`);
       embed = new Embeds()
         .setTitle(`case ${number}`)
         .setColor(rdomcolor())
         .setDescription(
           `**If you need further info contact the Moderator.** \n \n ${data}`
         )
-        .setFooter(`rtsrs • Case Review Of ${number} • ${day}`);
+        .setFooter(`${botName} • Case Review Of ${number} • ${day}`);
     }
 
     await Bot.helpers.sendInteractionResponse(
@@ -619,14 +619,14 @@ createCommand({
 });
 
 createCommand({
-  name: 'delviolation',
-  description: 'removes violations from user',
+  name: `delviolation`,
+  description: `removes violations from user`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'user to remove',
+      name: `user`,
+      description: `user to remove`,
       required: true,
     },
   ],
@@ -634,7 +634,7 @@ createCommand({
     if (interaction?.data?.options === undefined) return;
     const hasPerm =
       Boolean(interaction?.member?.permissions) &&
-      validatePermissions(interaction.member?.permissions!, ['ADMINISTRATOR']);
+      validatePermissions(interaction.member?.permissions!, [`ADMINISTRATOR`]);
     if (hasPerm === false) return;
 
     const x = interaction.data.options[0].value!;
@@ -654,7 +654,7 @@ createCommand({
       .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`>>> **Violation Cases for <@${x}> Has been removed**`)
-      .setFooter(`rtsrs • Violations removal for <@${x}>`);
+      .setFooter(`${botName} • Violations removal for <@${x}>`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
@@ -669,8 +669,8 @@ createCommand({
 });
 
 createCommand({
-  name: 'resetcase',
-  description: 'resetcase Owner NEEDS TO RESTART BOT',
+  name: `resetcase`,
+  description: `resetcase Owner NEEDS TO RESTART BOT`,
   type: ApplicationCommandTypes.ChatInput,
   devOnly: true,
 
@@ -678,14 +678,14 @@ createCommand({
     try {
       if (interaction?.member === undefined) return;
       if (interaction.member.id.toString() === configs.owner) {
-        await dbChangeData('WarnCurrentCase', 0, WarnCase);
-        await dbChangeData('TimeoutCurrentCase', 0, TimeoutCase);
-        await dbChangeData('KickCurrentCase', 0, KickCase);
-        console.log(await getdbValue('TimeoutCurrentCase', TimeoutCase));
-        console.log(await getdbValue('WarnCurrentCase', WarnCase));
-        log.warn('Resseted Mute case');
-        log.warn('Resseted Warn case');
-        log.fatal('RESTART BOT');
+        await dbChangeData(`WarnCurrentCase`, 0, WarnCase);
+        await dbChangeData(`TimeoutCurrentCase`, 0, TimeoutCase);
+        await dbChangeData(`KickCurrentCase`, 0, KickCase);
+        console.log(await getdbValue(`TimeoutCurrentCase`, TimeoutCase));
+        console.log(await getdbValue(`WarnCurrentCase`, WarnCase));
+        log.warn(`Resseted Mute case`);
+        log.warn(`Resseted Warn case`);
+        log.fatal(`RESTART BOT`);
       } else {
         return;
       }
@@ -695,7 +695,7 @@ createCommand({
         {
           type: InteractionResponseTypes.ChannelMessageWithSource,
           data: {
-            content: 'Reseted cases to 0 ( owner needs to restart bot )',
+            content: `Reseted cases to 0 ( owner needs to restart bot )`,
           },
         }
       );
@@ -703,7 +703,7 @@ createCommand({
     } catch {
     } finally {
       // deno-lint-ignore no-unsafe-finally
-      throw 'RESTART BOT';
+      throw `RESTART BOT`;
     }
   },
 });
@@ -717,14 +717,14 @@ minToMilli;
 configs;
 Bot;
 createCommand({
-  name: 'eval',
-  description: 'eval',
+  name: `eval`,
+  description: `eval`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'stuff',
-      description: 'Runs the sript',
+      name: `stuff`,
+      description: `Runs the sript`,
       required: true,
     },
   ],
@@ -753,16 +753,16 @@ createCommand({
     const stuff = interaction.data.options[0].value?.toString()!;
     try {
       eval(
-        'try{eval((async () => {' +
+        `try{eval((async () => {` +
           stuff +
-          '}))()}catch(aysd23sdm){console.log(aysd23sdm);}'
+          `}))()}catch(aysd23sdm){console.log(aysd23sdm);}`
       );
     } catch (err) {
       const embed = new Embeds()
         .setTitle(`EVAL: ERROR`)
         .setColor(discordInvis)
         .setTimestamp(timenow.getTime())
-        .setFooter(`rtsrs • Eval`)
+        .setFooter(`${botName} • Eval`)
         .setDescription(`${err}`);
       console.log(err);
       await Bot.helpers.sendInteractionResponse(
@@ -781,14 +781,14 @@ createCommand({
 });
 
 createCommand({
-  name: 'userinfo',
-  description: 'userinfo',
+  name: `userinfo`,
+  description: `userinfo`,
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'mention user',
+      name: `user`,
+      description: `mention user`,
       required: true,
     },
   ],
@@ -799,15 +799,15 @@ createCommand({
 
     const msg = JSON.stringify(
       Object.fromEntries(interaction.data.resolved.users),
-      (key, value) => (typeof value === 'bigint' ? value.toString() : value)
+      (key, value) => (typeof value === `bigint` ? value.toString() : value)
     );
 
     const embed = new Embeds()
-      .setTitle('rtsrs user info')
+      .setTitle(`${botName} user info`)
       .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`${msg}`)
-      .setFooter(`rtsrs bot`);
+      .setFooter(`${botName} bot`);
 
     const user = interaction.user.id;
     const guildid: bigint = interaction.guildId;

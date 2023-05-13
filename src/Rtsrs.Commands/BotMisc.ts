@@ -3,7 +3,7 @@ import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
 import axiod from "https://deno.land/x/axiod@0.26.2/mod.ts";
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
 import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
-import { owner } from '../../configs.ts';
+import { botName, owner } from '../../configs.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -35,10 +35,10 @@ createCommand({
 
     const embed = new Embeds()
       .setTimestamp(timenow.getTime())
-      .setTitle('rtsrs random number success')
+      .setTitle(`${botName} random number success`)
       .setDescription(`**Generated number**: ${n}\n\nRange: ${int}`)
       .setColor(rdomcolor())
-      .setFooter(`rtsrs bot`);
+      .setFooter(`${botName} bot`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
@@ -54,18 +54,18 @@ createCommand({
 
 createCommand({
   name: 'ping',
-  description: 'notifys rtsrs erves to send ping request.',
+  description: `notifys ${botName} erves to send ping request.`,
   type: ApplicationCommandTypes.ChatInput,
   execute: async (Bot, interaction) => {
     // const hasPerm = Boolean(interaction?.member?.permissions) && validatePermissions(interaction.member?.permissions, ["ADMINISTRATOR"]);
     const ping = Date.now() - snowflakeToTimestamp(interaction.id);
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
-      .setTitle('rtsrs current ping')
+      .setTitle(`${botName} current ping`)
       .setTimestamp(timenow.getTime())
       .setColor(rdomcolor())
       .setDescription(`${ping} (ms)`)
-      .setFooter(`rtsrs bot`);
+      .setFooter(`${botName} bot`);
     await Bot.helpers.sendInteractionResponse(
       interaction.id,
       interaction.token,
@@ -80,36 +80,36 @@ createCommand({
 });
 
 createCommand({
-  name: 'doa',
-  description: 'rtsrs has 1 in 8 chance of dead',
+  name: `doa`,
+  description: `${botName} has 1 in 8 chance of dead`,
   type: ApplicationCommandTypes.ChatInput,
   devOnly: true,
   options: [
     {
       type: ApplicationCommandOptionTypes.User,
-      name: 'user',
-      description: 'a user to test',
+      name: `user`,
+      description: `a user to test`,
       required: true,
     },
   ],
   execute: async (Bot, interaction) => {
-    const day = format(new Date(), 'HH:mm');
+    const day = format(new Date(), `HH:mm`);
     if (interaction.data?.options === undefined) {
       return;
     }
     const user = interaction.data?.options[0].value;
     const embedDead = new Embeds()
-      .setTitle('rtsrs dead or alive success')
+      .setTitle(`${botName} dead or alive success`)
       .setTimestamp(timenow.getTime())
-      .setColor('#880808')
+      .setColor(`#880808`)
       .setDescription(`<@${user}> \n \n result: 💀🔫 you died nigga`)
-      .setFooter(`rtsrs bot`);
+      .setFooter(`${botName} bot`);
 
     const embedAlive = new Embeds()
-      .setTitle('rtsrs dead or alive success')
-      .setColor('#125e94')
+      .setTitle(`${botName} dead or alive success`)
+      .setColor(`#125e94`)
       .setDescription(`<@${user}> \n \n result: 😮‍💨 alive`)
-      .setFooter(`rtsrs bot ${day}`);
+      .setFooter(`${botName} bot ${day}`);
 
     const r = new mod.Random().pick(
       embedAlive,
@@ -136,112 +136,112 @@ createCommand({
 });
 
 createCommand({
-  name: 'anime',
-  description: 'Generates a random anime girl',
+  name: `anime`,
+  description: `Generates a random anime girl`,
   type: ApplicationCommandTypes.ChatInput,
   devOnly: false,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'type',
-      description: 'Type of generation',
+      name: `type`,
+      description: `Type of generation`,
       required: true,
       choices: [
         {
-          name: 'RANDOM',
-          value: 'RANDOM',
+          name: `RANDOM`,
+          value: `RANDOM`,
         },
         {
-          name: 'MAID',
-          value: 'MAID',
+          name: `MAID`,
+          value: `MAID`,
         },
         {
-          name: 'WAIFU',
-          value: 'WAIFU',
+          name: `WAIFU`,
+          value: `WAIFU`,
         },
         {
-          name: 'SELFIE',
-          value: 'SELFIE',
+          name: `SELFIE`,
+          value: `SELFIE`,
         },
         {
-          name: 'MILKERS',
-          value: 'MILKERS',
+          name: `MILKERS`,
+          value: `MILKERS`,
         },
         {
-          name: 'UNIFORM',
-          value: 'UNIFORM',
+          name: `UNIFORM`,
+          value: `UNIFORM`,
         },
         {
-          name: 'ASS',
-          value: 'ASS',
+          name: `ASS`,
+          value: `ASS`,
         },
         {
-          name: 'ECCHI',
-          value: 'ECCHI',
+          name: `ECCHI`,
+          value: `ECCHI`,
         },
         {
-          name: 'HENTAI',
-          value: 'HENTAI',
+          name: `HENTAI`,
+          value: `HENTAI`,
         },
         {
-          name: 'ERO',
-          value: 'ERO',
+          name: `ERO`,
+          value: `ERO`,
         },
         {
-          name: 'TITS',
-          value: 'TITS',
+          name: `TITS`,
+          value: `TITS`,
         },
         {
-          name: 'MILF',
-          value: 'MILF',
+          name: `MILF`,
+          value: `MILF`,
         },
         {
-          name: 'ORAL',
-          value: 'ORAL',
+          name: `ORAL`,
+          value: `ORAL`,
         },
         {
-          name: 'CUM',
-          value: 'CUM',
+          name: `CUM`,
+          value: `CUM`,
         },
         {
-          name: 'LEWD',
-          value: 'LEWD',
+          name: `LEWD`,
+          value: `LEWD`,
         },
         {
-          name: 'LESBIAN',
-          value: 'LESBIAN',
+          name: `LESBIAN`,
+          value: `LESBIAN`,
         },
         {
-          name: 'SEXY',
-          value: 'SEXY',
+          name: `SEXY`,
+          value: `SEXY`,
         },
         {
-          name: 'HENTAI2',
-          value: 'HENTAI2',
+          name: `HENTAI2`,
+          value: `HENTAI2`,
         },
         {
-          name: 'BJ',
-          value: 'BJ',
+          name: `BJ`,
+          value: `BJ`,
         },
         {
-          name: 'BOOBS',
-          value: 'BOOBS',
+          name: `BOOBS`,
+          value: `BOOBS`,
         },
         {
-          name: 'PUSSY',
-          value: 'PUSSY',
+          name: `PUSSY`,
+          value: `PUSSY`,
         },
         {
-          name: 'HOLO',
-          value: 'HOLO',
+          name: `HOLO`,
+          value: `HOLO`,
         },
         {
-          name: 'NEKO',
-          value: 'NEKO',
+          name: `NEKO`,
+          value: `NEKO`,
         },
         {
-          name: 'ANAL',
-          value: 'ANAL',
+          name: `ANAL`,
+          value: `ANAL`,
         },
       ],
     },
@@ -249,17 +249,17 @@ createCommand({
   execute: async (Bot, interaction) => {
     const type = interaction.data?.options![0].value!;
     switch (type) {
-      case 'RANDOM': {
+      case `RANDOM`: {
         await axiod
-          .get('https://api.waifu.im/search')
+          .get(`https://api.waifu.im/search`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('RANDOM Generated')
+              .setTitle(`RANDOM Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -275,17 +275,17 @@ createCommand({
           });
         break;
       }
-      case 'UNIFORM': {
+      case `UNIFORM`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=uniform')
+          .get(`https://api.waifu.im/search/?included_tags=uniform`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('UNIFORM Generated')
+              .setTitle(`UNIFORM Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -301,17 +301,17 @@ createCommand({
           });
         break;
       }
-      case 'MAID': {
+      case `MAID`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=maid')
+          .get(`https://api.waifu.im/search/?included_tags=maid`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('MAID Generated')
+              .setTitle(`MAID Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -327,17 +327,17 @@ createCommand({
           });
         break;
       }
-      case 'WAIFU': {
+      case `WAIFU`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=waifu')
+          .get(`https://api.waifu.im/search/?included_tags=waifu`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('WAIFU Generated')
+              .setTitle(`WAIFU Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -353,17 +353,17 @@ createCommand({
           });
         break;
       }
-      case 'SELFIE': {
+      case `SELFIE`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=selfies')
+          .get(`https://api.waifu.im/search/?included_tags=selfies`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('SELFIE Generated')
+              .setTitle(`SELFIE Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -379,17 +379,17 @@ createCommand({
           });
         break;
       }
-      case 'MILKERS': {
+      case `MILKERS`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=oppai')
+          .get(`https://api.waifu.im/search/?included_tags=oppai`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('MILKERS Generated')
+              .setTitle(`MILKERS Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -405,17 +405,17 @@ createCommand({
           });
         break;
       }
-      case 'ASS': {
+      case `ASS`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=ass')
+          .get(`https://api.waifu.im/search/?included_tags=ass`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('ASS Generated')
+              .setTitle(`ASS Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -431,17 +431,17 @@ createCommand({
           });
         break;
       }
-      case 'ECCHI': {
+      case `ECCHI`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=ecchi')
+          .get(`https://api.waifu.im/search/?included_tags=ecchi`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('ECCHI Generated')
+              .setTitle(`ECCHI Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -457,17 +457,17 @@ createCommand({
           });
         break;
       }
-      case 'HENTAI': {
+      case `HENTAI`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=hentai&gif=true')
+          .get(`https://api.waifu.im/search/?included_tags=hentai&gif=true`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('HENTAI Generated')
+              .setTitle(`HENTAI Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -483,17 +483,17 @@ createCommand({
           });
         break;
       }
-      case 'ERO': {
+      case `ERO`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=ero')
+          .get(`https://api.waifu.im/search/?included_tags=ero`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('ERO Generated')
+              .setTitle(`ERO Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -509,17 +509,17 @@ createCommand({
           });
         break;
       }
-      case 'TITS': {
+      case `TITS`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=paizuri')
+          .get(`https://api.waifu.im/search/?included_tags=paizuri`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('TITS Generated')
+              .setTitle(`TITS Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -535,17 +535,17 @@ createCommand({
           });
         break;
       }
-      case 'MILF': {
+      case `MILF`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=milf')
+          .get(`https://api.waifu.im/search/?included_tags=milf`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('MILF Generated')
+              .setTitle(`MILF Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -561,17 +561,17 @@ createCommand({
           });
         break;
       }
-      case 'ORAL': {
+      case `ORAL`: {
         await axiod
-          .get('https://api.waifu.im/search/?included_tags=oral')
+          .get(`https://api.waifu.im/search/?included_tags=oral`)
           .then(async (response) => {
-            const img = response.data['images'][0]['url'];
+            const img = response.data[`images`][0][`url`];
             const embed = new Embeds()
-              .setTitle('ORAL Generated')
+              .setTitle(`ORAL Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -587,17 +587,17 @@ createCommand({
           });
         break;
       }
-      case 'CUM': {
+      case `CUM`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/cum')
+          .get(`http://api.nekos.fun:8080/api/cum`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('CUM Generated')
+              .setTitle(`CUM Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -613,17 +613,17 @@ createCommand({
           });
         break;
       }
-      case 'LEWD': {
+      case `LEWD`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/lewd')
+          .get(`http://api.nekos.fun:8080/api/lewd`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('LEWD Generated')
+              .setTitle(`LEWD Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -639,17 +639,17 @@ createCommand({
           });
         break;
       }
-      case 'LESBIAN': {
+      case `LESBIAN`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/lesbian')
+          .get(`http://api.nekos.fun:8080/api/lesbian`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('LESBIAN Generated')
+              .setTitle(`LESBIAN Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -665,18 +665,18 @@ createCommand({
           });
         break;
       }
-      case 'SEXY': {
+      case `SEXY`: {
         if (interaction.user.id.toString() !== owner) return;
         await axiod
-          .get('http://api.nekos.fun:8080/api/feet')
+          .get(`http://api.nekos.fun:8080/api/feet`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('SEXY Generated')
+              .setTitle(`SEXY Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -692,17 +692,17 @@ createCommand({
           });
         break;
       }
-      case 'HENTAI2': {
+      case `HENTAI2`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/hentai')
+          .get(`http://api.nekos.fun:8080/api/hentai`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('HENTAI2 Generated')
+              .setTitle(`HENTAI2 Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -718,17 +718,17 @@ createCommand({
           });
         break;
       }
-      case 'BJ': {
+      case `BJ`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/bj')
+          .get(`http://api.nekos.fun:8080/api/bj`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('BJ Generated')
+              .setTitle(`BJ Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -744,17 +744,17 @@ createCommand({
           });
         break;
       }
-      case 'BOOBS': {
+      case `BOOBS`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/boobs')
+          .get(`http://api.nekos.fun:8080/api/boobs`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('BOOBS Generated')
+              .setTitle(`BOOBS Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -770,17 +770,17 @@ createCommand({
           });
         break;
       }
-      case 'PUSSY': {
+      case `PUSSY`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/pussy')
+          .get(`http://api.nekos.fun:8080/api/pussy`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('PUSSY Generated')
+              .setTitle(`PUSSY Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -796,17 +796,17 @@ createCommand({
           });
         break;
       }
-      case 'HOLO': {
+      case `HOLO`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/holo')
+          .get(`http://api.nekos.fun:8080/api/holo`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('HOLO Generated')
+              .setTitle(`HOLO Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -822,17 +822,17 @@ createCommand({
           });
         break;
       }
-      case 'NEKO': {
+      case `NEKO`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/neko')
+          .get(`http://api.nekos.fun:8080/api/neko`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('NEKO Generated')
+              .setTitle(`NEKO Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,
@@ -848,17 +848,17 @@ createCommand({
           });
         break;
       }
-      case 'ANAL': {
+      case `ANAL`: {
         await axiod
-          .get('http://api.nekos.fun:8080/api/anal')
+          .get(`http://api.nekos.fun:8080/api/anal`)
           .then(async (response) => {
-            const img = response.data['image'];
+            const img = response.data[`image`];
             const embed = new Embeds()
-              .setTitle('ANAL Generated')
+              .setTitle(`ANAL Generated`)
               .setImage(img)
               .setColor(discordInvis)
               .setTimestamp(timenow.getTime())
-              .setFooter('rtsrs anime');
+              .setFooter(`${botName} anime`);
 
             await Bot.helpers.sendInteractionResponse(
               interaction.id,

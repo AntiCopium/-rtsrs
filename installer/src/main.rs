@@ -60,6 +60,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     println!("Repo cloned");
 
+    println!("Enter your bot name: ");
+    let mut botName_input = String::new();
+    std::io::stdin().read_line(&mut botName_input).unwrap();
+
+
     println!("Enter your bot token: ");
     let mut token_input = String::new();
     std::io::stdin().read_line(&mut token_input).unwrap();
@@ -82,12 +87,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let final_env = format!(
         "
+    BOT_NAME='{}'
     BOT_TOKEN='{}'
     DEV_GUILD_ID='{}'
     OWNER_ID='{}'
     
     USER_LOG_CHANNEL='{}'
     BOT_MOD_CMD_LOG_CHANNEL='{}'",
+        botName_input.trim(),
         token_input.trim(),
         guild_id_input.trim(),
         owner_id_input.trim(),
