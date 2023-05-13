@@ -1,10 +1,9 @@
 import { startBot } from './deps.ts';
 import { fileLoader, importDirectory } from './src/Rtsrs.Utils/loader.ts';
-import log from './src/Rtsrs.Utils/logger.ts';
 import { updateApplicationCommands } from './src/Rtsrs.Utils/updateCommands.ts';
 // setup db
 import { Bot } from './rtsrs.ts';
-import { initCoin } from './src/Rtsrs.Currency/wallet/wallet.ts';
+import { initCoin } from './src/Rtsrs.Currency/wallet.ts';
 import './src/Rtsrs.Database/mod.ts';
 import {
   initCase,
@@ -17,7 +16,7 @@ await Promise.all(
   [
     './src/Rtsrs.Commands',
     './src/Rtsrs.Events',
-    './src/Rtsrs.Currency',
+    './src/Rtsrs.Currency'
     // "./src/Rtsrs.tasks",
   ].map((path) => importDirectory(Deno.realPathSync(path)))
 );

@@ -716,6 +716,9 @@ MillitoMin;
 minToMilli;
 configs;
 Bot;
+botName;
+timenow;
+Embeds;
 createCommand({
   name: `eval`,
   description: `eval`,

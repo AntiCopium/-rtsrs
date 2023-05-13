@@ -1,6 +1,7 @@
 // deno-lint-ignore-file
 import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
-import * as db from '../../Rtsrs.Database/mod.ts';
+import * as db from '../Rtsrs.Database/mod.ts';
+import log from "../Rtsrs.Utils/logger.ts";
 
 export const UserCurrencyWallet = new KwikTable(db.kwik, 'UserCurrencyWallet');
 
@@ -26,5 +27,7 @@ export async function addToUserBalance(user: any, amount: any) {
 }
 
 export async function initCoin() {
-  await db.CreateTable('UserCurrencyWallet');
+  await db.CreateTable('UserCurrencyWallet').then(() => {
+    log.info('UserCurrencyWallet table created...');
+  });
 }
