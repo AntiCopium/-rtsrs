@@ -16,6 +16,9 @@ export interface Command {
   devOnly?: boolean;
   /** The options for this command */
   options?: ApplicationCommandOption[];
+
+  /** The cooldown for this command in seconds */
+  cooldown?: number;
   /** This will be executed when the command is run. */
   execute: (bot: BotClient, interaction: Interaction) => unknown;
 }

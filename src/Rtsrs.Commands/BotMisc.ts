@@ -10,8 +10,10 @@ import {
   InteractionResponseTypes,
 } from '../../deps.ts';
 import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
+import { CooldownManager } from "../Rtsrs.Utils/cooldown.ts";
 import { snowflakeToTimestamp } from '../Rtsrs.Utils/helpers.ts';
 import { createCommand, timenow } from './mod.ts';
+const cooldownManager = new CooldownManager();
 
 createCommand({
   name: 'randomnumber',
@@ -58,6 +60,32 @@ createCommand({
   type: ApplicationCommandTypes.ChatInput,
   execute: async (Bot, interaction) => {
     // const hasPerm = Boolean(interaction?.member?.permissions) && validatePermissions(interaction.member?.permissions, ["ADMINISTRATOR"]);
+    const userId = interaction.user?.id;
+    const commandName = 'ping';
+    const cooldownTime = 3; // seconds
+
+
+    if (userId === undefined) return;
+    if (cooldownManager.isOnCooldown(String(userId), commandName)) {
+      const cooldownSeconds = Math.ceil(
+        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! - Date.now()) / 1000
+      );
+      const embedcooled = new Embeds()
+      .setTitle(`Cooldown`)
+      .setTimestamp(timenow.getTime())
+      .setColor('#bf2c2c')
+      .setDescription(`Please wait ${cooldownSeconds} second(s) before using this command again.`)
+      .setFooter(`${botName} • Cooldown`);
+      await Bot.helpers.sendInteractionResponse(interaction.id, interaction.token, {
+        type: InteractionResponseTypes.ChannelMessageWithSource,
+        data: {
+          embeds: embedcooled,
+          flags: 64,
+        },
+      });
+      return;
+    }
+   
     const ping = Date.now() - snowflakeToTimestamp(interaction.id);
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
@@ -76,6 +104,7 @@ createCommand({
         },
       }
     );
+    cooldownManager.setCooldown(String(userId), commandName, cooldownTime);
   },
 });
 
@@ -248,6 +277,30 @@ createCommand({
   ],
   execute: async (Bot, interaction) => {
     const type = interaction.data?.options![0].value!;
+    const userId = interaction.user?.id;
+    const commandName = 'anime';
+    const cooldownTime = 2; // seconds
+
+    if (userId === undefined) return;
+    if (cooldownManager.isOnCooldown(String(userId), commandName)) {
+      const cooldownSeconds = Math.ceil(
+        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! - Date.now()) / 1000
+      );
+      const embedcooled = new Embeds()
+      .setTitle(`Cooldown`)
+      .setTimestamp(timenow.getTime())
+      .setColor('#bf2c2c')
+      .setDescription(`Please wait ${cooldownSeconds} second(s) before using this command again.`)
+      .setFooter(`${botName} • Cooldown`);
+      await Bot.helpers.sendInteractionResponse(interaction.id, interaction.token, {
+        type: InteractionResponseTypes.ChannelMessageWithSource,
+        data: {
+          emebds: embedcooled,
+          flags: 64,
+        },
+      });
+      return;
+    }
     switch (type) {
       case `RANDOM`: {
         await axiod
@@ -875,5 +928,6 @@ createCommand({
         break;
       }
     }
+    cooldownManager.setCooldown(String(userId), commandName, cooldownTime);
   },
 });

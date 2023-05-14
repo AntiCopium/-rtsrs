@@ -12,7 +12,7 @@ export async function getBalance(user: bigint): Promise<number> {
   return await db.getdbValue(user.toString(), UserCurrencyWallet);
 }
 
-export async function addToUserBalance(user: any, amount: any) {
+export async function addToUserBalance(user: any, amount: any): Promise<number> {
   if ((await db.dbHasValue(user.toString(), UserCurrencyWallet)) === false) {
     await db.setdbValue(user.toString(), UserCurrencyWallet, 0);
   }
@@ -22,6 +22,20 @@ export async function addToUserBalance(user: any, amount: any) {
     UserCurrencyWallet
   );
   const newBal: number = oldBal + amount;
+  await db.dbChangeData(user.toString(), newBal, UserCurrencyWallet);
+  return newBal;
+}
+
+export async function subtractToUserBalance(user: any, amount: any): Promise<number> {
+  if ((await db.dbHasValue(user.toString(), UserCurrencyWallet)) === false) {
+    await db.setdbValue(user.toString(), UserCurrencyWallet, 0);
+  }
+
+  const oldBal: number = await db.getdbValue(
+    user.toString(),
+    UserCurrencyWallet
+  );
+  const newBal: number = oldBal - amount;
   await db.dbChangeData(user.toString(), newBal, UserCurrencyWallet);
   return newBal;
 }
