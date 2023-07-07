@@ -46,8 +46,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         println!("Deno Already Installed");
     }
-    let repo_url = "https://github.com/cantevenread/-rtsrs.git";
-    let repo_name = "-rtsrs";
+    let repo_url = "https://github.com/cantevenread/rtsrs.git";
+    let repo_name = "rtsrs";
 
     let current_dir = env::current_dir().unwrap();
     let repo_dir = current_dir.join(repo_name);
@@ -61,8 +61,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Repo cloned");
 
     println!("Enter your bot name: ");
-    let mut botName_input = String::new();
-    std::io::stdin().read_line(&mut botName_input).unwrap();
+    let mut botname_input = String::new();
+    std::io::stdin().read_line(&mut botname_input).unwrap();
 
 
     println!("Enter your bot token: ");
@@ -94,7 +94,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     USER_LOG_CHANNEL='{}'
     BOT_MOD_CMD_LOG_CHANNEL='{}'",
-        botName_input.trim(),
+        botname_input.trim(),
         token_input.trim(),
         guild_id_input.trim(),
         owner_id_input.trim(),

@@ -58,12 +58,11 @@ createCommand({
       if (interaction.data?.options === undefined) return;
       const userToAdd = interaction.data.options[0].value!;
       const amount = interaction.data.options[1].value!;
-      const userUsername = interaction.user.username;
       const balance = await addToUserBalance(userToAdd, amount);
       const embed = new Embeds()
         .setColor(rdomcolor())
         .setTimestamp(timenow.getTime())
-        .setTitle(`${userUsername}'s New  Balance`)
+        .setTitle(`${userToAdd}'s New  Balance`)
         .setDescription(
           `*Your balance always changes*\n\n>>> ***Balance:*** *${balance}*$\n ***Daily Income:*** *Not Done*\n \n *Hint: you can use /beg to beg for money.*`
         )
