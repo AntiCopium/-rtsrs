@@ -53,7 +53,7 @@ $ git clone https://github.com/cantevenread/rtsrs.git
 ```
 3. Delete the installer folder, and rtsrs.exe ( since you will compile it your own )
 
-4. Edit the .env file and copy paste the info below and fill in the info in between the quotes.
+4. Make a .env file ( name a file `.env` ) and copy paste the info below and fill in the info in between the quotes.
 `ex. BOT_NAME='BOT'`
 
 ```
