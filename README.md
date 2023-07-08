@@ -28,7 +28,7 @@
 <a href="#"><img src="https://user-images.githubusercontent.com/90981829/200134418-630211a9-bcbc-4860-a0ca-c44a5cf5225e.png" width="360"></a>
 
 
-## 🤖 How to run
+# 🤖 How to run (windows)
 
 1. Go to the [releases](https://github.com/cantevenread/-rtsrs/releases/tag/installer) page and install the latest installer.
 
@@ -42,18 +42,30 @@
 ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
 </span>
 
-### MAC OS
-Compile from source
-Downlaod source > delete rtsrs.exe > delete installer folder > fill .env with info > make a file called .env > fill in this info
+# From Source (mac, linux,etc)
+
+### Setup
+
+1. Be sure to have [deno](https://deno.land/manual@v1.35.0/getting_started/installation) and [rust-lang](https://www.rust-lang.org/learn/get-started) installed.
+
+2. Clone the project.
+```cmd
+$ git clone https://github.com/cantevenread/rtsrs.git
+```
+3. Delete the installer folder, and rtsrs.exe ( since you will compile it your own )
+
+4. Edit the .env file and copy paste the info below and fill in the info in between the quotes.
+`ex. BOT_NAME='BOT'`
 
 ```
-BOT_NAME=
-BOT_TOKEN=
-DEV_GUILD_ID=
-OWNER_ID=
-USER_LOG_CHANNEL=
-BOT_MOD_CMD_LOG_CHANNEL=
+BOT_NAME=''
+BOT_TOKEN=''
+DEV_GUILD_ID=''
+OWNER_ID=''
+USER_LOG_CHANNEL=''
+BOT_MOD_CMD_LOG_CHANNEL=''
 ```
->>> After cargo run in the root dir > fresh start
+
+5. After completed save and run this command in the terminal. `cargo run -r` When it asks you to do the start type run fresh start.
 
 ### 🗿 ENJOY
