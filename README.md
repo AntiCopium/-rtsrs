@@ -38,9 +38,8 @@
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
-<span style="color:red">
-❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
-</span>
+
+#### ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE rtsrs.exe AND RERUN IT WITH FRESH START***
 
 # From Source (mac, linux,etc)
 
@@ -67,5 +66,12 @@ BOT_MOD_CMD_LOG_CHANNEL=''
 ```
 
 5. After completed save and run this command in the terminal. `cargo run -r` When it asks you to do the start type run fresh start.
+
+#### ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE IT AND RE RUN IT***
+
+### Info
+
+The fresh start run opetion  resets the db values. So any db value is deleted/ overwritten
+Deafult starts from the last db value.
 
 ### 🗿 ENJOY
