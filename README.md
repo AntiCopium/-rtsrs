@@ -34,7 +34,7 @@
 
 2. Make a folder and move the installer into the folder than run the installer and fill the questions with correct info make sure you dont add any spaces, "", or ''
 
-3. Once completed the installer should make a folder named `-rtsrs` open it and run the rtsrs.exe
+3. Once completed the installer should make a folder named `rtsrs` open it and run the rtsrs.exe
 
 4. Then run fresh start option. This will freshly restart the cases. 
 
