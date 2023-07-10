@@ -1,5 +1,5 @@
 <h1 align="center">
-  -rtsrs
+  rtsrs
   <br>
   <a href="#"><img src="https://user-images.githubusercontent.com/90981829/200134119-2aee089d-7ac0-490e-a031-3be4428930ba.png" width="64" height="64"></a>
 </h1>
@@ -72,6 +72,6 @@ BOT_MOD_CMD_LOG_CHANNEL=''
 ### Info
 
 The fresh start run opetion  resets the db values. So any db value is deleted/ overwritten
-Deafult starts from the last db value.
+Deafult starts from the last db value. This project is designed to run and host your own discord bot.
 
 ### 🗿 ENJOY
