@@ -1,4 +1,6 @@
+import { writeJson } from "https://deno.land/std@0.66.0/fs/write_json.ts";
 import { dotEnvConfig } from './deps.ts';
+import { UserConfigSettings } from "./src/Rtsrs.UserConfig/mod.ts";
 
 // Get the .env file that the user should have created, and get the token
 export const env = dotEnvConfig({ export: true, path: './.env' });
@@ -27,3 +29,14 @@ export const configs = {
   /** The server id where you develop your bot and want dev commands created. */
   devGuildId: BigInt(env.DEV_GUILD_ID!),
 };
+
+export function initConfigs() {
+  const update = setInterval(async function() {
+ const data = Object.fromEntries(UserConfigSettings);
+  try {
+    await writeJson(`./${botName}.config.json`, data, { create: true, spaces: 2}); // Write the JSON data to the file
+  } catch (error) {
+    console.error('Error writing to UserConfigSettings.json:', error);
+  }
+}, 1 * 1000); 
+}

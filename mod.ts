@@ -10,6 +10,8 @@ import {
   initViolations,
 } from './src/Rtsrs.Violation/ViolationManager.ts';
 
+import { initConfigs } from './configs.ts';
+
 
 // Forces deno to read all the files which will fill the commands/inhibitors cache etc.
 await Promise.all(
@@ -23,6 +25,8 @@ await Promise.all(
 );
 
 await fileLoader();
+
+await initConfigs();
 
 // UPDATES YOUR COMMANDS TO LATEST COMMANDS
 await updateApplicationCommands();
