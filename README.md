@@ -66,9 +66,15 @@ USER_LOG_CHANNEL=''
 BOT_MOD_CMD_LOG_CHANNEL=''
 ```
 
-5. After completed save and run this command in the terminal. `deno task check-run` this makes sure the db is working and is mandatory for launch. Running the bot after use the command `deno task start` and if you wish to reset the db run `deno task check-run` since the command resets the db.
+5. After completed save and run this command in the terminal. <br>
+ ```console
+   sudo cargo run
+   ```
+
+You will be given options. Run option 2 for the initial start-up, and to reset the database entries. You MAY have to follow the command with sudo. After the initial start-up you can just click enter or enter number 1 for a normal start.
 
 #### ❗***MAKE SURE TO RUN FRESH START; IF NOT CLOSE IT AND RE RUN IT***
+#### ❗***ERRORS MAY OCCUR DONT WORRY***
 
 ### Info
 
