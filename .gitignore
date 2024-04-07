@@ -1,11 +1,12 @@
 db
-.env
+
 fileloader.ts
 Rtsrs.DB.txt
 deno.lock
+
+.DS_Store
 
 # Added by cargo
 
 /target
 installer/target
-.env
