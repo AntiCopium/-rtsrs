@@ -1,5 +1,5 @@
 db
-
+.env
 fileloader.ts
 Rtsrs.DB.txt
 deno.lock
