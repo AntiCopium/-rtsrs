@@ -3,6 +3,8 @@ import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts
 import { configs } from '../../configs.ts';
 import { Bot } from '../../rtsrs.ts';
 import { timenow } from '../Rtsrs.Commands/mod.ts';
+import { UserConfigOptions, UserConfigSettings } from "../Rtsrs.UserConfig/mod.ts";
+import { discordInvis } from "../Rtsrs.Utils/colors.ts";
 
 const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
@@ -107,4 +109,36 @@ Bot.events.guildBanAdd = async (_, usr) => {
   await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
     embeds: memberBan
   })
+}
+
+Bot.events.messageDelete = async (_, chan, msg) => {
+
+  if (UserConfigSettings.get(UserConfigOptions.MessageDeletionLogSetting) === false) {
+    return;
+  }
+
+  const userID = msg?.authorId;
+
+  const _chan = chan.channelId;
+
+  // coulda .trim() it but nah
+  const channel = _chan.toString().split("n").join("");
+
+  const embed = new Embeds()
+  .setTitle('LOG: MESSAGE DELETE')
+  .setColor(discordInvis)
+  .setTimestamp(timenow.getTime())
+  .setDescription(
+    `**WHEN (EST):** ${when}\n>>> **CHANNEL_ID:** <#${channel}>\n**USER** <@${userID}>\n**MESSAGE:** ${msg?.content}`
+  )
+
+  
+  await Bot.helpers.sendMessage(channel, {
+    embeds: embed
+  })
+
+    await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
+    embeds: embed
+  })
+
 }

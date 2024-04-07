@@ -16,10 +16,12 @@ await Promise.all(
   [
     './src/Rtsrs.Commands',
     './src/Rtsrs.Events',
-    './src/Rtsrs.Currency'
+    './src/Rtsrs.Currency',
+    './src/Rtsrs.UserConfig',
     // "./src/Rtsrs.tasks",
   ].map((path) => importDirectory(Deno.realPathSync(path)))
 );
+
 await fileLoader();
 
 // UPDATES YOUR COMMANDS TO LATEST COMMANDS

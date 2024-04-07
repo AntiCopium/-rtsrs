@@ -48,7 +48,7 @@ await kwik.init();
  */
 export async function CreateTable(table: string) {
   try {
-    await Deno.mkdir(`C:\\Users\\Owner\\Desktop\\rtsrs\\db\\${table}`);
+    await Deno.mkdir(`db//${table}`);
     await new KwikTable(kwik, table);
   } catch (e) {
     await Deno.writeTextFile('Rtsrs.DB.txt', e + '\n \n ', { append: true });
