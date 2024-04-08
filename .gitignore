@@ -7,3 +7,4 @@ installer/target
 src/.DS_Store
 deno.lock
 fileloader.ts
+.env
