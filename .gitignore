@@ -1,12 +1,9 @@
-db
-.env
-fileloader.ts
-Rtsrs.DB.txt
-deno.lock
-
+/db
+env
 .DS_Store
-
-# Added by cargo
-
+Rtsrs.DB.txt
 /target
 installer/target
+src/.DS_Store
+deno.lock
+fileloader.ts
