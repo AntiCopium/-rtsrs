@@ -112,3 +112,102 @@ createCommand({
     }
   },
 });
+
+createCommand({
+  name: 'allownsfw',
+  description: 'toggles nsfw commands',
+  type: ApplicationCommandTypes.ChatInput,
+  options: [
+    {
+      type: ApplicationCommandOptionTypes.String,
+      name: 'option',
+      description: 'option to toggle',
+      required: true,
+      choices: [
+        {
+          name: 'enable',
+          value: 'enable',
+        },
+        {
+          name: 'disable',
+          value: 'disable',
+        },
+      ],
+    },
+  ],
+  execute: async (Bot, interaction) => {
+    const hasPerm =
+      Boolean(interaction?.member?.permissions) &&
+      validatePermissions(interaction.member?.permissions!, [`ADMINISTRATOR`]);
+    if (hasPerm === false) return;
+
+    if (interaction.data?.options === undefined) {
+      return;
+    }
+    const embed = new Embeds()
+      .setTitle(`CONFIG: NSFW RESTRICTION`)
+      .setTimestamp(timenow.getTime())
+      .setColor(rdomcolor())
+      .setFooter(`${botName} • Message Deletion Log Config`)
+      .setDescription(
+        `**MODERATOR:** <@${
+          interaction.user.id
+        }>\n >>> **OPTION:** ${interaction.data?.options[0].value!}`
+      );
+    await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
+      embeds: embed,
+    });
+
+    if (interaction.data?.options[0].value! === 'enable') {
+      UserConfigSettings.set(UserConfigOptions.AllowNSFWSetting, true);
+
+      const jsonData = JSON.stringify(
+        Object.fromEntries(UserConfigSettings),
+        null,
+        2
+      );
+
+      await Deno.writeTextFileSync(
+        './src/Rtsrs.UserConfig/rtsrs.config.json',
+        jsonData
+      );
+
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content: `nsfw commands enabled`,
+            flags: 64,
+          },
+        }
+      );
+    } else if (interaction.data?.options[0].value === 'disable') {
+      UserConfigSettings.set(UserConfigOptions.AllowNSFWSetting, false);
+
+      const jsonData = JSON.stringify(
+        Object.fromEntries(UserConfigSettings),
+        null,
+        2
+      );
+
+      await Deno.writeTextFileSync(
+        './src/Rtsrs.UserConfig/rtsrs.config.json',
+        jsonData
+      );
+
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content: `nsfw commands disabled`,
+            flags: 64,
+          },
+        }
+      );
+    }
+  },
+});

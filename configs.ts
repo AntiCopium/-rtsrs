@@ -53,4 +53,15 @@ export async function initConfig() {
   } catch (error) {
     console.error('Error parsing JSON data from the config file:', error);
   }
+
+  try {
+    const configData = JSON.parse(content);
+    UserConfigSettings.set(
+      UserConfigOptions.AllowNSFWSetting,
+      configData.AllowNSFWSetting
+    );
+  } catch (error) {
+    console.error('Error parsing JSON data from the config file:', error);
+  }
+
 }

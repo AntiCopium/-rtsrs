@@ -1,18 +1,24 @@
 // deno-lint-ignore-file no-unused-vars
 import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
-import axiod from "https://deno.land/x/axiod@0.26.2/mod.ts";
+import axiod from 'https://deno.land/x/axiod@0.26.2/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
 import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
-import { botName, owner } from '../../configs.ts';
+import * as akaneko from 'https://esm.sh/akaneko@5.3.0';
+import { botName } from '../../configs.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
 } from '../../deps.ts';
+import {
+  UserConfigOptions,
+  UserConfigSettings,
+} from '../Rtsrs.UserConfig/mod.ts';
 import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { CooldownManager } from "../Rtsrs.Utils/cooldown.ts";
+import { CooldownManager } from '../Rtsrs.Utils/cooldown.ts';
 import { snowflakeToTimestamp } from '../Rtsrs.Utils/helpers.ts';
 import { createCommand, timenow } from './mod.ts';
+
 const cooldownManager = new CooldownManager();
 
 createCommand({
@@ -64,28 +70,35 @@ createCommand({
     const commandName = 'ping';
     const cooldownTime = 3; // seconds
 
-
     if (userId === undefined) return;
     if (cooldownManager.isOnCooldown(String(userId), commandName)) {
       const cooldownSeconds = Math.ceil(
-        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! - Date.now()) / 1000
+        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
+          Date.now()) /
+          1000
       );
       const embedcooled = new Embeds()
-      .setTitle(`Cooldown`)
-      .setTimestamp(timenow.getTime())
-      .setColor('#bf2c2c')
-      .setDescription(`Please wait ${cooldownSeconds} second(s) before using this command again.`)
-      .setFooter(`${botName} • Cooldown`);
-      await Bot.helpers.sendInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionResponseTypes.ChannelMessageWithSource,
-        data: {
-          embeds: embedcooled,
-          flags: 64,
-        },
-      });
+        .setTitle(`Cooldown`)
+        .setTimestamp(timenow.getTime())
+        .setColor('#bf2c2c')
+        .setDescription(
+          `Please wait ${cooldownSeconds} second(s) before using this command again.`
+        )
+        .setFooter(`${botName} • Cooldown`);
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            embeds: embedcooled,
+            flags: 64,
+          },
+        }
+      );
       return;
     }
-   
+
     const ping = Date.now() - snowflakeToTimestamp(interaction.id);
     const day = format(new Date(), 'HH:mm');
     const embed = new Embeds()
@@ -165,7 +178,7 @@ createCommand({
 });
 
 createCommand({
-  name: `anime`,
+  name: `animensfw`,
   description: `Generates a random anime girl`,
   type: ApplicationCommandTypes.ChatInput,
   devOnly: false,
@@ -193,8 +206,8 @@ createCommand({
           value: `SELFIE`,
         },
         {
-          name: `MILKERS`,
-          value: `MILKERS`,
+          name: `MASTURBATION`,
+          value: `MASTURBATION`,
         },
         {
           name: `UNIFORM`,
@@ -279,235 +292,269 @@ createCommand({
     const type = interaction.data?.options![0].value!;
     const userId = interaction.user?.id;
     const commandName = 'anime';
-    const cooldownTime = 2; // seconds
+    const cooldownTime = 5; // seconds
+
+    if (UserConfigSettings.get(UserConfigOptions.AllowNSFWSetting) === false) {
+      const nsfwDIS = new Embeds()
+        .setTitle(`ADMINISTRATOR RESTRICTIONS`)
+        .setTimestamp(timenow.getTime())
+        .setColor('#bf2c2c')
+        .setDescription(
+          `\n >>> The command` +
+            '`' +
+            `${commandName}` +
+            '`' +
+            `has been restricted by the administrator.`
+        )
+        .setFooter(`${botName} • Restrictions`);
+
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            embeds: nsfwDIS,
+            flags: 64,
+          },
+        }
+      );
+
+      return;
+    }
 
     if (userId === undefined) return;
     if (cooldownManager.isOnCooldown(String(userId), commandName)) {
       const cooldownSeconds = Math.ceil(
-        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! - Date.now()) / 1000
+        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
+          Date.now()) /
+          1000
       );
       const embedcooled = new Embeds()
-      .setTitle(`Cooldown`)
-      .setTimestamp(timenow.getTime())
-      .setColor('#bf2c2c')
-      .setDescription(`Please wait ${cooldownSeconds} second(s) before using this command again.`)
-      .setFooter(`${botName} • Cooldown`);
-      await Bot.helpers.sendInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionResponseTypes.ChannelMessageWithSource,
-        data: {
-          emebds: embedcooled,
-          flags: 64,
-        },
-      });
+        .setTitle(`Cooldown`)
+        .setTimestamp(timenow.getTime())
+        .setColor('#bf2c2c')
+        .setDescription(
+          `Please wait ${cooldownSeconds} second(s) before using this command again.`
+        )
+        .setFooter(`${botName} • Cooldown`);
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            embeds: embedcooled,
+            flags: 64,
+          },
+        }
+      );
       return;
     }
+
+    const nsfwEM = new Embeds()
+      .setTitle(`RESTRICTED COMMAND: NSFW`)
+      .setTimestamp(timenow.getTime())
+      .setColor('#bf2c2c')
+      .setDescription(
+        `<#${interaction?.channelId!}> is not a NSFW channel.\n >>> The command` +
+          '`' +
+          `${commandName}` +
+          '`' +
+          `is restricted only to NSFW channels.`
+      )
+      .setFooter(`${botName} • Restrictions`);
+
+    const nsfw = Bot.channels.get(interaction?.channelId!)?.nsfw;
+    if (nsfw === false) {
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            embeds: nsfwEM,
+            flags: 64,
+          },
+        }
+      );
+    }
+
     switch (type) {
       case `RANDOM`: {
-        await axiod
-          .get(`https://api.waifu.im/search`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`RANDOM Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.gifs();
+        console.log(img);
+        const restrictionEM = new Embeds()
+          .setTitle(`RANDOM Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: restrictionEM,
+            },
+          }
+        );
         break;
       }
       case `UNIFORM`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=uniform`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`UNIFORM Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.uniform();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`UNIFORM Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `MAID`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=maid`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`MAID Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.maid();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`MAID Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `WAIFU`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=waifu`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`WAIFU Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.lewdNeko();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`WAIFU Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `SELFIE`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=selfies`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`SELFIE Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.foxgirl();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`SELFIE Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
-      case `MILKERS`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=oppai`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`MILKERS Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+      case `MASTERBATION`: {
+        const img = await akaneko.nsfw.masturbation();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`MILKERS Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `ASS`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=ass`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`ASS Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.ass();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`ASS Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `ECCHI`: {
-        await axiod
-          .get(`https://api.waifu.im/search/?included_tags=ecchi`)
-          .then(async (response) => {
-            const img = response.data[`images`][0][`url`];
-            const embed = new Embeds()
-              .setTitle(`ECCHI Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.bdsm();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`ECCHI Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `HENTAI`: {
@@ -529,7 +576,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -555,7 +601,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -581,7 +626,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -607,7 +651,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -633,7 +676,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -641,29 +683,25 @@ createCommand({
         break;
       }
       case `CUM`: {
-        await axiod
-          .get(`http://api.nekos.fun:8080/api/cum`)
-          .then(async (response) => {
-            const img = response.data[`image`];
-            const embed = new Embeds()
-              .setTitle(`CUM Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.cum();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`CUM Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `LEWD`: {
@@ -685,7 +723,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -711,7 +748,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -719,30 +755,25 @@ createCommand({
         break;
       }
       case `SEXY`: {
-        if (interaction.user.id.toString() !== owner) return;
-        await axiod
-          .get(`http://api.nekos.fun:8080/api/feet`)
-          .then(async (response) => {
-            const img = response.data[`image`];
-            const embed = new Embeds()
-              .setTitle(`SEXY Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.feet();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`SEXY Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `HENTAI2`: {
@@ -764,7 +795,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -772,29 +802,25 @@ createCommand({
         break;
       }
       case `BJ`: {
-        await axiod
-          .get(`http://api.nekos.fun:8080/api/bj`)
-          .then(async (response) => {
-            const img = response.data[`image`];
-            const embed = new Embeds()
-              .setTitle(`BJ Generated`)
-              .setImage(img)
-              .setColor(discordInvis)
-              .setTimestamp(timenow.getTime())
-              .setFooter(`${botName} anime`);
+        const img = await akaneko.nsfw.blowjob();
+        console.log(img);
+        const embed = new Embeds()
+          .setTitle(`BJ Generated`)
+          .setImage(img.toString())
+          .setColor(discordInvis)
+          .setTimestamp(timenow.getTime())
+          .setFooter(`${botName} anime`);
 
-            await Bot.helpers.sendInteractionResponse(
-              interaction.id,
-              interaction.token,
-              {
-                type: InteractionResponseTypes.ChannelMessageWithSource,
-                data: {
-                  embeds: embed,
-                  flags: 64,
-                },
-              }
-            );
-          });
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embed,
+            },
+          }
+        );
         break;
       }
       case `BOOBS`: {
@@ -816,7 +842,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -842,7 +867,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -868,7 +892,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -894,7 +917,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
@@ -920,7 +942,6 @@ createCommand({
                 type: InteractionResponseTypes.ChannelMessageWithSource,
                 data: {
                   embeds: embed,
-                  flags: 64,
                 },
               }
             );
