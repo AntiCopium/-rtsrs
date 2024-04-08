@@ -1,6 +1,9 @@
-import { writeJson } from "https://deno.land/std@0.66.0/fs/write_json.ts";
+import { readAll } from 'https://deno.land/std@0.99.0/io/util.ts';
 import { dotEnvConfig } from './deps.ts';
-import { UserConfigSettings } from "./src/Rtsrs.UserConfig/mod.ts";
+import {
+  UserConfigOptions,
+  UserConfigSettings,
+} from './src/Rtsrs.UserConfig/mod.ts';
 
 // Get the .env file that the user should have created, and get the token
 export const env = dotEnvConfig({ export: true, path: './.env' });
@@ -8,7 +11,7 @@ export const token = env.BOT_TOKEN || '';
 export const botName = env.BOT_NAME || '';
 export const owner = env.OWNER_ID || '';
 export const USER_LOG_CHANNEL = env.USER_LOG_CHANNEL || '';
-export const BOT_MOD_CMD_LOG_CHANNEL  = env.BOT_MOD_CMD_LOG_CHANNEL || '';
+export const BOT_MOD_CMD_LOG_CHANNEL = env.BOT_MOD_CMD_LOG_CHANNEL || '';
 
 export interface Config {
   token: string;
@@ -30,13 +33,24 @@ export const configs = {
   devGuildId: BigInt(env.DEV_GUILD_ID!),
 };
 
-export function initConfigs() {
-  const update = setInterval(async function() {
- const data = Object.fromEntries(UserConfigSettings);
-  try {
-    await writeJson(`./${botName}.config.json`, data, { create: true, spaces: 2}); // Write the JSON data to the file
-  } catch (error) {
-    console.error('Error writing to UserConfigSettings.json:', error);
+export async function initConfig() {
+  const file = await Deno.open('./src/Rtsrs.UserConfig/rtsrs.config.json', {
+    read: true,
+  });
+  const content = new TextDecoder().decode(await readAll(file));
+
+  if (content.trim() === '') {
+    console.error('Config file is empty or malformed.');
+    return;
   }
-}, 1 * 1000); 
+
+  try {
+    const configData = JSON.parse(content);
+    UserConfigSettings.set(
+      UserConfigOptions.MessageDeletionLogSetting,
+      configData.MessageDeletionLogSetting
+    );
+  } catch (error) {
+    console.error('Error parsing JSON data from the config file:', error);
+  }
 }
