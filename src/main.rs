@@ -1,9 +1,9 @@
 use std::fs;
-use std::io::{BufRead, BufReader, Write, self};
+use std::io::{ BufReader, self};
 use std::process::{Command, Stdio, Child};
 use std::str;
 use std::{thread, time};
-use std::fs::{File};
+use std::fs::File;
 use std::io::prelude::*;
 
 fn main() -> std::io::Result<()> {
