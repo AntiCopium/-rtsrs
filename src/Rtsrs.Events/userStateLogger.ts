@@ -3,8 +3,11 @@ import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts
 import { configs } from '../../configs.ts';
 import { Bot } from '../../rtsrs.ts';
 import { timenow } from '../Rtsrs.Commands/mod.ts';
-import { UserConfigOptions, UserConfigSettings } from "../Rtsrs.UserConfig/mod.ts";
-import { discordInvis } from "../Rtsrs.Utils/colors.ts";
+import {
+  UserConfigOptions,
+  UserConfigSettings,
+} from '../Rtsrs.UserConfig/mod.ts';
+import { discordInvis } from '../Rtsrs.Utils/colors.ts';
 
 const when = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
 
@@ -20,7 +23,7 @@ Bot.events.guildMemberAdd = async (_, member, user) => {
 
   const memberAdd = new Embeds()
     .setTitle('LOG: USER ENTER')
-    .setColor("#0f2080")
+    .setColor('#0f2080')
     .setTimestamp(timenow.getTime())
     .setThumbnail(avatasr)
     .setDescription(
@@ -39,7 +42,6 @@ Bot.events.messageCreate = async (_, msg) => {
   }
 };
 
-
 Bot.events.guildMemberRemove = async (_, user) => {
   const avatasr = Bot.helpers.getAvatarURL(
     user.id.toString(),
@@ -51,7 +53,7 @@ Bot.events.guildMemberRemove = async (_, user) => {
   );
   const memberAdd = new Embeds()
     .setTitle('LOG: USER LEAVE')
-    .setColor("#80170f")
+    .setColor('#80170f')
     .setTimestamp(timenow.getTime())
     .setThumbnail(avatasr)
     .setDescription(
@@ -60,7 +62,7 @@ Bot.events.guildMemberRemove = async (_, user) => {
   await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
     embeds: memberAdd,
   });
-}
+};
 
 Bot.events.guildMemberUpdate = async (_, member, user) => {
   const avatasr = Bot.helpers.getAvatarURL(
@@ -74,7 +76,7 @@ Bot.events.guildMemberUpdate = async (_, member, user) => {
 
   const memberAdd = new Embeds()
     .setTitle('LOG: USER INFO UPDATE')
-    .setColor("#80780f")
+    .setColor('#80780f')
     .setTimestamp(timenow.getTime())
     .setThumbnail(avatasr)
     .setDescription(
@@ -83,14 +85,12 @@ Bot.events.guildMemberUpdate = async (_, member, user) => {
   await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
     embeds: memberAdd,
   });
-}
-
+};
 
 Bot.events.guildBanAdd = async (_, usr) => {
-
   const avatasr = Bot.helpers.getAvatarURL(
     usr.id.toString(),
-   usr.discriminator.toString()!,
+    usr.discriminator.toString()!,
     {
       avatar: usr.avatar,
       format: 'png',
@@ -98,22 +98,24 @@ Bot.events.guildBanAdd = async (_, usr) => {
   );
 
   const memberBan = new Embeds()
-  .setTitle('LOG: USER BAN ADD')
-  .setColor("#80780f")
-  .setTimestamp(timenow.getTime())
-  .setThumbnail(avatasr)
-  .setDescription(
-    `**WHEN (EST):** ${when}\n>>> **MEMBER_ID:** ${usr.id}\n**USERNAME:** ${usr.username}\n **DISCRIMINATOR:** ${usr.discriminator}`
-  );
+    .setTitle('LOG: USER BAN ADD')
+    .setColor('#80780f')
+    .setTimestamp(timenow.getTime())
+    .setThumbnail(avatasr)
+    .setDescription(
+      `**WHEN (EST):** ${when}\n>>> **MEMBER_ID:** ${usr.id}\n**USERNAME:** ${usr.username}\n **DISCRIMINATOR:** ${usr.discriminator}`
+    );
 
   await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
-    embeds: memberBan
-  })
-}
+    embeds: memberBan,
+  });
+};
 
 Bot.events.messageDelete = async (_, chan, msg) => {
-
-  if (UserConfigSettings.get(UserConfigOptions.MessageDeletionLogSetting) === false) {
+  if (
+    UserConfigSettings.get(UserConfigOptions.MessageDeletionLogSetting) ===
+    false
+  ) {
     return;
   }
 
@@ -122,23 +124,21 @@ Bot.events.messageDelete = async (_, chan, msg) => {
   const _chan = chan.channelId;
 
   // coulda .trim() it but nah
-  const channel = _chan.toString().split("n").join("");
+  const channel = _chan.toString().split('n').join('');
 
   const embed = new Embeds()
-  .setTitle('LOG: MESSAGE DELETE')
-  .setColor(discordInvis)
-  .setTimestamp(timenow.getTime())
-  .setDescription(
-    `**WHEN (EST):** ${when}\n>>> **CHANNEL_ID:** <#${channel}>\n**USER** <@${userID}>\n**MESSAGE:** ${msg?.content}`
-  )
+    .setTitle('LOG: MESSAGE DELETE')
+    .setColor(discordInvis)
+    .setTimestamp(timenow.getTime())
+    .setDescription(
+      `**WHEN (EST):** ${when}\n>>> **CHANNEL_ID:** <#${channel}>\n**USER** <@${userID}>\n**MESSAGE:** ${msg?.content}`
+    );
 
-  
   await Bot.helpers.sendMessage(channel, {
-    embeds: embed
-  })
+    embeds: embed,
+  });
 
-    await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
-    embeds: embed
-  })
-
-}
+  await Bot.helpers.sendMessage(configs.USER_LOG_CHANNEL, {
+    embeds: embed,
+  });
+};

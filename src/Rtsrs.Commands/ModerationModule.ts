@@ -6,6 +6,7 @@ import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
+  getAvatarURL,
   validatePermissions,
 } from '../../deps.ts';
 import { Bot } from '../../rtsrs.ts';
@@ -104,7 +105,7 @@ createCommand({
       );
     try {
       await Bot.helpers.banMember(guildID, userToBan, {
-        reason: level.toString() + reason.toString() ,
+        reason: level.toString() + reason.toString(),
       });
     } catch (_err) {
       return;
@@ -405,9 +406,20 @@ createCommand({
     const memberTimeout = new Embeds()
       .setTitle(`LOG: TIMEDOUT`)
       .setColor(`#80780f`)
+      .setImage(
+        `${getAvatarURL(
+          Bot,
+          moderator,
+          interaction.user.discriminator.toString()!,
+          {
+            avatar: interaction.user.avatar,
+            format: 'png',
+          }
+        )}`
+      )
       .setTimestamp(timenow.getTime())
       .setDescription(
-        `**WHEN (EST):** ${when}\n **MODERATOR:** <@${moderator}\n>>>> **MEMBER_ID:** ${userToMute}\n**USERNAME:** <@${userToMute}>`
+        `**WHEN (EST):** ${when}\n **MODERATOR:** <@${moderator}> \n >>> **MEMBER_ID:** ${userToMute}\n**USERNAME:** <@${userToMute}>`
       );
 
     await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
@@ -837,4 +849,3 @@ createCommand({
   },
 });
 ``;
-

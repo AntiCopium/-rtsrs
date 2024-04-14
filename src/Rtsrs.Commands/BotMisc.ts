@@ -4,7 +4,7 @@ import axiod from 'https://deno.land/x/axiod@0.26.2/mod.ts';
 import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
 import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
 import * as akaneko from 'https://esm.sh/akaneko@5.3.0';
-import { botName } from '../../configs.ts';
+import { botName, configs } from '../../configs.ts';
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
@@ -289,7 +289,7 @@ createCommand({
     },
   ],
   execute: async (Bot, interaction) => {
-    const type = interaction.data?.options![0].value!;
+    const type = interaction.data?.options![0].value;
     const userId = interaction.user?.id;
     const commandName = 'anime';
     const cooldownTime = 5; // seconds
@@ -324,32 +324,34 @@ createCommand({
     }
 
     if (userId === undefined) return;
-    if (cooldownManager.isOnCooldown(String(userId), commandName)) {
-      const cooldownSeconds = Math.ceil(
-        (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
-          Date.now()) /
-          1000
-      );
-      const embedcooled = new Embeds()
-        .setTitle(`Cooldown`)
-        .setTimestamp(timenow.getTime())
-        .setColor('#bf2c2c')
-        .setDescription(
-          `Please wait ${cooldownSeconds} second(s) before using this command again.`
-        )
-        .setFooter(`${botName} • Cooldown`);
-      await Bot.helpers.sendInteractionResponse(
-        interaction.id,
-        interaction.token,
-        {
-          type: InteractionResponseTypes.ChannelMessageWithSource,
-          data: {
-            embeds: embedcooled,
-            flags: 64,
-          },
-        }
-      );
-      return;
+    if (String(userId) != configs.owner) {
+      if (cooldownManager.isOnCooldown(String(userId), commandName)) {
+        const cooldownSeconds = Math.ceil(
+          (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
+            Date.now()) /
+            1000
+        );
+        const embedcooled = new Embeds()
+          .setTitle(`Cooldown`)
+          .setTimestamp(timenow.getTime())
+          .setColor('#bf2c2c')
+          .setDescription(
+            `Please wait ${cooldownSeconds} second(s) before using this command again.`
+          )
+          .setFooter(`${botName} • Cooldown`);
+        await Bot.helpers.sendInteractionResponse(
+          interaction.id,
+          interaction.token,
+          {
+            type: InteractionResponseTypes.ChannelMessageWithSource,
+            data: {
+              embeds: embedcooled,
+              flags: 64,
+            },
+          }
+        );
+        return;
+      }
     }
 
     const nsfwEM = new Embeds()

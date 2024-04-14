@@ -1,41 +1,40 @@
-import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import { botName, configs } from '../../configs.ts';
+import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
+import { botName, configs } from "../../configs.ts";
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
   validatePermissions,
-} from '../../deps.ts';
-import { createCommand } from '../Rtsrs.Commands/mod.ts';
-import { timenow } from '../Rtsrs.Commands/mod.ts#0.ts.ts';
-import { rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { UserConfigOptions, UserConfigSettings } from './mod.ts';
+} from "../../deps.ts";
+import { createCommand } from "../Rtsrs.Commands/mod.ts";
+import { timenow } from "../Rtsrs.Commands/mod.ts#0.ts.ts";
+import { rdomcolor } from "../Rtsrs.Utils/colors.ts";
+import { UserConfigOptions, UserConfigSettings } from "./mod.ts";
 
 createCommand({
-  name: 'messagelogs',
-  description: 'toggles message deletion logs',
+  name: "messagelogs",
+  description: "toggles message deletion logs",
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'option',
-      description: 'option to toggle',
+      name: "option",
+      description: "option to toggle",
       required: true,
       choices: [
         {
-          name: 'enable',
-          value: 'enable',
+          name: "enable",
+          value: "enable",
         },
         {
-          name: 'disable',
-          value: 'disable',
+          name: "disable",
+          value: "disable",
         },
       ],
     },
   ],
   execute: async (Bot, interaction) => {
-    const hasPerm =
-      Boolean(interaction?.member?.permissions) &&
+    const hasPerm = Boolean(interaction?.member?.permissions) &&
       validatePermissions(interaction.member?.permissions!, [`ADMINISTRATOR`]);
     if (hasPerm === false) return;
 
@@ -48,26 +47,25 @@ createCommand({
       .setColor(rdomcolor())
       .setFooter(`${botName} • Message Deletion Log Config`)
       .setDescription(
-        `**MODERATOR:** <@${
-          interaction.user.id
-        }>\n >>> **OPTION:** ${interaction.data?.options[0].value!}`
+        `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
+          .data?.options[0].value!}`,
       );
     await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
       embeds: embed,
     });
 
-    if (interaction.data?.options[0].value! === 'enable') {
+    if (interaction.data?.options[0].value! === "enable") {
       UserConfigSettings.set(UserConfigOptions.MessageDeletionLogSetting, true);
 
       const jsonData = JSON.stringify(
         Object.fromEntries(UserConfigSettings),
         null,
-        2
+        2,
       );
 
       await Deno.writeTextFileSync(
-        './src/Rtsrs.UserConfig/rtsrs.config.json',
-        jsonData
+        "./src/Rtsrs.UserConfig/rtsrs.config.json",
+        jsonData,
       );
 
       await Bot.helpers.sendInteractionResponse(
@@ -79,23 +77,23 @@ createCommand({
             content: `message deletion logs enabled`,
             flags: 64,
           },
-        }
+        },
       );
-    } else if (interaction.data?.options[0].value === 'disable') {
+    } else if (interaction.data?.options[0].value === "disable") {
       UserConfigSettings.set(
         UserConfigOptions.MessageDeletionLogSetting,
-        false
+        false,
       );
 
       const jsonData = JSON.stringify(
         Object.fromEntries(UserConfigSettings),
         null,
-        2
+        2,
       );
 
       await Deno.writeTextFileSync(
-        './src/Rtsrs.UserConfig/rtsrs.config.json',
-        jsonData
+        "./src/Rtsrs.UserConfig/rtsrs.config.json",
+        jsonData,
       );
 
       await Bot.helpers.sendInteractionResponse(
@@ -107,37 +105,36 @@ createCommand({
             content: `message deletion logs disabled`,
             flags: 64,
           },
-        }
+        },
       );
     }
   },
 });
 
 createCommand({
-  name: 'allownsfw',
-  description: 'toggles nsfw commands',
+  name: "allownsfw",
+  description: "toggles nsfw commands",
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.String,
-      name: 'option',
-      description: 'option to toggle',
+      name: "option",
+      description: "option to toggle",
       required: true,
       choices: [
         {
-          name: 'enable',
-          value: 'enable',
+          name: "enable",
+          value: "enable",
         },
         {
-          name: 'disable',
-          value: 'disable',
+          name: "disable",
+          value: "disable",
         },
       ],
     },
   ],
   execute: async (Bot, interaction) => {
-    const hasPerm =
-      Boolean(interaction?.member?.permissions) &&
+    const hasPerm = Boolean(interaction?.member?.permissions) &&
       validatePermissions(interaction.member?.permissions!, [`ADMINISTRATOR`]);
     if (hasPerm === false) return;
 
@@ -150,26 +147,25 @@ createCommand({
       .setColor(rdomcolor())
       .setFooter(`${botName} • Message Deletion Log Config`)
       .setDescription(
-        `**MODERATOR:** <@${
-          interaction.user.id
-        }>\n >>> **OPTION:** ${interaction.data?.options[0].value!}`
+        `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
+          .data?.options[0].value!}`,
       );
     await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
       embeds: embed,
     });
 
-    if (interaction.data?.options[0].value! === 'enable') {
+    if (interaction.data?.options[0].value! === "enable") {
       UserConfigSettings.set(UserConfigOptions.AllowNSFWSetting, true);
 
       const jsonData = JSON.stringify(
         Object.fromEntries(UserConfigSettings),
         null,
-        2
+        2,
       );
 
       await Deno.writeTextFileSync(
-        './src/Rtsrs.UserConfig/rtsrs.config.json',
-        jsonData
+        "./src/Rtsrs.UserConfig/rtsrs.config.json",
+        jsonData,
       );
 
       await Bot.helpers.sendInteractionResponse(
@@ -181,20 +177,20 @@ createCommand({
             content: `nsfw commands enabled`,
             flags: 64,
           },
-        }
+        },
       );
-    } else if (interaction.data?.options[0].value === 'disable') {
+    } else if (interaction.data?.options[0].value === "disable") {
       UserConfigSettings.set(UserConfigOptions.AllowNSFWSetting, false);
 
       const jsonData = JSON.stringify(
         Object.fromEntries(UserConfigSettings),
         null,
-        2
+        2,
       );
 
       await Deno.writeTextFileSync(
-        './src/Rtsrs.UserConfig/rtsrs.config.json',
-        jsonData
+        "./src/Rtsrs.UserConfig/rtsrs.config.json",
+        jsonData,
       );
 
       await Bot.helpers.sendInteractionResponse(
@@ -206,7 +202,116 @@ createCommand({
             content: `nsfw commands disabled`,
             flags: 64,
           },
-        }
+        },
+      );
+    }
+  },
+});
+
+createCommand({
+  name: "allowwelcomer",
+  description: "toggles welcome",
+  type: ApplicationCommandTypes.ChatInput,
+  options: [
+    {
+      type: ApplicationCommandOptionTypes.String,
+      name: "option",
+      description: "option to toggle",
+      required: true,
+      choices: [
+        {
+          name: "enable",
+          value: "enable",
+        },
+        {
+          name: "disable",
+          value: "disable",
+        },
+      ],
+    },
+  ],
+  execute: async (Bot, interaction) => {
+    const hasPerm = Boolean(interaction?.member?.permissions) &&
+      validatePermissions(interaction.member?.permissions!, [`ADMINISTRATOR`]);
+    if (hasPerm === false) return;
+
+    if (interaction.data?.options === undefined) return;
+    const embed = new Embeds()
+      .setTitle(`CONFIG: WELCOMER`)
+      .setTimestamp(timenow.getTime())
+      .setColor(rdomcolor())
+      .setFooter(`${botName} • Welcomer Config`)
+      .setDescription(
+        `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
+          .data?.options[0].value!}`,
+      );
+    await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
+      embeds: embed,
+    });
+
+    if (interaction.data?.options[0].value! === "enable") {
+      UserConfigSettings.set(
+        UserConfigOptions.AllowWelcomeMessageSetting,
+        true,
+      );
+
+      const jsonData = JSON.stringify(
+        Object.fromEntries(UserConfigSettings),
+        null,
+        2,
+      );
+
+      try {
+        await Deno.writeTextFileSync(
+          "./src/Rtsrs.UserConfig/rtsrs.config.json",
+          jsonData,
+        );
+      } catch (error) {
+        console.log(error);
+      }
+
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content: `welcomer enabled`,
+            flags: 64,
+          },
+        },
+      );
+    } else if (interaction.data?.options[0].value === "disable") {
+      UserConfigSettings.set(
+        UserConfigOptions.AllowWelcomeMessageSetting,
+        false,
+      );
+
+      const jsonData = JSON.stringify(
+        Object.fromEntries(UserConfigSettings),
+        null,
+        2,
+      );
+
+      try {
+        await Deno.writeTextFileSync(
+          "./src/Rtsrs.UserConfig/rtsrs.config.json",
+          jsonData,
+        );
+      } catch (error) {
+        console.log(error);
+      }
+
+      await Bot.helpers.sendInteractionResponse(
+        interaction.id,
+        interaction.token,
+        {
+          type: InteractionResponseTypes.ChannelMessageWithSource,
+          data: {
+            content: `welcomer disabled`,
+            flags: 64,
+          },
+        },
       );
     }
   },

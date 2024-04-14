@@ -1,17 +1,6 @@
 // deno-lint-ignore-file
-/**
- *
- * ! WORK IN PROGRESS (CURRENTLY WORKING)
- *
- *
- * This is a a manager for cases,violations;
- * Instead of the casses going in the file this is more organized and with init when bot started
- * This will fix all setup issues and make an more organised workspace.
- *
- * ? This is constantly udpated file
- *
- * ~ CAPTHAT
- */
+
+// CAPTHAT (LOOP) 2024
 
 import { KwikTable } from 'https://deno.land/x/kwik@v1.3.1/table.ts';
 import {
