@@ -3,6 +3,8 @@ import { KwikTable } from "https://deno.land/x/kwik@v1.3.1/table.ts";
 import * as db from "../Rtsrs.Database/mod.ts";
 import log from "../Rtsrs.Utils/logger.ts";
 
+export const UserInventory = new KwikTable(db.kwik, "UserInventory");
+
 export enum InventoryItems {
   Nail = "Nail",
   Cards = "Cards",
@@ -11,6 +13,29 @@ export enum InventoryItems {
   Knife = "Knife",
   Tape = "Tape",
   Lock = "Lock",
+}
+
+export function inventoryItemToString(
+  item: InventoryItems,
+): string {
+  switch (item) {
+    case InventoryItems.Nail:
+      return "Nail";
+    case InventoryItems.Cards:
+      return "Cards";
+    case InventoryItems.Keys:
+      return "Keys";
+    case InventoryItems.Gun:
+      return "Gun";
+    case InventoryItems.Knife:
+      return "Knife";
+    case InventoryItems.Tape:
+      return "Tape";
+    case InventoryItems.Lock:
+      return "Lock";
+    default:
+      return "Nail";
+  }
 }
 
 export function stringToInventoryItem(
@@ -40,57 +65,70 @@ export function inventoryFormat(item: InventoryItems, amount: number) {
   return `${item} | ${amount}`;
 }
 
-export async function readInventory(
-  user: string,
-): Promise<Map<InventoryItems, number>> {
-  const decoder = new TextDecoder("utf-8");
-  const inv = new Map<InventoryItems, number>();
-  const file = decoder.decode(
-    await Deno.readFile(
-      `db/UserInvetory/${user.split("n").join("")}.kwik`,
-    ),
+export async function createNewInventory(user: any) {
+  if ((await db.dbHasValue(user.toString(), UserInventory)) === true) {
+    return;
+  }
+  await db.setdbValue(
+    user.toString(),
+    UserInventory,
+    "yess king \nNail | 0\nCards | 0\nKeys | 0\nGun | 0\nKnife | 0\nTape | 0\nLock | 0",
   );
-  const lines = file.split("\n");
+}
+
+export async function readInventory(
+  user: any,
+): Promise<Map<InventoryItems, number>> {
+  if ((await db.dbHasValue(user.toString(), UserInventory)) === false) {
+    await createNewInventory(user);
+  }
+  const inv = new Map<InventoryItems, number>();
+  const userInv = await db.getdbValue(user.toString(), UserInventory);
+  // Remove the first line
+  const lines = userInv.substring(userInv.indexOf("\n") + 1).split("\n");
+
   for (const line of lines) {
     const [item, amount] = line.split(" | ");
     inv.set(stringToInventoryItem(item), parseInt(amount));
   }
-
   return inv;
 }
 
-export const UserInvetory = new KwikTable(db.kwik, "UserInvetory");
-
-export async function getInventory(
-  user: string,
-): Promise<Map<InventoryItems, number>> {
-  if ((await db.dbHasValue(user, UserInvetory)) === false) {
-    await db.setdbValue(
-      user.toString(),
-      UserInvetory,
-    );
-  }
-  return await readInventory(user);
-}
-
-// function that appends the db file with an item and its amount in the inventory
-
-export async function addItemToInventory(
+export async function addToInventory(
   user: any,
   item: InventoryItems,
   amount: any,
-): Promise<void> {
-  if ((await db.dbHasValue(`${user}`, UserInvetory)) === false) {
-    await db.setdbValue(`${user}`, UserInvetory);
-  } else {
-    const olddata: string = await db.getdbValue(`${user}`, UserInvetory);
-    const newdata: string = olddata + "\n" + inventoryFormat(item, amount);
-    await db.dbChangeData(`${user}`, newdata, UserInvetory);
+) {
+  if ((await db.dbHasValue(user.toString(), UserInventory)) === false) {
+    await createNewInventory(user);
   }
+
+  user = user.toString();
+
+  const myInv = new Map<InventoryItems, number>();
+
+  const oldData = await db.getdbValue(user, UserInventory);
+
+  const lines = oldData.substring(oldData.indexOf("\n") + 1).split("\n");
+
+  for (const line of lines) {
+    const [oldItem, oldAmount] = line.split(" | ");
+    myInv.set(stringToInventoryItem(oldItem), parseInt(oldAmount));
+  }
+
+  myInv.set(item, amount);
+
+  // map into string key | value
+  const newData = "yess kng\n" +
+    Array.from(myInv.entries()).map(([key, value]) =>
+      `${inventoryItemToString(key)} | ${value}`
+    ).join("\n");
+
+  await db.dbChangeData(user, newData.toString(), UserInventory);
 }
 
 export async function initInventory() {
-  await db.CreateTable("UserInvetory").then(() => {
-    log.info("UserInvetory table created...");
+  await db.CreateTable("UserInventory").then(() => {
+    log.info("UserInventory table created...");
   });
 }

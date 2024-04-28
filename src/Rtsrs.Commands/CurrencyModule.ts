@@ -20,10 +20,10 @@ createCommand({
   type: ApplicationCommandTypes.ChatInput,
   execute: async (Bot, interaction) => {
     const user = interaction.user.id;
-    console.log(interaction.user.id!);
-    const userinv = await getInventory(user.toString().trim());
 
-    console.log(userinv, interaction.user.id, userinv);
+    const currentInv = await readInventory(user);
+
+    console.log(currentInv, interaction.user.id);
 
     // TODO: I  need to create an inventory table and stoer the players inventory inside
     // and then create it if its  not there it will display every item for the
@@ -111,15 +111,11 @@ createCommand({
     const userToGiveItem = interaction.data?.options[1].value!;
     const item = interaction.data?.options[2].value!;
 
-    await addItemToInventory(
-      userToGiveItem.toString(),
-      stringToInventoryItem(item),
-      amount,
-    );
+    console.log("Before: " + [...await readInventory(userToGiveItem)]);
 
-    const userinv = await getInventory(interaction.user.id.toString());
+    await addToInventory(userToGiveItem, stringToInventoryItem(item), amount);
 
-    console.log(userinv, interaction.user.id);
+    console.log("After: " + [...await readInventory(userToGiveItem)]);
 
     const embed = new Embeds()
       .setFooter(`${botName} • User Inventory`)
@@ -262,8 +258,9 @@ createCommand({
 
 import { CooldownManager } from "../Rtsrs.Utils/cooldown.ts";
 import {
-  addItemToInventory,
-  getInventory,
+  addToInventory,
+  createNewInventory,
+  readInventory,
   stringToInventoryItem,
 } from "../Rtsrs.Currency/inventory.ts";
 const cooldownManager = new CooldownManager();
