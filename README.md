@@ -64,6 +64,7 @@ DEV_GUILD_ID=''
 OWNER_ID=''
 USER_LOG_CHANNEL=''
 BOT_MOD_CMD_LOG_CHANNEL=''
+WELCONE_CHANNEL=''
 ```
 
 5. After completed save and run this command in the terminal. <br>
