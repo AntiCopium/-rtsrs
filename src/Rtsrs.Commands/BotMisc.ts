@@ -1,35 +1,35 @@
 // deno-lint-ignore-file no-unused-vars
-import { format } from 'https://deno.land/std@0.91.0/datetime/mod.ts';
-import axiod from 'https://deno.land/x/axiod@0.26.2/mod.ts';
-import Embeds from 'https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts';
-import * as mod from 'https://deno.land/x/random@v1.1.2/Random.js';
-import * as akaneko from 'https://esm.sh/akaneko@5.3.0';
-import { botName, configs } from '../../configs.ts';
+import { format } from "https://deno.land/std@0.91.0/datetime/mod.ts";
+import axiod from "https://deno.land/x/axiod@0.26.2/mod.ts";
+import Embeds from "https://deno.land/x/discordeno@17.0.0/packages/embeds/mod.ts";
+import * as mod from "https://deno.land/x/random@v1.1.2/Random.js";
+import * as akaneko from "https://esm.sh/akaneko@5.3.0";
+import { botName, configs } from "../../configs.ts";
 import {
   ApplicationCommandOptionTypes,
   ApplicationCommandTypes,
   InteractionResponseTypes,
-} from '../../deps.ts';
+} from "../../deps.ts";
 import {
   UserConfigOptions,
   UserConfigSettings,
-} from '../Rtsrs.UserConfig/mod.ts';
-import { discordInvis, rdomcolor } from '../Rtsrs.Utils/colors.ts';
-import { CooldownManager } from '../Rtsrs.Utils/cooldown.ts';
-import { snowflakeToTimestamp } from '../Rtsrs.Utils/helpers.ts';
-import { createCommand, timenow } from './mod.ts';
+} from "../Rtsrs.UserConfig/mod.ts";
+import { discordInvis, rdomcolor } from "../Rtsrs.Utils/colors.ts";
+import { CooldownManager } from "../Rtsrs.Utils/cooldown.ts";
+import { snowflakeToTimestamp } from "../Rtsrs.Utils/helpers.ts";
+import { createCommand, timenow } from "./mod.ts";
 
 const cooldownManager = new CooldownManager();
 
 createCommand({
-  name: 'randomnumber',
-  description: 'submits a random number from (range)',
+  name: "randomnumber",
+  description: "submits a random number from (range)",
   type: ApplicationCommandTypes.ChatInput,
   options: [
     {
       type: ApplicationCommandOptionTypes.Integer,
-      name: 'range',
-      description: 'a range to go 1 to (range)',
+      name: "range",
+      description: "a range to go 1 to (range)",
       required: true,
     },
   ],
@@ -55,19 +55,19 @@ createCommand({
         data: {
           embeds: embed,
         },
-      }
+      },
     );
   },
 });
 
 createCommand({
-  name: 'ping',
+  name: "ping",
   description: `notifys ${botName} erves to send ping request.`,
   type: ApplicationCommandTypes.ChatInput,
   execute: async (Bot, interaction) => {
     // const hasPerm = Boolean(interaction?.member?.permissions) && validatePermissions(interaction.member?.permissions, ["ADMINISTRATOR"]);
     const userId = interaction.user?.id;
-    const commandName = 'ping';
+    const commandName = "ping";
     const cooldownTime = 3; // seconds
 
     if (userId === undefined) return;
@@ -75,14 +75,14 @@ createCommand({
       const cooldownSeconds = Math.ceil(
         (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
           Date.now()) /
-          1000
+          1000,
       );
       const embedcooled = new Embeds()
         .setTitle(`Cooldown`)
         .setTimestamp(timenow.getTime())
-        .setColor('#bf2c2c')
+        .setColor("#bf2c2c")
         .setDescription(
-          `Please wait ${cooldownSeconds} second(s) before using this command again.`
+          `Please wait ${cooldownSeconds} second(s) before using this command again.`,
         )
         .setFooter(`${botName} • Cooldown`);
       await Bot.helpers.sendInteractionResponse(
@@ -94,13 +94,13 @@ createCommand({
             embeds: embedcooled,
             flags: 64,
           },
-        }
+        },
       );
       return;
     }
 
     const ping = Date.now() - snowflakeToTimestamp(interaction.id);
-    const day = format(new Date(), 'HH:mm');
+    const day = format(new Date(), "HH:mm");
     const embed = new Embeds()
       .setTitle(`${botName} current ping`)
       .setTimestamp(timenow.getTime())
@@ -115,7 +115,7 @@ createCommand({
         data: {
           embeds: embed,
         },
-      }
+      },
     );
     cooldownManager.setCooldown(String(userId), commandName, cooldownTime);
   },
@@ -161,7 +161,7 @@ createCommand({
       embedAlive,
       embedAlive,
       embedAlive,
-      embedDead
+      embedDead,
     );
 
     await Bot.helpers.sendInteractionResponse(
@@ -172,7 +172,7 @@ createCommand({
         data: {
           embeds: r,
         },
-      }
+      },
     );
   },
 });
@@ -291,20 +291,20 @@ createCommand({
   execute: async (Bot, interaction) => {
     const type = interaction.data?.options![0].value;
     const userId = interaction.user?.id;
-    const commandName = 'anime';
+    const commandName = "anime";
     const cooldownTime = 5; // seconds
 
     if (UserConfigSettings.get(UserConfigOptions.AllowNSFWSetting) === false) {
       const nsfwDIS = new Embeds()
         .setTitle(`ADMINISTRATOR RESTRICTIONS`)
         .setTimestamp(timenow.getTime())
-        .setColor('#bf2c2c')
+        .setColor("#bf2c2c")
         .setDescription(
           `\n >>> The command` +
-            '`' +
+            "`" +
             `${commandName}` +
-            '`' +
-            `has been restricted by the administrator.`
+            "`" +
+            `has been restricted by the administrator.`,
         )
         .setFooter(`${botName} • Restrictions`);
 
@@ -317,7 +317,7 @@ createCommand({
             embeds: nsfwDIS,
             flags: 64,
           },
-        }
+        },
       );
 
       return;
@@ -329,14 +329,14 @@ createCommand({
         const cooldownSeconds = Math.ceil(
           (cooldownManager.cooldowns.get(`${userId}-${commandName}`)! -
             Date.now()) /
-            1000
+            1000,
         );
         const embedcooled = new Embeds()
           .setTitle(`Cooldown`)
           .setTimestamp(timenow.getTime())
-          .setColor('#bf2c2c')
+          .setColor("#bf2c2c")
           .setDescription(
-            `Please wait ${cooldownSeconds} second(s) before using this command again.`
+            `Please wait ${cooldownSeconds} second(s) before using this command again.`,
           )
           .setFooter(`${botName} • Cooldown`);
         await Bot.helpers.sendInteractionResponse(
@@ -348,7 +348,7 @@ createCommand({
               embeds: embedcooled,
               flags: 64,
             },
-          }
+          },
         );
         return;
       }
@@ -357,13 +357,14 @@ createCommand({
     const nsfwEM = new Embeds()
       .setTitle(`RESTRICTED COMMAND: NSFW`)
       .setTimestamp(timenow.getTime())
-      .setColor('#bf2c2c')
+      .setColor("#bf2c2c")
       .setDescription(
-        `<#${interaction?.channelId!}> is not a NSFW channel.\n >>> The command` +
-          '`' +
+        `<#${interaction
+          ?.channelId!}> is not a NSFW channel.\n >>> The command` +
+          "`" +
           `${commandName}` +
-          '`' +
-          `is restricted only to NSFW channels.`
+          "`" +
+          `is restricted only to NSFW channels.`,
       )
       .setFooter(`${botName} • Restrictions`);
 
@@ -378,7 +379,7 @@ createCommand({
             embeds: nsfwEM,
             flags: 64,
           },
-        }
+        },
       );
     }
 
@@ -401,7 +402,7 @@ createCommand({
             data: {
               embeds: restrictionEM,
             },
-          }
+          },
         );
         break;
       }
@@ -423,7 +424,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -445,7 +446,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -467,7 +468,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -489,7 +490,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -511,7 +512,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -533,7 +534,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -555,7 +556,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -579,7 +580,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -604,7 +605,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -629,7 +630,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -654,7 +655,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -679,7 +680,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -702,7 +703,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -726,7 +727,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -751,7 +752,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -774,7 +775,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -798,7 +799,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -821,7 +822,7 @@ createCommand({
             data: {
               embeds: embed,
             },
-          }
+          },
         );
         break;
       }
@@ -845,7 +846,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -870,7 +871,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -895,7 +896,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -920,7 +921,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
@@ -945,7 +946,7 @@ createCommand({
                 data: {
                   embeds: embed,
                 },
-              }
+              },
             );
           });
         break;
