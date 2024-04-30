@@ -112,8 +112,9 @@ createCommand({
         .setColor(rdomcolor())
         .setFooter(`${botName} • Message Deletion Log Config`)
         .setDescription(
-          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
-            .data?.options[0].value!}`,
+          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${ctxOptions[
+            0
+          ].value!}`,
         );
       await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
         embeds: embed,
@@ -193,8 +194,9 @@ createCommand({
         .setColor(rdomcolor())
         .setFooter(`${botName} • Message Deletion Log Config`)
         .setDescription(
-          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
-            .data?.options[0].value!}`,
+          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${ctxOptions[
+            0
+          ].value!}`,
         );
       await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
         embeds: embed,
@@ -267,8 +269,9 @@ createCommand({
         .setColor(rdomcolor())
         .setFooter(`${botName} • Welcomer Config`)
         .setDescription(
-          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${interaction
-            .data?.options[0].value!}`,
+          `**MODERATOR:** <@${interaction.user.id}>\n >>> **OPTION:** ${ctxOptions[
+            0
+          ].value!}`,
         );
       await Bot.helpers.sendMessage(configs.BOT_MOD_CMD_LOG_CHANNEL, {
         embeds: embed,
