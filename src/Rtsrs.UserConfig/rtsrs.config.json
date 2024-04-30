@@ -1,5 +1,5 @@
 {
   "MessageDeletionLogSetting": true,
-  "AllowNSFWSetting": true,
+  "AllowNSFWSetting": false,
   "AllowWelcomeMessageSetting": false
 }
